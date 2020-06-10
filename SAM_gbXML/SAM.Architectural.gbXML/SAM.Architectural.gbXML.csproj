@@ -32,11 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gbXMLSerializer">
-      <HintPath>..\references\gbXMLSerializer.dll</HintPath>
+    <Reference Include="gbXMLSerializer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\references\gbXMLSerializer.dll</HintPath>
     </Reference>
-    <Reference Include="SAM.Architectural">
-      <HintPath>..\..\SAM\build\SAM.Architectural.dll</HintPath>
+    <Reference Include="SAM.Architectural, Version=1.0.7466.18558, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SAM\build\SAM.Architectural.dll</HintPath>
     </Reference>
     <Reference Include="SAM.Core, Version=1.0.7465.21889, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
