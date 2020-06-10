@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="RhinoInside, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\..\packages\Rhino.Inside.0.2.0\lib\net45\RhinoInside.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RhinoWindows, Version=7.0.20119.13300, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RhinoWindows.7.0.20119.13305-wip\lib\net45\RhinoWindows.dll</HintPath>
@@ -125,4 +126,20 @@
   </Target>
   <Import Project="..\..\packages\Grasshopper.7.0.20119.13305-wip\build\net45\Grasshopper.targets" Condition="Exists('..\..\packages\Grasshopper.7.0.20119.13305-wip\build\net45\Grasshopper.targets')" />
   <Import Project="..\..\packages\RhinoWindows.7.0.20119.13305-wip\build\net45\RhinoWindows.targets" Condition="Exists('..\..\packages\RhinoWindows.7.0.20119.13305-wip\build\net45\RhinoWindows.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "$(TargetDir)\$(ProjectName).gha"
+
+set GH_PACKAGES_DIR=$(APPDATA)\Grasshopper\Libraries\SAM\
+if not exist "%25GH_PACKAGES_DIR%25" mkdir "%25GH_PACKAGES_DIR%25"
+
+copy "$(TargetDir)*.dll" "%25GH_PACKAGES_DIR%25"
+copy "%25GH_PACKAGES_DIR%25\$(ProjectName).dll" "%25GH_PACKAGES_DIR%25\$(ProjectName).gha"
+
+erase "%25GH_PACKAGES_DIR%25$(ProjectName).dll"
+erase "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

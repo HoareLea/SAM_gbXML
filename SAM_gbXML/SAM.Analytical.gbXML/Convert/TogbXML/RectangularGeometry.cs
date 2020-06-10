@@ -10,7 +10,7 @@ namespace SAM.Analytical.gbXML
             if (planarBoundary3D == null)
                 return null;
 
-            return Geometry.gbXML.Convert.TogbXML_RectangularGeometry(planarBoundary3D.GetFace3D(), tolerance); ;
+            return Geometry.gbXML.Convert.TogbXML_RectangularGeometry(planarBoundary3D.GetFace3D(), tolerance);
         }
 
     }

@@ -14,7 +14,11 @@ namespace SAM.Geometry.gbXML
             if (normal == null)
                 return double.NaN;
 
-            if (!Spatial.Query.Clockwise(closedPlanar3D))
+            IClosedPlanar3D closedPlanar3D_Temp = closedPlanar3D;
+            if (closedPlanar3D is Face3D)
+                closedPlanar3D_Temp = ((Face3D)closedPlanar3D).GetExternalEdge();
+
+            if (!Spatial.Query.Clockwise(closedPlanar3D_Temp))
                 normal.Negate();
 
             if (normal.Z == 1)
