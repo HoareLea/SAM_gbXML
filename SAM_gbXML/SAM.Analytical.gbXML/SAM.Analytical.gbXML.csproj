@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{57FDD311-8237-4B83-9824-927D0140C2A9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SAM.Analytical.gbXML</RootNamespace>
+    <AssemblyName>SAM.Analytical.gbXML</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\build\SAM.Analytical.gbXML.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gbXMLSerializer">
+      <HintPath>..\..\references\gbXMLSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="SAM.Analytical">
+      <HintPath>..\..\..\SAM\build\SAM.Analytical.dll</HintPath>
+    </Reference>
+    <Reference Include="SAM.Architectural, Version=1.0.7465.21890, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SAM\build\SAM.Architectural.dll</HintPath>
+    </Reference>
+    <Reference Include="SAM.Core">
+      <HintPath>..\..\..\SAM\build\SAM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SAM.Geometry, Version=1.0.7463.41474, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SAM\build\SAM.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Convert\TogbXML\Building.cs" />
+    <Compile Include="Convert\TogbXML\ClosedShell.cs" />
+    <Compile Include="Convert\TogbXML\ShellGeometry.cs" />
+    <Compile Include="Convert\TogbXML\Location.cs" />
+    <Compile Include="Convert\TogbXML\Campus.cs" />
+    <Compile Include="Convert\TogbXML\gbXML.cs" />
+    <Compile Include="Convert\TogbXML\SpaceBoundary.cs" />
+    <Compile Include="Convert\TogbXML\PlanarGeometry.cs" />
+    <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
+    <Compile Include="Convert\TogbXML\Opening.cs" />
+    <Compile Include="Convert\TogbXML\Surface.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\ExposedToSun.cs" />
+    <Compile Include="Query\OpeningTypeEnum.cs" />
+    <Compile Include="Query\SurfaceTypeEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Convert\ToSAM\" />
+    <Folder Include="Create\" />
+    <Folder Include="Manager\" />
+    <Folder Include="Modify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj">
+      <Project>{1daf1cec-4d6f-4519-a014-b85a3b9168be}</Project>
+      <Name>SAM.Architectural.gbXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj">
+      <Project>{2faa4b69-24a8-4b43-bdf2-65a462e5ae6a}</Project>
+      <Name>SAM.Geometry.gbXML</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

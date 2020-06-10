@@ -1,2 +1,2 @@
-# SAM_Excel
-SAM link to Microsoft Excel
+# SAM_gbXML
+SAM link to gbXML

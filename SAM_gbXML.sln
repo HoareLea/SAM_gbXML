@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Analytical.gbXML", "SAM_gbXML\SAM.Analytical.gbXML\SAM.Analytical.gbXML.csproj", "{57FDD311-8237-4B83-9824-927D0140C2A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dynamo", "Dynamo", "{F652363D-FD6C-4CA1-A992-E074C8EC2F82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grasshopper", "Grasshopper", "{C249747D-3819-446F-9697-1306778A065C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SAM_gbXML", "SAM_gbXML", "{53C5CE6F-E18D-47D7-BEF6-869424D33089}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Analytical.Grasshopper.gbXML", "Grasshopper\SAM.Analytical.Grasshopper.gbXML\SAM.Analytical.Grasshopper.gbXML.csproj", "{FE92A197-5958-4A33-B41A-BAF94D83FC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Geometry.gbXML", "SAM_gbXML\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj", "{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Architectural.gbXML", "SAM_gbXML\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj", "{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57FDD311-8237-4B83-9824-927D0140C2A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57FDD311-8237-4B83-9824-927D0140C2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57FDD311-8237-4B83-9824-927D0140C2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57FDD311-8237-4B83-9824-927D0140C2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE92A197-5958-4A33-B41A-BAF94D83FC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE92A197-5958-4A33-B41A-BAF94D83FC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE92A197-5958-4A33-B41A-BAF94D83FC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE92A197-5958-4A33-B41A-BAF94D83FC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57FDD311-8237-4B83-9824-927D0140C2A9} = {53C5CE6F-E18D-47D7-BEF6-869424D33089}
+		{FE92A197-5958-4A33-B41A-BAF94D83FC99} = {C249747D-3819-446F-9697-1306778A065C}
+		{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A} = {53C5CE6F-E18D-47D7-BEF6-869424D33089}
+		{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE} = {53C5CE6F-E18D-47D7-BEF6-869424D33089}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8878BE8-3E12-4F42-AC0D-D42CDF0EEC63}
+	EndGlobalSection
+EndGlobal
