@@ -15,7 +15,7 @@ namespace SAM.Analytical.gbXML
             gbXML.lengthUnit = lengthUnitEnum.Meters;
             gbXML.areaUnit = areaUnitEnum.SquareMeters;
             gbXML.volumeUnit = volumeUnitEnum.CubicMeters;
-            gbXML.version = versionEnum.OhThreeSeven;
+            gbXML.version = versionEnum.FiveOneOne;
             gbXML.Campus = analyticalModel.TogbXML_Campus(tolerance);
 
             return gbXML;
