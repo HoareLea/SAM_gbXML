@@ -17,7 +17,7 @@ namespace SAM.Analytical.gbXML
             if(adjacencyCluster != null)
             {
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(tolerance) };
-                campus.Surface = adjacencyCluster.GetPanels()?.ConvertAll(x => x.TogbXML(tolerance)).ToArray();
+                campus.Surface = adjacencyCluster.GetPanels()?.ConvertAll(x => x.TogbXML(adjacencyCluster.GetRelatedObjects<Space>(x), tolerance)).ToArray();
             }
  
             return campus;

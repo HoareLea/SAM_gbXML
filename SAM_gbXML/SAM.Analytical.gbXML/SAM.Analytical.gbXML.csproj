@@ -71,6 +71,7 @@
     <Compile Include="Convert\TogbXML\Opening.cs" />
     <Compile Include="Convert\TogbXML\Surface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\AdjacentSpaceId.cs" />
     <Compile Include="Query\ExposedToSun.cs" />
     <Compile Include="Query\OpeningTypeEnum.cs" />
     <Compile Include="Query\SurfaceTypeEnum.cs" />

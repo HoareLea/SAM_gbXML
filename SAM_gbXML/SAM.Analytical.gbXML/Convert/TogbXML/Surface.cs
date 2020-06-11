@@ -1,16 +1,11 @@
 ﻿using gbXMLSerializer;
-using SAM.Geometry.gbXML;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Surface TogbXML(this Panel panel, double tolerance = Core.Tolerance.MicroDistance)
+        public static Surface TogbXML(this Panel panel, List<Space> adjacentSpaces, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (panel == null)
                 return null;
@@ -20,14 +15,27 @@ namespace SAM.Analytical.gbXML
                 return null;
             
             Surface surface = new Surface();
-            surface.Name = panel.Name;
+            surface.Name = string.Format("{0} [{1}]", panel.Name, panel.Guid);
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
             surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
-            surface.CADObjectId = new CADObjectId() { id = panel.Guid.ToString() };
+            surface.CADObjectId = new CADObjectId() { id = panel.Name };
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
             surface.PlanarGeometry = planarBoundary3D.TogbXML(tolerance);
-            surface.exposedToSunField = Query.ExposedToSun(panel.PanelType);
+            surface.exposedToSunField = true; Query.ExposedToSun(panel.PanelType);
+
+            if(adjacentSpaces != null && adjacentSpaces.Count > 0)
+            {
+                List<AdjacentSpaceId> adjacentSpaceIds = new List<AdjacentSpaceId>();
+                foreach (Space space in adjacentSpaces)
+                {
+                    AdjacentSpaceId adjacentSpaceId = Query.AdjacentSpaceId(space);
+                    if (adjacentSpaceId == null)
+                        continue;
+                    adjacentSpaceIds.Add(adjacentSpaceId);
+                }
+                surface.AdjacentSpaceId = adjacentSpaceIds.ToArray();
+            }
 
             List<Aperture> apertures = panel.Apertures;
             if(apertures != null)
