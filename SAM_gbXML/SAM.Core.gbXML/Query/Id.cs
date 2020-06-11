@@ -9,7 +9,7 @@ namespace SAM.Core.gbXML
             if (sAMObject == null || type == null)
                 return null;
 
-            return string.Format("{0}[1]", type.Name, sAMObject.Guid.ToString("N"));
+            return string.Format("{0}_{1}", type.Name, sAMObject.Guid.ToString("N"));
         }
     }
 }
