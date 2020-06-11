@@ -24,7 +24,7 @@ namespace SAM.Analytical.gbXML
                         gbXMLSerializer.Construction construction_gbXML = construction.TogbXML(tolerance);
                         if (construction_gbXML != null)
                         {
-                            constructions_gbXML.Add(construction_gbXML);
+                            //constructions_gbXML.Add(construction_gbXML);
                             guids.Add(construction.Guid);
                         }
 
@@ -42,7 +42,7 @@ namespace SAM.Analytical.gbXML
                             gbXMLSerializer.Construction construction_gbXML = apertureConstruction.TogbXML(tolerance);
                             if (construction_gbXML != null)
                             {
-                                constructions_gbXML.Add(construction_gbXML);
+                                //constructions_gbXML.Add(construction_gbXML);
                                 guids.Add(construction.Guid);
                             }
                         }
@@ -59,6 +59,7 @@ namespace SAM.Analytical.gbXML
             gbXML.version = versionEnum.FiveOneOne;
             gbXML.Campus = analyticalModel.TogbXML_Campus(tolerance);
             gbXML.Constructions = constructions_gbXML.ToArray();
+            //gbXML.
 
             return gbXML;
         }
