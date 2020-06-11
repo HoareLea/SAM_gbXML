@@ -22,7 +22,7 @@ namespace SAM.Analytical.gbXML
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
             surface.PlanarGeometry = planarBoundary3D.TogbXML(tolerance);
-            surface.exposedToSunField = true; Query.ExposedToSun(panel.PanelType);
+            surface.exposedToSunField = Query.ExposedToSun(panel.PanelType);
 
             if(adjacentSpaces != null && adjacentSpaces.Count > 0)
             {
