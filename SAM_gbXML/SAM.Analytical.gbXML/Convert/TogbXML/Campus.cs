@@ -1,4 +1,5 @@
 ﻿using gbXMLSerializer;
+using System.Collections.Generic;
 
 namespace SAM.Analytical.gbXML
 {
@@ -17,7 +18,28 @@ namespace SAM.Analytical.gbXML
             if(adjacencyCluster != null)
             {
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(analyticalModel.Name, analyticalModel.Description, tolerance) };
-                campus.Surface = adjacencyCluster.GetPanels()?.ConvertAll(x => x.TogbXML(adjacencyCluster.GetRelatedObjects<Space>(x), tolerance)).ToArray();
+                List<Panel> panels = adjacencyCluster.GetPanels();
+                if(panels != null)
+                {
+                    List<Surface> surfaces = new List<Surface>();
+                    for(int i=0; i < panels.Count; i++)
+                    {
+                        Panel panel = panels[i];
+                        if (panel == null)
+                            continue;
+
+                        List<Space> spaces = adjacencyCluster.GetRelatedObjects<Space>(panel);
+
+                        Surface surface = panel.TogbXML(spaces, i + 1, tolerance);
+                        if (surface != null)
+                            surfaces.Add(surface);
+
+                    }
+                    campus.Surface = surfaces.ToArray();
+                }
+
+
+                campus.Surface = adjacencyCluster.GetPanels()?.ConvertAll(x => ).ToArray();
             }
  
             return campus;

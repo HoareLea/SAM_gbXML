@@ -5,7 +5,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Surface TogbXML(this Panel panel, List<Space> adjacentSpaces, double tolerance = Core.Tolerance.MicroDistance)
+        public static Surface TogbXML(this Panel panel, List<Space> adjacentSpaces = null, int cADObjectIdSufix = -1, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (panel == null)
                 return null;
@@ -18,7 +18,7 @@ namespace SAM.Analytical.gbXML
             surface.Name = string.Format("{0} [{1}]", panel.Name, panel.Guid);
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
             surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
-            surface.CADObjectId = new CADObjectId() { id = panel.Name };
+            surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix);
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
             surface.PlanarGeometry = planarBoundary3D.TogbXML(tolerance);

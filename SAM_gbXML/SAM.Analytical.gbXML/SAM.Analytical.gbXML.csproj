@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\TogbXML\Building.cs" />
+    <Compile Include="Convert\TogbXML\Construction.cs" />
     <Compile Include="Convert\TogbXML\ClosedShell.cs" />
     <Compile Include="Convert\TogbXML\ShellGeometry.cs" />
     <Compile Include="Convert\TogbXML\Campus.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Convert\TogbXML\Opening.cs" />
     <Compile Include="Convert\TogbXML\Surface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\CADObjectId.cs" />
     <Compile Include="Query\AdjacentSpaceId.cs" />
     <Compile Include="Query\ExposedToSun.cs" />
     <Compile Include="Query\OpeningTypeEnum.cs" />
