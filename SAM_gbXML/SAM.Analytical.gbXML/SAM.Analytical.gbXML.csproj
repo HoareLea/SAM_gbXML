@@ -63,7 +63,6 @@
     <Compile Include="Convert\TogbXML\Building.cs" />
     <Compile Include="Convert\TogbXML\ClosedShell.cs" />
     <Compile Include="Convert\TogbXML\ShellGeometry.cs" />
-    <Compile Include="Convert\TogbXML\Location.cs" />
     <Compile Include="Convert\TogbXML\Campus.cs" />
     <Compile Include="Convert\TogbXML\gbXML.cs" />
     <Compile Include="Convert\TogbXML\SpaceBoundary.cs" />
@@ -86,6 +85,10 @@
     <ProjectReference Include="..\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj">
       <Project>{1daf1cec-4d6f-4519-a014-b85a3b9168be}</Project>
       <Name>SAM.Architectural.gbXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAM.Core.gbXML\SAM.Core.gbXML.csproj">
+      <Project>{bba608a4-615b-4824-8e53-f8232be703ec}</Project>
+      <Name>SAM.Core.gbXML</Name>
     </ProjectReference>
     <ProjectReference Include="..\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj">
       <Project>{2faa4b69-24a8-4b43-bdf2-65a462e5ae6a}</Project>

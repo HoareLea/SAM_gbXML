@@ -85,15 +85,15 @@ namespace SAM.Analytical.gbXML
                 space_gbXML.buildingStoreyIdRef = buildingStorey.id;
                 space_gbXML.cadid = new CADObjectId() { id = space.Guid.ToString() };
                 space_gbXML.PlanarGeo = face3D.TogbXML(tolerance);
-                space_gbXML.id = space.Guid.ToString();
+                space_gbXML.id = Core.gbXML.Query.Id(space, typeof(gbXMLSerializer.Space));
                 space_gbXML.spbound = panels_Space.ConvertAll(x => x.TogbXML_SpaceBoundary(tolerance)).ToArray();
-                space_gbXML.ShellGeo = panels_Space.TogbXML(space.Guid.ToString(), tolerance);
+                space_gbXML.ShellGeo = panels_Space.TogbXML(space, tolerance);
 
                 spaces_gbXML.Add(space_gbXML);
             }
 
             Building building = new Building();
-            building.id = adjacencyCluster.Guid.ToString();
+            building.id = Core.gbXML.Query.Id(adjacencyCluster, typeof(Building));
             building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
             building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
             building.buildingType = buildingTypeEnum.Office;

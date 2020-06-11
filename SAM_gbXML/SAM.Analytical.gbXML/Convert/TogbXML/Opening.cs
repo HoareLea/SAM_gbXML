@@ -24,9 +24,9 @@ namespace SAM.Analytical.gbXML
                 return null;
             
             Opening opening = new Opening();
-            opening.constructionIdRef = aperture.ApertureConstruction.Guid.ToString();
+            opening.constructionIdRef = Core.gbXML.Query.Id(aperture.ApertureConstruction, typeof(gbXMLSerializer.Construction));
             opening.Description = opening.Name;
-            opening.id = aperture.Guid.ToString();
+            opening.id = Core.gbXML.Query.Id(aperture, typeof(Opening));
             opening.Name = aperture.Name;
             opening.openingType = Query.OpeningTypeEnum(aperture.ApertureConstruction.ApertureType);
             opening.pg = planarBoundary3D.TogbXML(tolerance);

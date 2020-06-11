@@ -11,7 +11,7 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             BuildingStorey buildingStorey = new BuildingStorey();
-            buildingStorey.id = level.Guid.ToString();
+            buildingStorey.id = Core.gbXML.Query.Id(level, typeof(BuildingStorey));
             buildingStorey.Level = Core.Query.Round(level.Elevation, tolerance).ToString();
             buildingStorey.Name = level.Name;
             

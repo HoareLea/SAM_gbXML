@@ -10,8 +10,8 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             Campus campus = new Campus();
-            campus.id = analyticalModel.Guid.ToString();
-            campus.Location = analyticalModel?.Location?.TogbXML(analyticalModel.Address, tolerance);
+            campus.id = Core.gbXML.Query.Id(analyticalModel, typeof(Campus));
+            campus.Location = Core.gbXML.Convert.TogbXML(analyticalModel.Location, analyticalModel.Address, tolerance);
 
             AdjacencyCluster adjacencyCluster = analyticalModel.AdjacencyCluster;
             if(adjacencyCluster != null)

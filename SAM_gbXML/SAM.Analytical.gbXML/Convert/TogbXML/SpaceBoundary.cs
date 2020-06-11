@@ -20,7 +20,7 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             SpaceBoundary spaceBoundary = new SpaceBoundary();
-            spaceBoundary.surfaceIdRef = panel.Guid.ToString();
+            spaceBoundary.surfaceIdRef = Core.gbXML.Query.Id(panel, typeof(Surface));
             spaceBoundary.PlanarGeometry = face3D.TogbXML(tolerance);
 
             return spaceBoundary;

@@ -5,13 +5,13 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static ShellGeometry TogbXML(this IEnumerable<Panel> panels, string id, double tolerance = Core.Tolerance.MicroDistance)
+        public static ShellGeometry TogbXML(this IEnumerable<Panel> panels, Space space, double tolerance = Core.Tolerance.MicroDistance)
         {
-            if (panels == null || string.IsNullOrWhiteSpace(id))
+            if (panels == null || space == null)
                 return null;
 
             ShellGeometry shellGeometry = new ShellGeometry();
-            shellGeometry.id = id;
+            shellGeometry.id = Core.gbXML.Query.Id(space, typeof(ShellGeometry)); ;
             shellGeometry.unit = lengthUnitEnum.Meters;
             shellGeometry.ClosedShell = panels.TogbXML(tolerance);
 

@@ -21,8 +21,8 @@ namespace SAM.Analytical.gbXML
             
             Surface surface = new Surface();
             surface.Name = panel.Name;
-            surface.id = panel.Guid.ToString();
-            surface.constructionIdRef = panel.Construction.Guid.ToString();
+            surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
+            surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
             surface.CADObjectId = new CADObjectId() { id = panel.Guid.ToString() };
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
