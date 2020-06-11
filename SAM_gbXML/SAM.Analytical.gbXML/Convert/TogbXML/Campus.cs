@@ -37,9 +37,6 @@ namespace SAM.Analytical.gbXML
                     }
                     campus.Surface = surfaces.ToArray();
                 }
-
-
-                campus.Surface = adjacencyCluster.GetPanels()?.ConvertAll(x => ).ToArray();
             }
  
             return campus;

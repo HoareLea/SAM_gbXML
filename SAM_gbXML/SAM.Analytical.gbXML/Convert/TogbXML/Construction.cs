@@ -11,8 +11,23 @@ namespace SAM.Analytical.gbXML
             if (construction == null)
                 return null;
 
+            gbXMLSerializer.Construction construction_gbXML = new gbXMLSerializer.Construction();
+            construction_gbXML.id = Core.gbXML.Query.Id(construction, typeof(gbXMLSerializer.Construction));
+            construction_gbXML.Name = construction.Name;
 
-            return closedShell;
+            return construction_gbXML;
+        }
+
+        public static gbXMLSerializer.Construction TogbXML(this ApertureConstruction apertureConstruction, double tolerance = Core.Tolerance.MicroDistance)
+        {
+            if (apertureConstruction == null)
+                return null;
+
+            gbXMLSerializer.Construction construction_gbXML = new gbXMLSerializer.Construction();
+            construction_gbXML.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Construction));
+            construction_gbXML.Name = apertureConstruction.Name;
+
+            return construction_gbXML;
         }
 
     }
