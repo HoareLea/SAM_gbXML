@@ -40,7 +40,7 @@ namespace SAM.Analytical.gbXML
             List<gbXMLSerializer.Space> spaces_gbXML = new List<gbXMLSerializer.Space>();
             foreach (Space space in spaces)
             {
-                List<Panel> panels_Space = adjacencyCluster.GetRelatedObjects<Panel>(space.Guid);
+                List<Panel> panels_Space = adjacencyCluster.GetRelatedObjects<Panel>(space);
                 if (panels_Space == null || panels_Space.Count == 0)
                     continue;
 
