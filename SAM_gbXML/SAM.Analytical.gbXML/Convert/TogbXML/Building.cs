@@ -12,11 +12,12 @@ namespace SAM.Analytical.gbXML
     {
         public static Building TogbXML(this AdjacencyCluster adjacencyCluster, double tolerance = Tolerance.MicroDistance)
         {
-            if (adjacencyCluster == null)
+            List<Panel> panels = adjacencyCluster?.GetPanels();
+            if (panels == null || panels.Count == 0)
                 return null;
 
-            List<Panel> panels = adjacencyCluster.GetPanels();
-            if (panels == null || panels.Count == 0)
+            List<Space> spaces = adjacencyCluster.GetSpaces();
+            if (spaces == null)
                 return null;
 
             //Dictionary of Minimal Elevations and List of Panels
@@ -35,16 +36,6 @@ namespace SAM.Analytical.gbXML
                 foreach(Panel panel in keyValuePair.Value)
                     dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double> (buildingStorey, keyValuePair.Key, panel.MaxElevation());
             }
-
-            List<Space> spaces = adjacencyCluster?.GetSpaces();
-            if (spaces == null)
-                return null;
-
-            Building building = new Building();
-            building.id = adjacencyCluster.Guid.ToString();
-            building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
-            building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
-            building.buildingType = buildingTypeEnum.Office;
 
             List<gbXMLSerializer.Space> spaces_gbXML = new List<gbXMLSerializer.Space>();
             foreach (Space space in spaces)
@@ -101,7 +92,13 @@ namespace SAM.Analytical.gbXML
                 spaces_gbXML.Add(space_gbXML);
             }
 
+            Building building = new Building();
+            building.id = adjacencyCluster.Guid.ToString();
+            building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
+            building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
+            building.buildingType = buildingTypeEnum.Office;
             building.Spaces = spaces_gbXML.ToArray();
+
             return building;
         }
     }
