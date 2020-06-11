@@ -80,8 +80,8 @@ namespace SAM.Analytical.gbXML
 
                 gbXMLSerializer.Space space_gbXML = new gbXMLSerializer.Space();
                 space_gbXML.Name = space.Name;
-                space_gbXML.Area = area;
-                space_gbXML.Volume = volume;
+                space_gbXML.spacearea = new Area() { val = area.ToString() };
+                space_gbXML.spacevol = new Volume() { val = volume.ToString() };
                 space_gbXML.buildingStoreyIdRef = buildingStorey.id;
                 space_gbXML.cadid = new CADObjectId() { id = space.Guid.ToString() };
                 space_gbXML.PlanarGeo = face3D.TogbXML(tolerance);
