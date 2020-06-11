@@ -10,7 +10,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Building TogbXML(this AdjacencyCluster adjacencyCluster, double tolerance = Tolerance.MicroDistance)
+        public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
             List<Panel> panels = adjacencyCluster?.GetPanels();
             if (panels == null || panels.Count == 0)
@@ -94,6 +94,8 @@ namespace SAM.Analytical.gbXML
 
             Building building = new Building();
             building.id = Core.gbXML.Query.Id(adjacencyCluster, typeof(Building));
+            building.Name = name;
+            building.Description = description;
             building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
             building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
             building.buildingType = buildingTypeEnum.Office;
