@@ -4,7 +4,7 @@ namespace SAM.Core.gbXML
 {
     public static partial class Convert
     {
-        public static gbXMLSerializer.Location TogbXML(this Location location, Core.Address address = null, double tolerance = Core.Tolerance.MicroDistance)
+        public static gbXMLSerializer.Location TogbXML(this Location location, Address address = null, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (location == null)
                 return null;
@@ -18,6 +18,8 @@ namespace SAM.Core.gbXML
             string postalCode = address?.PostalCode;
             if (!string.IsNullOrWhiteSpace(postalCode))
                 location_gbXML.ZipcodeOrPostalCode = postalCode;
+            else
+                location_gbXML.ZipcodeOrPostalCode = "000000";
 
             return location_gbXML;
         }
