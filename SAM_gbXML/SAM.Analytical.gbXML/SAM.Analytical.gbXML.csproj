@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\CADObjectId.cs" />
     <Compile Include="Query\AdjacentSpaceId.cs" />
+    <Compile Include="Query\DocumentHistory.cs" />
     <Compile Include="Query\ExposedToSun.cs" />
     <Compile Include="Query\OpeningTypeEnum.cs" />
     <Compile Include="Query\SurfaceTypeEnum.cs" />
