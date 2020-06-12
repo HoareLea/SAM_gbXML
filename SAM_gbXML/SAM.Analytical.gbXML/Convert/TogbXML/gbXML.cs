@@ -59,8 +59,7 @@ namespace SAM.Analytical.gbXML
             gbXML.version = versionEnum.FiveOneOne;
             gbXML.Campus = analyticalModel.TogbXML_Campus(tolerance);
             gbXML.Constructions = constructions_gbXML.ToArray();
-            gbXML.DocumentHistory = Core.gbXML.Query.DocumentHistory();
-            gbXML.CreatedBy = Core.gbXML.Query.CreatedBy(analyticalModel.Guid);
+            gbXML.DocumentHistory = Core.gbXML.Query.DocumentHistory(analyticalModel.Guid);
 
             return gbXML;
         }
