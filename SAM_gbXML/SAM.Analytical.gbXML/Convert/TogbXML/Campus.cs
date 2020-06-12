@@ -21,6 +21,7 @@ namespace SAM.Analytical.gbXML
                 List<Panel> panels = adjacencyCluster.GetPanels();
                 if(panels != null)
                 {
+                    int count_opening = 1;
                     List<Surface> surfaces = new List<Surface>();
                     for(int i=0; i < panels.Count; i++)
                     {
@@ -30,9 +31,12 @@ namespace SAM.Analytical.gbXML
 
                         List<Space> spaces = adjacencyCluster.GetRelatedObjects<Space>(panel);
 
-                        Surface surface = panel.TogbXML(spaces, i + 1, tolerance);
+                        Surface surface = panel.TogbXML(spaces, i + 1, count_opening, tolerance);
                         if (surface != null)
                             surfaces.Add(surface);
+
+                        if (surface.Opening != null)
+                            count_opening += surface.Opening.Length;
 
                     }
                     campus.Surface = surfaces.ToArray();

@@ -5,7 +5,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Surface TogbXML(this Panel panel, List<Space> adjacentSpaces = null, int cADObjectIdSufix = -1, double tolerance = Core.Tolerance.MicroDistance)
+        public static Surface TogbXML(this Panel panel, List<Space> adjacentSpaces = null, int cADObjectIdSufix_Surface = -1, int cADObjectIdSufix_Opening = -1, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (panel == null)
                 return null;
@@ -18,7 +18,7 @@ namespace SAM.Analytical.gbXML
             surface.Name = string.Format("{0} [{1}]", panel.Name, panel.Guid);
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
             //surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
-            surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix);
+            surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix_Surface);
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
             surface.PlanarGeometry = planarBoundary3D.TogbXML(tolerance);
@@ -39,7 +39,24 @@ namespace SAM.Analytical.gbXML
 
             List<Aperture> apertures = panel.Apertures;
             if(apertures != null)
-                surface.Opening = apertures.ConvertAll(x => x.TogbXML(tolerance)).ToArray();
+            {
+                List<Opening> openings = new List<Opening>();
+                
+                int cADObjectIdSufix_Opening_Temp = cADObjectIdSufix_Opening;
+                foreach (Aperture aperture in apertures)
+                {
+                    Opening opening = aperture.TogbXML(cADObjectIdSufix_Opening_Temp, tolerance);
+                    if (opening == null)
+                        continue;
+
+                    if (cADObjectIdSufix_Opening_Temp != -1)
+                        cADObjectIdSufix_Opening_Temp++;
+
+                    openings.Add(opening);
+                }
+                surface.Opening = openings.ToArray();
+            }
+                
 
             return surface;
         }

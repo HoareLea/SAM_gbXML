@@ -51,5 +51,43 @@ namespace SAM.Analytical.gbXML
             
                 return cADObjectId;
         }
+
+        public static CADObjectId CADObjectId(this Aperture aperture, int cADObjectIdSufix = -1)
+        {
+            if (aperture == null)
+                return null;
+
+            ApertureConstruction apertureConstruction = aperture.ApertureConstruction;
+
+            string name = aperture.Name;
+            if (string.IsNullOrWhiteSpace(name) && apertureConstruction != null)
+                name = apertureConstruction.Name;
+
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            string prefix = null;
+            if(apertureConstruction != null)
+            {
+                switch (aperture.ApertureConstruction.ApertureType)
+                {
+                    case ApertureType.Window:
+                        prefix = "Window";
+                        break;
+                    case ApertureType.Door:
+                        prefix = "Door";
+                        break;
+                }
+            }
+
+
+            CADObjectId cADObjectId = new CADObjectId();
+            if (cADObjectIdSufix == -1)
+                cADObjectId.id = string.Format("{0}: {1}", prefix, name);
+            else
+                cADObjectId.id = string.Format("{0}: {1} [{2}]", prefix, name, cADObjectIdSufix);
+
+            return cADObjectId;
+        }
     }
 }
