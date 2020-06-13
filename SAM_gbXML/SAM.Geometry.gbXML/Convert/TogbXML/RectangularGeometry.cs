@@ -19,9 +19,9 @@ namespace SAM.Geometry.gbXML
             double height = boundingBox2D.Height;
             if(System.Math.Abs(area_closedPlanar3D - area_boundingBox2D) > Core.Tolerance.MacroDistance)
             {
-                double factor = area_closedPlanar3D / area_boundingBox2D;
-                width = factor * width;
-                height = factor * height;
+                //TODO: find better way to keep side ratio
+                width = System.Math.Sqrt(area_closedPlanar3D);
+                height = area_closedPlanar3D / width;
             }
 
             RectangularGeometry rectangularGeometry = new RectangularGeometry();
