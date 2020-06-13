@@ -39,6 +39,7 @@ namespace SAM.Geometry.Grasshopper
         {
             inputParamManager.AddParameter(new GooAnalyticalModelParam(), "_analyticalModel", "_analyticalModel", "AnalyticalModel", GH_ParamAccess.item);
             inputParamManager.AddTextParameter("_path", "_path", "File Path", GH_ParamAccess.item);
+            inputParamManager.AddBooleanParameter("_run_", "_run_", "Run", GH_ParamAccess.item, false);
         }
 
         /// <summary>
@@ -58,6 +59,16 @@ namespace SAM.Geometry.Grasshopper
         /// </param>
         protected override void SolveInstance(IGH_DataAccess dataAccess)
         {
+            bool run = false;
+            if (!dataAccess.GetData(2, ref run))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
+                dataAccess.SetData(1, false);
+                return;
+            }
+            if (!run)
+                return;
+
             Analytical.AnalyticalModel analyticalModel = null;
             if (!dataAccess.GetData(0, ref analyticalModel) || analyticalModel == null)
             {
