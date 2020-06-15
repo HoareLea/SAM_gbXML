@@ -32,8 +32,9 @@ namespace SAM.Analytical.gbXML
                     continue;
 
                 double elevation = panel.MinElevation();
+                List<double> differences = elevations.ConvertAll(x => Math.Abs(x - elevation));
 
-                int index = elevations.IndexOf(elevations.ConvertAll(x => Math.Abs(x - elevation)).Min());
+                int index = differences.IndexOf(differences.Min());
                 dictionary_MinElevations.Values.ElementAt(index).Add(panel);
             }
 
