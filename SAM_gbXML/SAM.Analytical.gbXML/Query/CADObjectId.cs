@@ -66,28 +66,35 @@ namespace SAM.Analytical.gbXML
             if (string.IsNullOrWhiteSpace(name))
                 return null;
 
-            string prefix = null;
-            if(apertureConstruction != null)
-            {
-                switch (aperture.ApertureConstruction.ApertureType)
-                {
-                    case ApertureType.Window:
-                        prefix = "Window";
-                        break;
-                    case ApertureType.Door:
-                        prefix = "Door";
-                        break;
-                }
-            }
-
-
             CADObjectId cADObjectId = new CADObjectId();
             if (cADObjectIdSufix == -1)
-                cADObjectId.id = string.Format("{0}: {1}", prefix, name);
+                cADObjectId.id = string.Format("{0}", name);
             else
-                cADObjectId.id = string.Format("{0}: {1} [{2}]", prefix, name, cADObjectIdSufix);
+                cADObjectId.id = string.Format("{0} [{1}]", name, cADObjectIdSufix);
 
             return cADObjectId;
+
+            //string prefix = null;
+            //if(apertureConstruction != null)
+            //{
+            //    switch (aperture.ApertureConstruction.ApertureType)
+            //    {
+            //        case ApertureType.Window:
+            //            prefix = "Window";
+            //            break;
+            //        case ApertureType.Door:
+            //            prefix = "Door";
+            //            break;
+            //    }
+            //}
+
+            //CADObjectId cADObjectId = new CADObjectId();
+            //if (cADObjectIdSufix == -1)
+            //    cADObjectId.id = string.Format("{0}: {1}", prefix, name);
+            //else
+            //    cADObjectId.id = string.Format("{0}: {1} [{2}]", prefix, name, cADObjectIdSufix);
+
+            //return cADObjectId;
         }
     }
 }

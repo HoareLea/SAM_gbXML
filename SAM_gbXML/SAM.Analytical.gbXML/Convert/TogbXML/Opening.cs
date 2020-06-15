@@ -27,13 +27,11 @@ namespace SAM.Analytical.gbXML
             if (string.IsNullOrWhiteSpace(name))
                 name = aperture.ApertureConstruction.Name;
 
-            
-
             Opening opening = new Opening();
             //opening.constructionIdRef = Core.gbXML.Query.Id(aperture.ApertureConstruction, typeof(gbXMLSerializer.Construction));
             opening.Description = name;
             opening.id = Core.gbXML.Query.Id(aperture, typeof(Opening));
-            opening.Name = string.Format("{0} [{1}]", name, aperture.Guid); ;
+            opening.Name = string.Format("{0} [{1}]", name, aperture.Guid);
             opening.openingType = Query.OpeningTypeEnum(aperture.ApertureConstruction.ApertureType);
             opening.pg = planarBoundary3D.TogbXML(tolerance);
             opening.rg = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);
