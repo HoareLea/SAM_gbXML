@@ -48,8 +48,11 @@ namespace SAM.Analytical.gbXML
 
             name += ":";
 
-            if (!string.IsNullOrWhiteSpace(panel.Name))
-                name += string.Format(" {0}", panel.Name);
+            string panelName = panel.Name;
+            if (string.IsNullOrWhiteSpace(panelName))
+                panelName = "Default";
+
+            name += string.Format(" {0}", panelName);
 
             if (cADObjectIdSufix != -1)
                 name += string.Format(" [{0}]", cADObjectIdSufix);

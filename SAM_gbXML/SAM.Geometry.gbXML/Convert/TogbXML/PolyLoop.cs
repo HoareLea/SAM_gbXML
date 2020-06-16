@@ -21,8 +21,13 @@ namespace SAM.Geometry.gbXML
                 closedPlanar3D_Temp = closedPlanar3D;
 
             if (closedPlanar3D_Temp is ISegmentable3D)
+            {
                 point3Ds = ((ISegmentable3D)closedPlanar3D_Temp).GetPoints();
 
+                if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
+                    point3Ds.Reverse();
+            }
+                
             if (point3Ds == null)
                 throw new System.NotImplementedException();
 

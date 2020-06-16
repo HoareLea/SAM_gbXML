@@ -22,8 +22,13 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             List<Panel> panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Floor);
+            
             if(panels_Levels.Count == 0)
                 panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Wall && x.PanelType != PanelType.CurtainWall);
+            
+            if (panels_Levels.Count == 0)
+                panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Wall);
+
 
             //Dictionary of Minimal Elevations and List of Panels
             Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels_Levels, Tolerance.MacroDistance);
