@@ -9,14 +9,14 @@ namespace SAM.Analytical.gbXML
             if (panel == null)
                 return null;
 
-            string prefix = null;
-            switch(panel.PanelType)
+            string name = null;
+            switch (panel.PanelType)
             {
                 case PanelType.Ceiling:
-                    prefix = "Compound Ceiling";
+                    name = "Compound Ceiling";
                     break;
                 case PanelType.CurtainWall:
-                    prefix = "Curtain Wall";
+                    name = "Curtain Wall";
                     break;
                 case PanelType.Floor:
                 case PanelType.FloorExposed:
@@ -25,31 +25,42 @@ namespace SAM.Analytical.gbXML
                 case PanelType.SlabOnGrade:
                 case PanelType.UndergroundSlab:
                 case PanelType.UndergroundCeiling:
-                    prefix = "Floor";
+                    name = "Floor";
                     break;
                 case PanelType.Roof:
                 case PanelType.Shade:
                 case PanelType.SolarPanel:
-                    prefix = "Basic Roof";
+                    name = "Basic Roof";
                     break;
                 case PanelType.UndergroundWall:
                 case PanelType.Wall:
                 case PanelType.WallExternal:
                 case PanelType.WallInternal:
-                    prefix = "Basic Wall";
+                    name = "Basic Wall";
+                    break;
+                case PanelType.Air:
+                    name = "Air";
                     break;
                 default:
-                    prefix = "Undefined";
+                    name = "Undefined";
                     break;
             }
 
+            name += ":";
+
+            if (!string.IsNullOrWhiteSpace(panel.Name))
+                name += string.Format(" {0}", panel.Name);
+
+            if (cADObjectIdSufix != -1)
+                name += string.Format(" [{0}]", cADObjectIdSufix);
+
+            if (name.EndsWith(":"))
+                name = name.Substring(0, name.Length - 1);
+
             CADObjectId cADObjectId = new CADObjectId();
-            if (cADObjectIdSufix == -1)
-                cADObjectId.id = string.Format("{0}: {1}", prefix, panel.Name);
-            else
-                cADObjectId.id = string.Format("{0}: {1} [{2}]", prefix, panel.Name, cADObjectIdSufix);
-            
-                return cADObjectId;
+            cADObjectId.id = name;
+
+            return cADObjectId;
         }
 
         public static CADObjectId CADObjectId(this Aperture aperture, int cADObjectIdSufix = -1)
