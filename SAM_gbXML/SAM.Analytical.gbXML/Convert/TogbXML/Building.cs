@@ -2,6 +2,7 @@
 using SAM.Architectural;
 using SAM.Core;
 using SAM.Geometry.gbXML;
+using SAM.Geometry.Spatial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,15 +21,17 @@ namespace SAM.Analytical.gbXML
             if (spaces == null)
                 return null;
 
-            List<Panel> panels_Floors = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Floor);
+            List<Panel> panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Floor);
+            if(panels_Levels.Count == 0)
+                panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Wall && x.PanelType != PanelType.CurtainWall);
 
             //Dictionary of Minimal Elevations and List of Panels
-            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels_Floors, Tolerance.MacroDistance);
+            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels_Levels, Tolerance.MacroDistance);
             List<double> elevations = dictionary_MinElevations.Keys.ToList();
 
             foreach(Panel panel in panels)
             {
-                if (panels_Floors.Contains(panel))
+                if (panels_Levels.Contains(panel))
                     continue;
 
                 double elevation = panel.MinElevation();
@@ -42,14 +45,14 @@ namespace SAM.Analytical.gbXML
             Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new Dictionary<BuildingStorey, double>();
 
             //Dictionary of SAM Panels related buildingSorey, minimal elevation and maximal elevation
-            Dictionary<Panel, Tuple<BuildingStorey, double, double>> dictionary_Panels = new Dictionary<Panel, Tuple<BuildingStorey, double, double>>();
+            Dictionary<Panel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new Dictionary<Panel, Tuple<BuildingStorey, double, double, double>>();
 
             foreach(KeyValuePair<double, List<Panel>> keyValuePair in dictionary_MinElevations)
             {
                 BuildingStorey buildingStorey = Architectural.Create.Level(keyValuePair.Key).TogbXML(tolerance);
                 dictionary_buildingStoreys[buildingStorey] = keyValuePair.Key;
                 foreach(Panel panel in keyValuePair.Value)
-                    dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double> (buildingStorey, keyValuePair.Key, panel.MaxElevation());
+                    dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double, double> (buildingStorey, keyValuePair.Key, panel.MinElevation(), panel.MaxElevation());
             }
 
             List<gbXMLSerializer.Space> spaces_gbXML = new List<gbXMLSerializer.Space>();
@@ -59,12 +62,13 @@ namespace SAM.Analytical.gbXML
                 if (panels_Space == null || panels_Space.Count == 0)
                     continue;
 
-                double elevation_Min = panels_Space.ConvertAll(x => dictionary_Panels[x].Item2).Min();
-                double elevation_Max = panels_Space.ConvertAll(x => dictionary_Panels[x].Item3).Max();
+                double elevation_Level = panels_Space.ConvertAll(x => dictionary_Panels[x].Item2).Min();
+                double elevation_Min = panels_Space.ConvertAll(x => dictionary_Panels[x].Item3).Min();
+                double elevation_Max = panels_Space.ConvertAll(x => dictionary_Panels[x].Item4).Max();
                 BuildingStorey buildingStorey = null;
                 foreach (KeyValuePair<BuildingStorey, double> keyValuePair in dictionary_buildingStoreys)
                 {
-                    if (keyValuePair.Value.Equals(elevation_Min))
+                    if (keyValuePair.Value.Equals(elevation_Level))
                     {
                         buildingStorey = keyValuePair.Key;
                         break;
@@ -74,8 +78,8 @@ namespace SAM.Analytical.gbXML
                 if (buildingStorey == null)
                     continue;
 
-                List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor);
-                panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Core.Tolerance.MacroDistance, false, false, Core.Tolerance.MacroDistance);
+                List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
+                panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
                 if (panels_PlanarGeometry == null || panels_PlanarGeometry.Count == 0)
                     continue;
 
