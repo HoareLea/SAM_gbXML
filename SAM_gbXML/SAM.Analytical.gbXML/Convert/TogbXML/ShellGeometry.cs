@@ -11,7 +11,7 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             ShellGeometry shellGeometry = new ShellGeometry();
-            shellGeometry.id = Core.gbXML.Query.Id(space, typeof(ShellGeometry)); ;
+            shellGeometry.id = Core.gbXML.Query.Id(space, typeof(ShellGeometry));
             shellGeometry.unit = lengthUnitEnum.Meters;
             shellGeometry.ClosedShell = panels.TogbXML(tolerance);
 

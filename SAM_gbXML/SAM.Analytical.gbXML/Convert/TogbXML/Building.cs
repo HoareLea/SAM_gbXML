@@ -11,7 +11,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.MicroDistance)
+        public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
             List<Panel> panels = adjacencyCluster?.GetPanels();
             if (panels == null || panels.Count == 0)
@@ -112,7 +112,7 @@ namespace SAM.Analytical.gbXML
                     SpaceBoundary spaceBoundary = null;
                     if(!dictionary.TryGetValue(panel.Guid, out spaceBoundary))
                     {
-                        spaceBoundary = panel.TogbXML_SpaceBoundary(Analytical.Query.ExternalVector3D(adjacencyCluster, space, panel, silverSpacing, tolerance), tolerance);
+                        spaceBoundary = panel.TogbXML_SpaceBoundary(tolerance);
                         dictionary[panel.Guid] = spaceBoundary;
                     }
 
@@ -125,7 +125,7 @@ namespace SAM.Analytical.gbXML
                 space_gbXML.spacevol = new Volume() { val = volume.ToString() };
                 space_gbXML.buildingStoreyIdRef = buildingStorey.id;
                 space_gbXML.cadid = new CADObjectId() { id = space.Guid.ToString() };
-                space_gbXML.PlanarGeo = face3D.TogbXML(null, tolerance);
+                space_gbXML.PlanarGeo = face3D.TogbXML(tolerance);
                 space_gbXML.id = Core.gbXML.Query.Id(space, typeof(gbXMLSerializer.Space));
                 space_gbXML.spbound = spaceBoundaries.ToArray();
                 space_gbXML.ShellGeo = panels_Space.TogbXML(space, tolerance);

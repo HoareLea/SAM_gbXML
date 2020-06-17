@@ -6,7 +6,7 @@ namespace SAM.Geometry.gbXML
 {
     public static partial class Convert
     {
-        public static PolyLoop TogbXML_PolyLoop(this IClosedPlanar3D closedPlanar3D, Vector3D normal = null, double tolerance = Core.Tolerance.MicroDistance)
+        public static PolyLoop TogbXML_PolyLoop(this IClosedPlanar3D closedPlanar3D, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (closedPlanar3D == null)
                 return null;
@@ -27,17 +27,14 @@ namespace SAM.Geometry.gbXML
                 //if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
                 //    point3Ds.Reverse();
             }
-                
+
             if (point3Ds == null)
                 throw new System.NotImplementedException();
 
-            if (normal != null)
-            {
-                Plane plane = Spatial.Create.Plane(point3Ds, tolerance);
-                if (!plane.Normal.SameHalf(normal.Unit))
-                    point3Ds.Reverse();
-            }
-                
+            Plane plane = Spatial.Create.Plane(point3Ds, tolerance);
+            if (!plane.Normal.SameHalf(closedPlanar3D.GetPlane().Normal))
+                point3Ds.Reverse();
+
 
             PolyLoop polyLoop = new PolyLoop();
             polyLoop.Points = point3Ds.ConvertAll(x => x.TogbXML(tolerance)).ToArray();
