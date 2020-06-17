@@ -18,8 +18,8 @@ namespace SAM.Geometry.gbXML
             if (closedPlanar3D is Face3D)
                 closedPlanar3D_Temp = ((Face3D)closedPlanar3D).GetExternalEdge();
 
-            if (!Spatial.Query.Clockwise(closedPlanar3D_Temp))
-                normal.Negate();
+            //if (!Spatial.Query.Clockwise(closedPlanar3D_Temp))
+            //    normal.Negate();
 
             return normal.Angle(Plane.WorldXY.Normal) * (180 / Math.PI);
         }
