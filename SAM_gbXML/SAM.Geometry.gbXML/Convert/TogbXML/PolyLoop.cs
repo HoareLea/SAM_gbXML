@@ -24,8 +24,8 @@ namespace SAM.Geometry.gbXML
             {
                 point3Ds = ((ISegmentable3D)closedPlanar3D_Temp).GetPoints();
 
-                if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
-                    point3Ds.Reverse();
+                //if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
+                //    point3Ds.Reverse();
             }
                 
             if (point3Ds == null)
