@@ -15,7 +15,7 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             PlanarGeometry planarGeometry = new PlanarGeometry();
-            planarGeometry.PolyLoop = face3D.TogbXML_PolyLoop(tolerance);
+            planarGeometry.PolyLoop = face3D.TogbXML_PolyLoop(null, tolerance);
             
             return planarGeometry;
         }

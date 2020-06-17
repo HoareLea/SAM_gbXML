@@ -5,7 +5,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static gbXMLSerializer.gbXML TogbXML(this AnalyticalModel analyticalModel, double tolerance = Core.Tolerance.MicroDistance)
+        public static gbXMLSerializer.gbXML TogbXML(this AnalyticalModel analyticalModel, double silverSpacing = Core.Tolerance.MacroDistance, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (analyticalModel == null)
                 return null;
@@ -57,7 +57,7 @@ namespace SAM.Analytical.gbXML
             gbXML.areaUnit = areaUnitEnum.SquareMeters;
             gbXML.volumeUnit = volumeUnitEnum.CubicMeters;
             gbXML.version = versionEnum.FiveOneOne;
-            gbXML.Campus = analyticalModel.TogbXML_Campus(tolerance);
+            gbXML.Campus = analyticalModel.TogbXML_Campus(silverSpacing, tolerance);
             gbXML.Constructions = constructions_gbXML.ToArray();
             gbXML.DocumentHistory = Core.gbXML.Query.DocumentHistory(analyticalModel.Guid);
 
