@@ -73,42 +73,46 @@ namespace SAM.Analytical.gbXML
 
             ApertureConstruction apertureConstruction = aperture.ApertureConstruction;
 
-            string name = aperture.Name;
-            if (string.IsNullOrWhiteSpace(name) && apertureConstruction != null)
-                name = apertureConstruction.Name;
+            ApertureType apertureType = ApertureType.Undefined;
+            if(apertureConstruction != null)
+                apertureType = apertureConstruction.ApertureType;
 
-            if (string.IsNullOrWhiteSpace(name))
-                return null;
+            string name = null;
+
+            switch (apertureType)
+            {
+                case ApertureType.Window:
+                    name = "Window";
+                    break;
+                case ApertureType.Door:
+                    name = "Door";
+                    break;
+                case ApertureType.Undefined:
+                    name = "Undefined";
+                    break;
+            }
+
+            name += ":";
+
+            string apertureName = aperture.Name;
+            if (string.IsNullOrWhiteSpace(apertureName) && apertureConstruction != null)
+                apertureName = apertureConstruction.Name;
+
+            if (string.IsNullOrWhiteSpace(apertureName))
+                apertureName = "Default";
+
+            name += string.Format(" {0}", apertureName);
+
+            if (cADObjectIdSufix != -1)
+                name += string.Format(" [{0}]", cADObjectIdSufix);
+
+            if (name.EndsWith(":"))
+                name = name.Substring(0, name.Length - 1);
 
             CADObjectId cADObjectId = new CADObjectId();
-            if (cADObjectIdSufix == -1)
-                cADObjectId.id = string.Format("{0}", name);
-            else
-                cADObjectId.id = string.Format("{0} [{1}]", name, cADObjectIdSufix);
+            cADObjectId.id = name;
 
             return cADObjectId;
-
-            //string prefix = null;
-            //if(apertureConstruction != null)
-            //{
-            //    switch (aperture.ApertureConstruction.ApertureType)
-            //    {
-            //        case ApertureType.Window:
-            //            prefix = "Window";
-            //            break;
-            //        case ApertureType.Door:
-            //            prefix = "Door";
-            //            break;
-            //    }
-            //}
-
-            //CADObjectId cADObjectId = new CADObjectId();
-            //if (cADObjectIdSufix == -1)
-            //    cADObjectId.id = string.Format("{0}: {1}", prefix, name);
-            //else
-            //    cADObjectId.id = string.Format("{0}: {1} [{2}]", prefix, name, cADObjectIdSufix);
-
-            //return cADObjectId;
         }
     }
 }
