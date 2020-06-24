@@ -39,6 +39,7 @@ namespace SAM.Geometry.Grasshopper
         {
             inputParamManager.AddParameter(new GooAnalyticalModelParam(), "_analyticalModel", "_analyticalModel", "AnalyticalModel", GH_ParamAccess.item);
             inputParamManager.AddTextParameter("_path", "_path", "File Path", GH_ParamAccess.item);
+            inputParamManager.AddNumberParameter("_tolerance_", "_tolerance_", "Tolerance", GH_ParamAccess.item, 0.00001);
             inputParamManager.AddBooleanParameter("_run_", "_run_", "Run", GH_ParamAccess.item, false);
         }
 
@@ -60,7 +61,7 @@ namespace SAM.Geometry.Grasshopper
         protected override void SolveInstance(IGH_DataAccess dataAccess)
         {
             bool run = false;
-            if (!dataAccess.GetData(2, ref run))
+            if (!dataAccess.GetData(3, ref run))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
                 dataAccess.SetData(1, false);
@@ -85,7 +86,15 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            gbXML gbXML = analyticalModel.TogbXML(Core.Tolerance.Distance);
+            double tolerance = 0.00001;
+            if (!dataAccess.GetData(2, ref tolerance) || double.IsNaN(tolerance))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
+                dataAccess.SetData(1, false);
+                return;
+            }
+
+            gbXML gbXML = analyticalModel.TogbXML(tolerance);
             string result = BasicSerialization.CreateXML(path, gbXML);
 
             dataAccess.SetDataList(0, result);
