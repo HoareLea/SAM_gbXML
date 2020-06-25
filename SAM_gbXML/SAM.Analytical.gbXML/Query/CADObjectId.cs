@@ -98,10 +98,15 @@ namespace SAM.Analytical.gbXML
             if (string.IsNullOrWhiteSpace(apertureName) && apertureConstruction != null)
                 apertureName = apertureConstruction.Name;
 
+            if (!string.IsNullOrWhiteSpace(apertureName) && apertureName.Contains(":"))
+                name = string.Empty;
+
             if (string.IsNullOrWhiteSpace(apertureName))
                 apertureName = "Default";
 
             name += string.Format(" {0}", apertureName);
+
+            name = name.Trim();
 
             if (cADObjectIdSufix != -1)
                 name += string.Format(" [{0}]", cADObjectIdSufix);
