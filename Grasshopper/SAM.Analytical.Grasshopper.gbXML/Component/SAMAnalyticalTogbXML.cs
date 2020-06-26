@@ -94,7 +94,7 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            gbXML gbXML = analyticalModel.TogbXML(tolerance);
+            gbXML gbXML = analyticalModel.TogbXML(Core.Tolerance.MacroDistance, tolerance);
             string result = BasicSerialization.CreateXML(path, gbXML);
 
             dataAccess.SetDataList(0, result);

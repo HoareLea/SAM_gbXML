@@ -14,7 +14,7 @@ namespace SAM.Analytical.gbXML
             List<PolyLoop> polyLoops = new List<PolyLoop>();
             foreach(Panel panel in panels)
             {
-                PolyLoop polyLoop = panel?.GetFace3D()?.TogbXML_PolyLoop(tolerance);
+                PolyLoop polyLoop = panel?.GetFace3D(false, tolerance)?.TogbXML_PolyLoop(tolerance);
                 if (polyLoop != null)
                     polyLoops.Add(polyLoop);
             }

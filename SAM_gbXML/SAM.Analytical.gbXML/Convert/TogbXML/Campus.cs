@@ -5,7 +5,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Campus TogbXML_Campus(this AnalyticalModel analyticalModel, double tolerance = Core.Tolerance.MicroDistance)
+        public static Campus TogbXML_Campus(this AnalyticalModel analyticalModel, double silverSpacing = Core.Tolerance.MacroDistance, double tolerance = Core.Tolerance.Distance)
         {
             if (analyticalModel == null)
                 return null;
@@ -18,6 +18,7 @@ namespace SAM.Analytical.gbXML
             if(adjacencyCluster != null)
             {
                 adjacencyCluster = adjacencyCluster.SplitByInternalEdges(tolerance);
+                adjacencyCluster = adjacencyCluster.UpdateNormals(silverSpacing, tolerance);
                 
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(analyticalModel.Name, analyticalModel.Description, tolerance) };
                 List<Panel> panels = adjacencyCluster.GetPanels();
