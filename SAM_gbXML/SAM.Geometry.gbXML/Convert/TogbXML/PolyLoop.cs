@@ -21,19 +21,17 @@ namespace SAM.Geometry.gbXML
                 closedPlanar3D_Temp = closedPlanar3D;
 
             if (closedPlanar3D_Temp is ISegmentable3D)
-            {
                 point3Ds = ((ISegmentable3D)closedPlanar3D_Temp).GetPoints();
-
-                //if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
-                //    point3Ds.Reverse();
-            }
 
             if (point3Ds == null)
                 throw new System.NotImplementedException();
 
-            Plane plane = Spatial.Create.Plane(point3Ds, tolerance);
-            if (!plane.Normal.SameHalf(closedPlanar3D.GetPlane().Normal))
+            if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
                 point3Ds.Reverse();
+
+            //Plane plane = Spatial.Create.Plane(point3Ds, tolerance);
+            //if (!plane.Normal.SameHalf(closedPlanar3D.GetPlane().Normal))
+            //    point3Ds.Reverse();
 
 
             PolyLoop polyLoop = new PolyLoop();
