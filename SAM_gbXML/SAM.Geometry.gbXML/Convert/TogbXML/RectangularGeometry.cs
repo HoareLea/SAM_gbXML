@@ -25,11 +25,11 @@ namespace SAM.Geometry.gbXML
             }
 
             RectangularGeometry rectangularGeometry = new RectangularGeometry();
-            rectangularGeometry.Azimuth = Query.Azimuth(closedPlanar3D, Vector3D.WorldY).ToString();
+            rectangularGeometry.Azimuth = Spatial.Query.Azimuth(closedPlanar3D, Vector3D.WorldY).ToString();
             rectangularGeometry.Width = width.ToString();
             rectangularGeometry.Height = height.ToString();
             rectangularGeometry.CartesianPoint = plane.Convert(boundingBox2D.Min).TogbXML(tolerance);
-            rectangularGeometry.Tilt = Query.Tilt(closedPlanar3D).ToString();
+            rectangularGeometry.Tilt = Spatial.Query.Tilt(closedPlanar3D).ToString();
             return rectangularGeometry;
         }
 
