@@ -84,7 +84,7 @@ namespace SAM.Analytical.gbXML
                 if (buildingStorey == null)
                     continue;
 
-                List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
+                List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ().GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
                 panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
                 if (panels_PlanarGeometry == null || panels_PlanarGeometry.Count == 0)
                     continue;
