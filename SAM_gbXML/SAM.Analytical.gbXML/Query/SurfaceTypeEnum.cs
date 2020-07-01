@@ -20,7 +20,7 @@ namespace SAM.Analytical.gbXML
                 case PanelType.Floor:
                     return surfaceTypeEnum.SlabOnGrade;
                 case PanelType.FloorExposed:
-                    return surfaceTypeEnum.SlabOnGrade;
+                    return surfaceTypeEnum.ExposedFloor;
                 case PanelType.FloorInternal:
                     return surfaceTypeEnum.InteriorFloor;
                 case PanelType.FloorRaised:
