@@ -11,7 +11,7 @@ namespace SAM.Analytical.gbXML
             if (panelType == PanelType.Undefined)
                 return surfaceTypeEnum.Air;
 
-            switch(panelType)
+            switch (panelType)
             {
                 case PanelType.Ceiling:
                     return surfaceTypeEnum.Ceiling;
@@ -36,7 +36,9 @@ namespace SAM.Analytical.gbXML
                 case PanelType.UndergroundCeiling:
                     return surfaceTypeEnum.UndergroundCeiling;
                 case PanelType.UndergroundSlab:
-                    return surfaceTypeEnum.UndergroundWall;
+                    return surfaceTypeEnum.UndergroundSlab;
+                case PanelType.UndergroundWall:
+                    return surfaceTypeEnum.UndergroundWall; ;
                 case PanelType.Wall:
                     return surfaceTypeEnum.ExteriorWall;
                 case PanelType.WallExternal:
