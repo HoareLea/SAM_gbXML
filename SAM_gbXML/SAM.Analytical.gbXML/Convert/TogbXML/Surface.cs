@@ -15,7 +15,12 @@ namespace SAM.Analytical.gbXML
                 return null;
             
             Surface surface = new Surface();
-            surface.Name = string.Format("{0} [{1}]", panel.Name, panel.Guid);
+
+            if(cADObjectIdSufix_Surface == -1)
+                surface.Name = string.Format("{0} [{1}]", panel.Name, panel.Guid);
+            else
+                surface.Name = string.Format("{0} [{1}]", panel.Name, cADObjectIdSufix_Surface);
+
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
             //surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
             surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix_Surface);
