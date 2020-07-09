@@ -21,30 +21,8 @@ namespace SAM.Analytical.gbXML
             if (spaces == null)
                 return null;
 
-            List<Panel> panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Floor);
-            
-            if(panels_Levels.Count == 0)
-                panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Wall && x.PanelType != PanelType.CurtainWall);
-            
-            if (panels_Levels.Count == 0)
-                panels_Levels = panels.FindAll(x => Analytical.Query.PanelGroup(x.PanelType) == PanelGroup.Wall);
-
-
             //Dictionary of Minimal Elevations and List of Panels
-            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels_Levels, Tolerance.MacroDistance);
-            List<double> elevations = dictionary_MinElevations.Keys.ToList();
-
-            foreach(Panel panel in panels)
-            {
-                if (panels_Levels.Contains(panel))
-                    continue;
-
-                double elevation = panel.MinElevation();
-                List<double> differences = elevations.ConvertAll(x => Math.Abs(x - elevation));
-
-                int index = differences.IndexOf(differences.Min());
-                dictionary_MinElevations.Values.ElementAt(index).Add(panel);
-            }
+            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
 
             //Dictionary of gbXML BuildingStoreys and its elevations
             Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new Dictionary<BuildingStorey, double>();
