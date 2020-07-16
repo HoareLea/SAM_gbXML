@@ -15,7 +15,7 @@ namespace SAM.Geometry.gbXML
 
             IClosedPlanar3D closedPlanar3D_Temp = null;
             if (closedPlanar3D is Face3D)
-                closedPlanar3D_Temp = ((Face3D)closedPlanar3D).GetExternalEdge();
+                closedPlanar3D_Temp = ((Face3D)closedPlanar3D).GetExternalEdge3D();
 
             if (closedPlanar3D_Temp == null)
                 closedPlanar3D_Temp = closedPlanar3D;
