@@ -71,7 +71,9 @@
     <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
     <Compile Include="Convert\TogbXML\Opening.cs" />
     <Compile Include="Convert\TogbXML\Surface.cs" />
+    <Compile Include="Modify\Rename.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\Spaces.cs" />
     <Compile Include="Query\CADObjectId.cs" />
     <Compile Include="Query\AdjacentSpaceId.cs" />
     <Compile Include="Query\OpeningTypeEnum.cs" />
@@ -81,7 +83,6 @@
     <Folder Include="Convert\ToSAM\" />
     <Folder Include="Create\" />
     <Folder Include="Manager\" />
-    <Folder Include="Modify\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj">
