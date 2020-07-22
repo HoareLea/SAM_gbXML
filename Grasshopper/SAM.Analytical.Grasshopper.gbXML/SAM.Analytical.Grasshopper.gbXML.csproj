@@ -131,6 +131,12 @@
   <ItemGroup>
     <None Include="Resources\SAM_gbXML.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_gbXML_in.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_gbXML_out.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
