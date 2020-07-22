@@ -26,7 +26,7 @@ namespace SAM.Geometry.gbXML
                 point3Ds.Add(point3D);
             }
 
-            return new Polygon3D(point3Ds);
+            return new Polygon3D(point3Ds, tolerance);
         }
 
         public static Polygon3D ToSAM(this PlanarGeometry planarGeometry, double tolerance = Tolerance.Distance)

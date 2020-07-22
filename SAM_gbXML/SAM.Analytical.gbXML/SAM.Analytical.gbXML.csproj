@@ -79,8 +79,10 @@
     <Compile Include="Convert\ToSAM\Space.cs" />
     <Compile Include="Convert\ToSAM\AnalyticalModel.cs" />
     <Compile Include="Create\AnalyticalModel.cs" />
+    <Compile Include="Modify\RenameSpaces.cs" />
     <Compile Include="Modify\Rename.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\Match.cs" />
     <Compile Include="Query\PanelType.cs" />
     <Compile Include="Query\ApertureType.cs" />
     <Compile Include="Query\Location.cs" />
