@@ -86,11 +86,9 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            throw new NotImplementedException();
+            Analytical.AnalyticalModel analyticalModel = Analytical.gbXML.Create.AnalyticalModel(path, tolerance);
 
-
-
-            //dataAccess.SetDataList(0, result);
+            dataAccess.SetData(0, new GooAnalyticalModel(analyticalModel));
             dataAccess.SetData(1, true);
 
             //AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Cannot split segments");
