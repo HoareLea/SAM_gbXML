@@ -8,42 +8,42 @@ namespace SAM.Analytical.gbXML
     {
         public static surfaceTypeEnum SurfaceTypeEnum(this PanelType panelType)
         {
-            if (panelType == PanelType.Undefined)
+            if (panelType == Analytical.PanelType.Undefined)
                 return surfaceTypeEnum.Air;
 
             switch (panelType)
             {
-                case PanelType.Ceiling:
+                case Analytical.PanelType.Ceiling:
                     return surfaceTypeEnum.Ceiling;
-                case PanelType.CurtainWall:
+                case Analytical.PanelType.CurtainWall:
                     return surfaceTypeEnum.ExteriorWall;
-                case PanelType.Floor:
+                case Analytical.PanelType.Floor:
                     return surfaceTypeEnum.SlabOnGrade;
-                case PanelType.FloorExposed:
+                case Analytical.PanelType.FloorExposed:
                     return surfaceTypeEnum.ExposedFloor;
-                case PanelType.FloorInternal:
+                case Analytical.PanelType.FloorInternal:
                     return surfaceTypeEnum.InteriorFloor;
-                case PanelType.FloorRaised:
+                case Analytical.PanelType.FloorRaised:
                     return surfaceTypeEnum.RaisedFloor;
-                case PanelType.Roof:
+                case Analytical.PanelType.Roof:
                     return surfaceTypeEnum.Roof;
-                case PanelType.Shade:
+                case Analytical.PanelType.Shade:
                     return surfaceTypeEnum.Shade;
-                case PanelType.SlabOnGrade:
+                case Analytical.PanelType.SlabOnGrade:
                     return surfaceTypeEnum.SlabOnGrade;
-                case PanelType.SolarPanel:
+                case Analytical.PanelType.SolarPanel:
                     return surfaceTypeEnum.Shade;
-                case PanelType.UndergroundCeiling:
+                case Analytical.PanelType.UndergroundCeiling:
                     return surfaceTypeEnum.UndergroundCeiling;
-                case PanelType.UndergroundSlab:
+                case Analytical.PanelType.UndergroundSlab:
                     return surfaceTypeEnum.UndergroundSlab;
-                case PanelType.UndergroundWall:
+                case Analytical.PanelType.UndergroundWall:
                     return surfaceTypeEnum.UndergroundWall; ;
-                case PanelType.Wall:
+                case Analytical.PanelType.Wall:
                     return surfaceTypeEnum.ExteriorWall;
-                case PanelType.WallExternal:
+                case Analytical.PanelType.WallExternal:
                     return surfaceTypeEnum.ExteriorWall;
-                case PanelType.WallInternal:
+                case Analytical.PanelType.WallInternal:
                     return surfaceTypeEnum.InteriorWall;
             }
 

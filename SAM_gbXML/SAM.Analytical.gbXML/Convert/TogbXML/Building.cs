@@ -1,5 +1,4 @@
 ﻿using gbXMLSerializer;
-using SAM.Architectural;
 using SAM.Core;
 using SAM.Geometry.gbXML;
 using SAM.Geometry.Spatial;

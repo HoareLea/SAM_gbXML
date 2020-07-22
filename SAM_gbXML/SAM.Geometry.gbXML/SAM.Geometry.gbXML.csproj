@@ -36,6 +36,9 @@
     <Reference Include="gbXMLSerializer">
       <HintPath>..\..\references\gbXMLSerializer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SAM.Core">
       <HintPath>..\..\..\SAM\build\SAM.Core.dll</HintPath>
     </Reference>
@@ -57,13 +60,18 @@
     <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
     <Compile Include="Convert\TogbXML\PlanarGeometry.cs" />
     <Compile Include="Convert\TogbXML\PolyLoop.cs" />
+    <Compile Include="Convert\ToSAM\Point3D.cs" />
+    <Compile Include="Convert\ToSAM\Polygon3D.cs" />
+    <Compile Include="Convert\ToSAM\Shell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Convert\ToSAM\" />
     <Folder Include="Create\" />
     <Folder Include="Manager\" />
     <Folder Include="Modify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

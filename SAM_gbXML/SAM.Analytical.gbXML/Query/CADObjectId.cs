@@ -12,33 +12,33 @@ namespace SAM.Analytical.gbXML
             string name = null;
             switch (panel.PanelType)
             {
-                case PanelType.Ceiling:
+                case Analytical.PanelType.Ceiling:
                     name = "Compound Ceiling";
                     break;
-                case PanelType.CurtainWall:
+                case Analytical.PanelType.CurtainWall:
                     name = "Curtain Wall";
                     break;
-                case PanelType.Floor:
-                case PanelType.FloorExposed:
-                case PanelType.FloorInternal:
-                case PanelType.FloorRaised:
-                case PanelType.SlabOnGrade:
-                case PanelType.UndergroundSlab:
-                case PanelType.UndergroundCeiling:
+                case Analytical.PanelType.Floor:
+                case Analytical.PanelType.FloorExposed:
+                case Analytical.PanelType.FloorInternal:
+                case Analytical.PanelType.FloorRaised:
+                case Analytical.PanelType.SlabOnGrade:
+                case Analytical.PanelType.UndergroundSlab:
+                case Analytical.PanelType.UndergroundCeiling:
                     name = "Floor";
                     break;
-                case PanelType.Roof:
-                case PanelType.Shade:
-                case PanelType.SolarPanel:
+                case Analytical.PanelType.Roof:
+                case Analytical.PanelType.Shade:
+                case Analytical.PanelType.SolarPanel:
                     name = "Basic Roof";
                     break;
-                case PanelType.UndergroundWall:
-                case PanelType.Wall:
-                case PanelType.WallExternal:
-                case PanelType.WallInternal:
+                case Analytical.PanelType.UndergroundWall:
+                case Analytical.PanelType.Wall:
+                case Analytical.PanelType.WallExternal:
+                case Analytical.PanelType.WallInternal:
                     name = "Basic Wall";
                     break;
-                case PanelType.Air:
+                case Analytical.PanelType.Air:
                     name = "Air";
                     break;
                 default:
@@ -73,7 +73,7 @@ namespace SAM.Analytical.gbXML
 
             ApertureConstruction apertureConstruction = aperture.ApertureConstruction;
 
-            ApertureType apertureType = ApertureType.Undefined;
+            ApertureType apertureType = Analytical.ApertureType.Undefined;
             if(apertureConstruction != null)
                 apertureType = apertureConstruction.ApertureType;
 
@@ -81,13 +81,13 @@ namespace SAM.Analytical.gbXML
 
             switch (apertureType)
             {
-                case ApertureType.Window:
+                case Analytical.ApertureType.Window:
                     name = "Window";
                     break;
-                case ApertureType.Door:
+                case Analytical.ApertureType.Door:
                     name = "Door";
                     break;
-                case ApertureType.Undefined:
+                case Analytical.ApertureType.Undefined:
                     name = "Undefined";
                     break;
             }

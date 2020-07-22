@@ -6,14 +6,14 @@ namespace SAM.Analytical.gbXML
     {
         public static openingTypeEnum OpeningTypeEnum(this ApertureType apertureType)
         {
-            if (apertureType == ApertureType.Undefined)
+            if (apertureType == Analytical.ApertureType.Undefined)
                 return openingTypeEnum.Air;
 
             switch(apertureType)
             {
-                case ApertureType.Door:
+                case Analytical.ApertureType.Door:
                     return openingTypeEnum.NonSlidingDoor;
-                case ApertureType.Window:
+                case Analytical.ApertureType.Window:
                     return openingTypeEnum.OperableWindow;
             }
 
