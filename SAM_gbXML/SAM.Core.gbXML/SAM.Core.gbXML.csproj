@@ -53,6 +53,7 @@
     <Compile Include="Convert\TogbXML\Location.cs" />
     <Compile Include="Convert\ToSAM\Location.cs" />
     <Compile Include="Convert\ToSAM\Address.cs" />
+    <Compile Include="Convert\ToString\String.cs" />
     <Compile Include="Create\gbXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\PersonInfo.cs" />

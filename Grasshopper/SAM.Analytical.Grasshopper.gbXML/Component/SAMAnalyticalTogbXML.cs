@@ -48,7 +48,7 @@ namespace SAM.Geometry.Grasshopper
         /// </summary>
         protected override void RegisterOutputParams(GH_OutputParamManager outputParamManager)
         {
-            outputParamManager.AddGenericParameter("gbXML", "gbXML", "gbXML", GH_ParamAccess.item);
+            outputParamManager.AddGenericParameter("String", "String", "String", GH_ParamAccess.item);
             outputParamManager.AddBooleanParameter("Successful", "Successful", "Correctly imported?", GH_ParamAccess.item);
         }
 
@@ -95,12 +95,16 @@ namespace SAM.Geometry.Grasshopper
             }
 
             gbXML gbXML = analyticalModel.TogbXML(Core.Tolerance.MacroDistance, tolerance);
-            string result = BasicSerialization.CreateXML(path, gbXML);
+            if(gbXML == null)
+            {
+                dataAccess.SetData(0, null);
+                dataAccess.SetData(1, false);
+            }
 
-            dataAccess.SetDataList(0, result);
-            dataAccess.SetData(1, true);
+            bool result = Core.gbXML.Create.gbXML(gbXML, path);
 
-            //AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Cannot split segments");
+            dataAccess.SetData(0, Core.gbXML.Convert.ToString(gbXML));
+            dataAccess.SetData(1, result);
         }
     }
 }

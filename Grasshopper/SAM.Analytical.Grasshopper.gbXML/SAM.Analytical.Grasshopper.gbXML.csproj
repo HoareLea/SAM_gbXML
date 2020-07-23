@@ -115,6 +115,10 @@
       <Project>{57fdd311-8237-4b83-9824-927d0140c2a9}</Project>
       <Name>SAM.Analytical.gbXML</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SAM_gbXML\SAM.Core.gbXML\SAM.Core.gbXML.csproj">
+      <Project>{bba608a4-615b-4824-8e53-f8232be703ec}</Project>
+      <Name>SAM.Core.gbXML</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
