@@ -26,7 +26,7 @@ namespace SAM.Geometry.gbXML
             if (point3Ds == null)
                 throw new System.NotImplementedException();
 
-            if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, tolerance))
+            if (!Spatial.Query.Clockwise(closedPlanar3D_Temp, null, tolerance))
                 point3Ds.Reverse();
 
             //Plane plane = Spatial.Create.Plane(point3Ds, tolerance);
