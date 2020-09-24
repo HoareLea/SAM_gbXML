@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SAM.Geometry.Grasshopper
 {
-    public class SAMAnalyticalTogbXML : GH_SAMComponent
+    public class TogbXML : GH_SAMComponent
     {
         /// <summary>
         /// Gets the unique ID for this component. Do not change this ID after release.
@@ -25,9 +25,9 @@ namespace SAM.Geometry.Grasshopper
         /// <summary>
         /// Initializes a new instance of the SAM_point3D class.
         /// </summary>
-        public SAMAnalyticalTogbXML()
-          : base("SAMAnalytical.TogbXML", "SAMAnalytical.TogbXML",
-              "SAMAnalytical To gbXML",
+        public TogbXML()
+          : base("TogbXML", "TogbXML",
+              "SAMAnalytical Model To gbXML",
               "SAM", "gbXML")
         {
         }
@@ -38,7 +38,7 @@ namespace SAM.Geometry.Grasshopper
         protected override void RegisterInputParams(GH_InputParamManager inputParamManager)
         {
             inputParamManager.AddParameter(new GooAnalyticalModelParam(), "_analyticalModel", "_analyticalModel", "AnalyticalModel", GH_ParamAccess.item);
-            inputParamManager.AddTextParameter("_path", "_path", "File Path", GH_ParamAccess.item);
+            inputParamManager.AddTextParameter("_path", "_path", "File Path with extension .xml", GH_ParamAccess.item);
             inputParamManager.AddNumberParameter("_tolerance_", "_tolerance_", "Tolerance", GH_ParamAccess.item, 0.00001);
             inputParamManager.AddBooleanParameter("_run_", "_run_", "Run", GH_ParamAccess.item, false);
         }
