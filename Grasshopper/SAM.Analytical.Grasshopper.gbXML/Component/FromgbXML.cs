@@ -11,7 +11,7 @@ using System.IO;
 
 namespace SAM.Geometry.Grasshopper
 {
-    public class gbXMLSAMAnalytical : GH_SAMComponent
+    public class FromgbXML : GH_SAMComponent
     {
         /// <summary>
         /// Gets the unique ID for this component. Do not change this ID after release.
@@ -26,9 +26,9 @@ namespace SAM.Geometry.Grasshopper
         /// <summary>
         /// Initializes a new instance of the SAM_point3D class.
         /// </summary>
-        public gbXMLSAMAnalytical()
-          : base("gbXML.SAMAnalytical", "gbXML.SAMAnalytical",
-              "gbXML To SAM Analytical",
+        public FromgbXML()
+          : base("FromgbXML", "FromgbXML",
+              "From gbXML file To SAM Analytical Model",
               "SAM", "gbXML")
         {
         }

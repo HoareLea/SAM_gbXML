@@ -96,7 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component\gbXMLSAMAnalytical.cs" />
+    <Compile Include="Component\FromgbXML.cs" />
     <Compile Include="Component\TogbXML.cs" />
     <Compile Include="Kernel\AssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
