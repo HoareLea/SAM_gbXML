@@ -1,12 +1,10 @@
 ﻿using gbXMLSerializer;
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
 using SAM.Analytical.gbXML;
 using SAM.Analytical.Grasshopper;
 using SAM.Analytical.Grasshopper.gbXML.Properties;
 using SAM.Core.Grasshopper;
 using System;
-using System.Collections.Generic;
 
 namespace SAM.Geometry.Grasshopper
 {
@@ -16,6 +14,11 @@ namespace SAM.Geometry.Grasshopper
         /// Gets the unique ID for this component. Do not change this ID after release.
         /// </summary>
         public override Guid ComponentGuid => new Guid("0928ad5f-eae6-4bb5-b098-b40a627e4e75");
+
+        /// <summary>
+        /// The latest version of this component
+        /// </summary>
+        public override string LatestComponentVersion => "1.0.0";
 
         /// <summary>
         /// Provides an Icon for the component.
