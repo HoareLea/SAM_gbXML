@@ -1,5 +1,6 @@
 ﻿using gbXMLSerializer;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SAM.Analytical.gbXML
 {
@@ -33,6 +34,15 @@ namespace SAM.Analytical.gbXML
                             continue;
 
                         List<Space> spaces = adjacencyCluster.GetRelatedObjects<Space>(panel);
+                        if(spaces != null && spaces.Count > 1)
+                        {
+                            //Spaces have to be in correct order!
+                            //https://www.gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link7
+
+                            SortedDictionary<int, Space> sortedDictionary = new SortedDictionary<int, Space>();
+                            spaces.ForEach(x => sortedDictionary[adjacencyCluster.GetIndex(x)] = x);
+                            spaces = sortedDictionary.Values.ToList();
+                        }
 
                         Surface surface = panel.TogbXML(spaces, i + 1, count_opening, tolerance);
                         if (surface != null)
