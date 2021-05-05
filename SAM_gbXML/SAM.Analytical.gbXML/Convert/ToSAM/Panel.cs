@@ -17,7 +17,7 @@ namespace SAM.Analytical.gbXML
             if (polygon3D == null)
                 return null;
 
-            return new Panel(null, PanelType.Undefined, new Face3D(polygon3D));
+            return Analytical.Create.Panel(null, PanelType.Undefined, new Face3D(polygon3D));
         }
 
         public static Panel ToSAM(this gbXMLSerializer.Surface surface, double tolerance = Tolerance.MicroDistance)
@@ -33,7 +33,7 @@ namespace SAM.Analytical.gbXML
 
             Construction construction = new Construction(surface.Name);
 
-            Panel result = new Panel(construction, panelType, new Face3D(polygon3D));
+            Panel result = Analytical.Create.Panel(construction, panelType, new Face3D(polygon3D));
 
             Opening[] openings = surface.Opening;
             if(openings != null)
