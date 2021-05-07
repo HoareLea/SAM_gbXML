@@ -2,13 +2,12 @@
 using SAM.Core;
 using SAM.Geometry.gbXML;
 using SAM.Geometry.Spatial;
-using System.Collections.Generic;
 
 namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Panel ToSAM(this gbXMLSerializer.SpaceBoundary spaceBoundary, double tolerance = Tolerance.MicroDistance)
+        public static Panel ToSAM(this SpaceBoundary spaceBoundary, double tolerance = Tolerance.MicroDistance)
         {
             if (spaceBoundary == null)
                 return null;
