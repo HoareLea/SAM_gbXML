@@ -1,13 +1,8 @@
-﻿using gbXMLSerializer;
-using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using SAM.Analytical.gbXML;
+﻿using Grasshopper.Kernel;
 using SAM.Analytical.Grasshopper;
 using SAM.Analytical.Grasshopper.gbXML.Properties;
 using SAM.Core.Grasshopper;
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace SAM.Geometry.Grasshopper
 {

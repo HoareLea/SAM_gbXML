@@ -1,5 +1,4 @@
 ﻿using gbXMLSerializer;
-using SAM.Analytical;
 
 namespace SAM.Analytical.gbXML
 {

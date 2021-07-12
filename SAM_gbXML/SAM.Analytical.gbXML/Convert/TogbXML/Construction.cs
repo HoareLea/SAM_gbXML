@@ -1,8 +1,4 @@
-﻿using gbXMLSerializer;
-using SAM.Geometry.gbXML;
-using System.Collections.Generic;
-
-namespace SAM.Analytical.gbXML
+﻿namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {

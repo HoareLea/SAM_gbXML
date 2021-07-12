@@ -1,6 +1,4 @@
-﻿using gbXMLSerializer;
-
-namespace SAM.Core.gbXML
+﻿namespace SAM.Core.gbXML
 {
     public static partial class Convert
     {

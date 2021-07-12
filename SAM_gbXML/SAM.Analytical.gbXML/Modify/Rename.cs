@@ -1,6 +1,4 @@
-﻿using gbXMLSerializer;
-
-namespace SAM.Analytical.gbXML
+﻿namespace SAM.Analytical.gbXML
 {
     public static partial class Modify
     {
