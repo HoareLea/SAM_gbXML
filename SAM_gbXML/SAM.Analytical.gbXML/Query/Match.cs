@@ -16,7 +16,7 @@ namespace SAM.Analytical.gbXML
             foreach(Space space_SAM in spaces)
             {
                 int elementId = -1;
-                if (!space_SAM.TryGetValue<int>("ElementId", out elementId))
+                if (!space_SAM.TryGetValue("ElementId", out elementId))
                     continue;
 
                 if (elementId == -1)
