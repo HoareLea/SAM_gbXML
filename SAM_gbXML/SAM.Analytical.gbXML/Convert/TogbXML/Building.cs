@@ -61,14 +61,38 @@ namespace SAM.Analytical.gbXML
                 if (buildingStorey == null)
                     continue;
 
-                List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
-                panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
-                if (panels_PlanarGeometry == null || panels_PlanarGeometry.Count == 0)
+                List<Face3D> face3Ds = null;
+
+                Shell shell = adjacencyCluster.Shell(space);
+                if(shell != null)
+                {
+                    face3Ds = shell.Section(Tolerance.MacroDistance, false, Tolerance.Angle, tolerance, Tolerance.MacroDistance);
+                    face3Ds?.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                    face3Ds = face3Ds.ConvertAll(x => x.GetMoved(new Vector3D(0, 0, - Tolerance.MacroDistance)) as Face3D);
+                }
+
+                if(face3Ds == null || face3Ds.Count == 0)
+                {
+                    List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
+                    panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
+                    if (panels_PlanarGeometry != null || panels_PlanarGeometry.Count != 0)
+                    {
+                        face3Ds = panels_PlanarGeometry.ConvertAll(x => x.GetFace3D());
+                        face3Ds?.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                    }
+                }
+
+                if (face3Ds == null || face3Ds.Count == 0)
+                {
                     continue;
+                }
 
-                panels_PlanarGeometry.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
+                if(face3Ds.Count > 1)
+                {
+                    face3Ds.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
+                }
 
-                Face3D face3D = panels_PlanarGeometry.First().PlanarBoundary3D?.GetFace3D();
+                Face3D face3D = face3Ds[0];
                 if (face3D == null)
                     continue;
 
