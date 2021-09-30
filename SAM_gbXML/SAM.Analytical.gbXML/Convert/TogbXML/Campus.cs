@@ -18,7 +18,7 @@ namespace SAM.Analytical.gbXML
             AdjacencyCluster adjacencyCluster = analyticalModel.AdjacencyCluster;
             if(adjacencyCluster != null)
             {
-                adjacencyCluster = adjacencyCluster.Triangulate(true, false, true, tolerance);
+                adjacencyCluster = adjacencyCluster.SplitByInternalEdges(tolerance);
                 adjacencyCluster = adjacencyCluster.UpdateNormals(false, silverSpacing, tolerance);
                 adjacencyCluster = adjacencyCluster.FixEdges(tolerance);
                 
