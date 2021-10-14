@@ -7,7 +7,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static AnalyticalModel ToSAM(this gbXMLSerializer.gbXML gbXML, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.MicroDistance)
+        public static AnalyticalModel ToSAM(this gbXMLSerializer.gbXML gbXML, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             if (gbXML == null)
                 return null;
@@ -15,7 +15,7 @@ namespace SAM.Analytical.gbXML
             return ToSAM(gbXML.Campus, silverSpacing, tolerance);
         }
 
-        public static AnalyticalModel ToSAM(this Campus campus, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.MicroDistance)
+        public static AnalyticalModel ToSAM(this Campus campus, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             Address address = campus.Location.ToSAM_Address();
             Core.Location location = campus.Location.ToSAM(tolerance);

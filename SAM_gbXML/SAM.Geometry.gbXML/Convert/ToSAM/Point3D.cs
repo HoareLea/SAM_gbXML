@@ -1,12 +1,11 @@
 ﻿using gbXMLSerializer;
-using SAM.Core;
 using SAM.Geometry.Spatial;
 
 namespace SAM.Geometry.gbXML
 {
     public static partial class Convert
     {
-        public static Point3D ToSAM(this CartesianPoint cartesianPoint, double tolerance = Tolerance.Distance)
+        public static Point3D ToSAM(this CartesianPoint cartesianPoint)
         {
             if (cartesianPoint == null)
                 return null;
@@ -23,7 +22,7 @@ namespace SAM.Geometry.gbXML
             if (!double.TryParse(cartesianPoint.Coordinate[2], out z))
                 return null;
 
-            return new Point3D(Core.Query.Round(x), Core.Query.Round(y), Core.Query.Round(z));
+            return new Point3D(x, y, z);
         }
 
     }

@@ -7,19 +7,19 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Panel ToSAM(this SpaceBoundary spaceBoundary, double tolerance = Tolerance.MicroDistance)
+        public static Panel ToSAM(this SpaceBoundary spaceBoundary, double tolerance = Tolerance.Distance)
         {
             if (spaceBoundary == null)
                 return null;
 
-            Polygon3D polygon3D = spaceBoundary.PlanarGeometry.ToSAM();
+            Polygon3D polygon3D = spaceBoundary.PlanarGeometry.ToSAM(tolerance);
             if (polygon3D == null)
                 return null;
 
             return Analytical.Create.Panel(null, PanelType.Undefined, new Face3D(polygon3D));
         }
 
-        public static Panel ToSAM(this gbXMLSerializer.Surface surface, double tolerance = Tolerance.MicroDistance)
+        public static Panel ToSAM(this gbXMLSerializer.Surface surface, double tolerance = Tolerance.Distance)
         {
             if (surface == null)
                 return null;
