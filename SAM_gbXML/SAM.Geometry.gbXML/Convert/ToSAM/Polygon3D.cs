@@ -27,8 +27,6 @@ namespace SAM.Geometry.gbXML
                 point3Ds.Add(point3D);
             }
 
-
-            //TODO: Assumption: All the points are cooplanar
             Point3D origin = point3Ds.Average();
             Vector3D normal = new Vector3D();
             for (int i = 0; i < point3Ds.Count - 1; i++)
