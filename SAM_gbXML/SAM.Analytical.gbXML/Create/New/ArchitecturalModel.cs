@@ -19,9 +19,7 @@ namespace SAM.Analytical.gbXML
             if (gbXML == null)
                 return null;
 
-            //return gbXML.ToSAM(tolerance);
-
-            throw new System.NotImplementedException();
+            return gbXML.ToSAM_ArchitecturalModel(tolerance);
         }
     }
 }

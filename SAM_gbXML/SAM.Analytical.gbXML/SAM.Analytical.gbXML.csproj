@@ -77,6 +77,7 @@
     <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
     <Compile Include="Convert\TogbXML\Opening.cs" />
     <Compile Include="Convert\TogbXML\Surface.cs" />
+    <Compile Include="Convert\ToSAM\New\ArchitecturalModel.cs" />
     <Compile Include="Convert\ToSAM\New\Opening.cs" />
     <Compile Include="Convert\ToSAM\New\Partition.cs" />
     <Compile Include="Convert\ToSAM\Panel.cs" />
