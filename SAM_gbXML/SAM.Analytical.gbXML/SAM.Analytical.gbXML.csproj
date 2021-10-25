@@ -92,7 +92,6 @@
     <Compile Include="Query\Match.cs" />
     <Compile Include="Query\New\OpeningTypeEnum.cs" />
     <Compile Include="Query\New\SurfaceTypeEnum.cs" />
-    <Compile Include="Query\New\UniqueIndex.cs" />
     <Compile Include="Query\New\CADObjectId.cs" />
     <Compile Include="Query\PanelType.cs" />
     <Compile Include="Query\ApertureType.cs" />
