@@ -33,5 +33,9 @@ namespace SAM.Geometry.gbXML
             return rectangularGeometry;
         }
 
+        public static RectangularGeometry TogbXML_RectangularGeometry(this IFace3DObject face3DObject, double tolerance = Core.Tolerance.MicroDistance)
+        {
+            return TogbXML_RectangularGeometry(face3DObject?.Face3D, tolerance);
+        }
     }
 }
