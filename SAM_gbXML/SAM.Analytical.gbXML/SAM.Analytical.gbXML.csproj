@@ -77,11 +77,14 @@
     <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
     <Compile Include="Convert\TogbXML\Opening.cs" />
     <Compile Include="Convert\TogbXML\Surface.cs" />
+    <Compile Include="Convert\ToSAM\New\Opening.cs" />
+    <Compile Include="Convert\ToSAM\New\Partition.cs" />
     <Compile Include="Convert\ToSAM\Panel.cs" />
     <Compile Include="Convert\ToSAM\Aperture.cs" />
     <Compile Include="Convert\ToSAM\Space.cs" />
     <Compile Include="Convert\ToSAM\AnalyticalModel.cs" />
     <Compile Include="Create\AnalyticalModel.cs" />
+    <Compile Include="Create\New\ArchitecturalModel.cs" />
     <Compile Include="Modify\RenameSpaces.cs" />
     <Compile Include="Modify\Rename.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
