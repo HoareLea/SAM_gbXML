@@ -1,5 +1,6 @@
 ﻿using gbXMLSerializer;
 using Grasshopper.Kernel;
+using SAM.Analytical;
 using SAM.Analytical.gbXML;
 using SAM.Analytical.Grasshopper;
 using SAM.Analytical.Grasshopper.gbXML.Properties;
@@ -18,7 +19,7 @@ namespace SAM.Geometry.Grasshopper
         /// <summary>
         /// The latest version of this component
         /// </summary>
-        public override string LatestComponentVersion => "1.0.0";
+        public override string LatestComponentVersion => "1.0.1";
 
         /// <summary>
         /// Provides an Icon for the component.
@@ -40,7 +41,7 @@ namespace SAM.Geometry.Grasshopper
         /// </summary>
         protected override void RegisterInputParams(GH_InputParamManager inputParamManager)
         {
-            inputParamManager.AddParameter(new GooAnalyticalModelParam(), "_analyticalModel", "_analyticalModel", "AnalyticalModel", GH_ParamAccess.item);
+            inputParamManager.AddParameter(new global::Grasshopper.Kernel.Parameters.Param_GenericObject(), "_analytical", "_analytical", "SAM Analytical Object", GH_ParamAccess.item);
             inputParamManager.AddTextParameter("_path", "_path", "File Path with extension .xml", GH_ParamAccess.item);
             inputParamManager.AddNumberParameter("_tolerance_", "_tolerance_", "Tolerance", GH_ParamAccess.item, 0.00001);
             inputParamManager.AddBooleanParameter("_run_", "_run_", "Run", GH_ParamAccess.item, false);
@@ -74,8 +75,8 @@ namespace SAM.Geometry.Grasshopper
             if (!run)
                 return;
 
-            Analytical.AnalyticalModel analyticalModel = null;
-            if (!dataAccess.GetData(0, ref analyticalModel) || analyticalModel == null)
+            Core.SAMObject sAMObject =  null;
+            if (!dataAccess.GetData(0, ref sAMObject) || sAMObject == null)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
                 return;
@@ -95,7 +96,16 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            gbXML gbXML = analyticalModel.TogbXML(Core.Tolerance.MacroDistance, tolerance);
+            gbXML gbXML = null;
+            if(sAMObject is AnalyticalModel)
+            {
+                gbXML = ((AnalyticalModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance);
+            }
+            else if (sAMObject is ArchitecturalModel)
+            {
+                gbXML = ((ArchitecturalModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance);
+            }
+
             if (gbXML == null)
                 return;
 

@@ -54,9 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\TogbXML\CartesianPoint.cs" />
+    <Compile Include="Convert\TogbXML\ClosedShell.cs" />
     <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
     <Compile Include="Convert\TogbXML\PlanarGeometry.cs" />
     <Compile Include="Convert\TogbXML\PolyLoop.cs" />
+    <Compile Include="Convert\TogbXML\SpaceBoundary.cs" />
     <Compile Include="Convert\ToSAM\Point3D.cs" />
     <Compile Include="Convert\ToSAM\Polygon3D.cs" />
     <Compile Include="Convert\ToSAM\Shell.cs" />
@@ -71,6 +73,12 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SAM.Core.gbXML\SAM.Core.gbXML.csproj">
+      <Project>{bba608a4-615b-4824-8e53-f8232be703ec}</Project>
+      <Name>SAM.Core.gbXML</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

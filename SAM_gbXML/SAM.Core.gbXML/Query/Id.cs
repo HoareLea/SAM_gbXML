@@ -4,12 +4,14 @@ namespace SAM.Core.gbXML
 {
     public static partial class Query
     {
-        public static string Id(this ISAMObject sAMObject, Type type)
+        public static string Id(this IJSAMObject jSAMObject, Type type)
         {
-            if (sAMObject == null || type == null)
+            if (jSAMObject == null || type == null)
                 return null;
 
-            return string.Format("{0}_{1}", type.Name, sAMObject.Guid.ToString("N"));
+            Guid guid = jSAMObject is ISAMObject ? ((ISAMObject)jSAMObject).Guid : System.Guid.NewGuid();
+
+            return string.Format("{0}_{1}", type.Name, guid.ToString("N"));
         }
     }
 }

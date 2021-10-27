@@ -15,5 +15,10 @@ namespace SAM.Geometry.gbXML
             return planarGeometry;
         }
 
+        public static PlanarGeometry TogbXML_PlanarGeometry(this Spatial.IFace3DObject face3DObject, double tolerance = Core.Tolerance.MicroDistance)
+        {
+            return TogbXML(face3DObject?.Face3D, tolerance);
+        }
+
     }
 }
