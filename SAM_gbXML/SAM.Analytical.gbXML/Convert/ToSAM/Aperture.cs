@@ -13,13 +13,16 @@ namespace SAM.Analytical.gbXML
 
             Polygon3D polygon3D = opening.pg.ToSAM(tolerance);
             if (polygon3D == null)
+            {
                 return null;
+            }
+
 
             ApertureType apertureType = Query.ApertureType(opening.openingType);
 
             ApertureConstruction apertureConstruction = new ApertureConstruction(opening.Name, apertureType);
 
-            Aperture result = new Aperture(apertureConstruction, polygon3D);
+            Aperture result = new Aperture(apertureConstruction, polygon3D, Analytical.Query.OpeningLocation(polygon3D, tolerance));
 
             return result;
         }
