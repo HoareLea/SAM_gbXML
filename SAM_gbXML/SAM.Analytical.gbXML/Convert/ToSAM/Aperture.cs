@@ -17,7 +17,6 @@ namespace SAM.Analytical.gbXML
                 return null;
             }
 
-
             ApertureType apertureType = Query.ApertureType(opening.openingType);
 
             ApertureConstruction apertureConstruction = new ApertureConstruction(opening.Name, apertureType);

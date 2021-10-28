@@ -8,22 +8,32 @@ namespace SAM.Analytical.gbXML
     {
         public static IOpening ToSAM_Opening(this gbXMLSerializer.Opening opening, double tolerance = Tolerance.MicroDistance)
         {
-            if (opening == null)
-                return null;
-
-            Polygon3D polygon3D = opening.pg.ToSAM(tolerance);
+            Polygon3D polygon3D = opening?.pg?.ToSAM(tolerance);
             if (polygon3D == null)
+            {
                 return null;
+            }
 
-            //ApertureType apertureType = Query.ApertureType(opening.openingType);
+            OpeningType openingType = null;
+            switch(opening.openingType)
+            {
+                case gbXMLSerializer.openingTypeEnum.NonSlidingDoor:
+                case gbXMLSerializer.openingTypeEnum.SlidingDoor:
+                    openingType = new DoorType(opening.Name);
+                    break;
 
-            //ApertureConstruction apertureConstruction = new ApertureConstruction(opening.Name, apertureType);
+                default:
+                    openingType = new WindowType(opening.Name);
+                    break;
+            }
 
-            //Aperture result = new Aperture(apertureConstruction, polygon3D);
+            if(openingType == null)
+            {
+                return null;
+            }
 
-            //return result;
-
-            throw new System.NotImplementedException();
+            IOpening result = Analytical.Create.Opening(System.Guid.NewGuid(), openingType, new Face3D(polygon3D), Analytical.Query.OpeningLocation(polygon3D, tolerance));
+            return result;
         }
 
     }
