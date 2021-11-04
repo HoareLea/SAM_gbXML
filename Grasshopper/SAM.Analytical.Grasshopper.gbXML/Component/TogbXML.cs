@@ -41,7 +41,7 @@ namespace SAM.Geometry.Grasshopper
         /// </summary>
         protected override void RegisterInputParams(GH_InputParamManager inputParamManager)
         {
-            inputParamManager.AddParameter(new global::Grasshopper.Kernel.Parameters.Param_GenericObject(), "_analytical", "_analytical", "SAM Analytical Object", GH_ParamAccess.item);
+            inputParamManager.AddParameter(new global::Grasshopper.Kernel.Parameters.Param_GenericObject(), "_analyticalModel", "_analyticalModel", "SAM Analytical Object", GH_ParamAccess.item);
             inputParamManager.AddTextParameter("_path", "_path", "File Path with extension .xml", GH_ParamAccess.item);
             inputParamManager.AddNumberParameter("_tolerance_", "_tolerance_", "Tolerance", GH_ParamAccess.item, 0.00001);
             inputParamManager.AddBooleanParameter("_run_", "_run_", "Run", GH_ParamAccess.item, false);
