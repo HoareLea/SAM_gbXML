@@ -5,14 +5,14 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static gbXMLSerializer.gbXML TogbXML(this ArchitecturalModel architecturalModel, double silverSpacing = Core.Tolerance.MacroDistance, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.MicroDistance)
+        public static gbXMLSerializer.gbXML TogbXML(this BuildingModel buildingModel, double silverSpacing = Core.Tolerance.MacroDistance, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.MicroDistance)
         {
-            if (architecturalModel == null)
+            if (buildingModel == null)
                 return null;
 
             List<gbXMLSerializer.Construction> constructions = new List<gbXMLSerializer.Construction>();
 
-            List<HostPartitionType> hostPartitionTypes = architecturalModel.GetHostPartitionTypes();
+            List<HostPartitionType> hostPartitionTypes = buildingModel.GetHostPartitionTypes();
             if(hostPartitionTypes != null && hostPartitionTypes.Count != 0)
             {
                 foreach (HostPartitionType hostPartitionType in hostPartitionTypes)
@@ -25,7 +25,7 @@ namespace SAM.Analytical.gbXML
                 }
             }
 
-            List<OpeningType> openiengTypes = architecturalModel.GetOpeningTypes();
+            List<OpeningType> openiengTypes = buildingModel.GetOpeningTypes();
             if(openiengTypes!= null && openiengTypes.Count != 0)
             {
                 foreach(OpeningType openingType in openiengTypes)
@@ -45,9 +45,9 @@ namespace SAM.Analytical.gbXML
             gbXML.areaUnit = areaUnitEnum.SquareMeters;
             gbXML.volumeUnit = volumeUnitEnum.CubicMeters;
             gbXML.version = versionEnum.FiveOneOne;
-            gbXML.Campus = architecturalModel.TogbXML_Campus(silverSpacing, tolerance_Angle, tolerance_Distance);
+            gbXML.Campus = buildingModel.TogbXML_Campus(silverSpacing, tolerance_Angle, tolerance_Distance);
             gbXML.Constructions = constructions.ToArray();
-            gbXML.DocumentHistory = Core.gbXML.Query.DocumentHistory(architecturalModel.Guid);
+            gbXML.DocumentHistory = Core.gbXML.Query.DocumentHistory(buildingModel.Guid);
 
             return gbXML;
         }

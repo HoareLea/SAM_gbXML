@@ -10,13 +10,13 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Building TogbXML(this ArchitecturalModel architecturalModel, string name, string description, double tolerance = Tolerance.MicroDistance)
+        public static Building TogbXML(this BuildingModel buildingModel, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
-            List<IPartition> partitions = architecturalModel?.GetPartitions();
+            List<IPartition> partitions = buildingModel?.GetPartitions();
             if (partitions == null || partitions.Count == 0)
                 return null;
 
-            List<Space> spaces = architecturalModel.GetSpaces();
+            List<Space> spaces = buildingModel.GetSpaces();
             if (spaces == null)
                 return null;
 
@@ -43,7 +43,7 @@ namespace SAM.Analytical.gbXML
             Dictionary<Guid, SpaceBoundary> dictionary = new Dictionary<Guid, SpaceBoundary>();
             foreach (Space space in spaces)
             {
-                List<IPartition> partitions_Space = architecturalModel.GetPartitions(space);
+                List<IPartition> partitions_Space = buildingModel.GetPartitions(space);
                 if (partitions_Space == null || partitions_Space.Count == 0)
                     continue;
 
@@ -65,7 +65,7 @@ namespace SAM.Analytical.gbXML
 
                 List<Face3D> face3Ds = null;
 
-                Shell shell = architecturalModel.GetShell(space);
+                Shell shell = buildingModel.GetShell(space);
                 if(shell != null)
                 {
                     face3Ds = shell.Section(Tolerance.MacroDistance, false, Tolerance.Angle, tolerance, Tolerance.MacroDistance);
@@ -131,7 +131,7 @@ namespace SAM.Analytical.gbXML
                 space_gbXML.PlanarGeo = face3D.TogbXML(tolerance);
                 space_gbXML.id = Core.gbXML.Query.Id(space, typeof(gbXMLSerializer.Space));
                 space_gbXML.spbound = spaceBoundaries.ToArray();
-                space_gbXML.ShellGeo = architecturalModel.TogbXML(space, tolerance);// Geometry.gbXML.Convert.TogbXML(shell, tolerance); //partitions_Space.TogbXML(space, tolerance);
+                space_gbXML.ShellGeo = buildingModel.TogbXML(space, tolerance);// Geometry.gbXML.Convert.TogbXML(shell, tolerance); //partitions_Space.TogbXML(space, tolerance);
 
                 spaces_gbXML.Add(space_gbXML);
 
@@ -139,7 +139,7 @@ namespace SAM.Analytical.gbXML
             }
 
             Building building = new Building();
-            building.id = Core.gbXML.Query.Id(architecturalModel, typeof(Building));
+            building.id = Core.gbXML.Query.Id(buildingModel, typeof(Building));
             building.Name = name;
             building.Description = description;
             building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();

@@ -101,9 +101,9 @@ namespace SAM.Geometry.Grasshopper
             {
                 gbXML = ((AnalyticalModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance);
             }
-            else if (sAMObject is ArchitecturalModel)
+            else if (sAMObject is BuildingModel)
             {
-                gbXML = ((ArchitecturalModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance);
+                gbXML = ((BuildingModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance);
             }
 
             if (gbXML == null)

@@ -4,9 +4,9 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static Opening TogbXML(this ArchitecturalModel architecturalModel, IOpening opening, double tolerance = Core.Tolerance.MicroDistance)
+        public static Opening TogbXML(this BuildingModel buildingModel, IOpening opening, double tolerance = Core.Tolerance.MicroDistance)
         {
-            if (architecturalModel == null || opening == null)
+            if (buildingModel == null || opening == null)
                 return null;
 
             //ApertureConstruction apertureConstruction = aperture.ApertureConstruction;
@@ -31,7 +31,7 @@ namespace SAM.Analytical.gbXML
             result.openingType = openingTypeEnum.Value;
             result.rg = Geometry.gbXML.Convert.TogbXML_RectangularGeometry(opening, tolerance);
             result.pg = Geometry.gbXML.Convert.TogbXML_PlanarGeometry(opening, tolerance);
-            result.CADObjectId = architecturalModel.CADObjectId(opening);
+            result.CADObjectId = buildingModel.CADObjectId(opening);
 
             return result;
         }

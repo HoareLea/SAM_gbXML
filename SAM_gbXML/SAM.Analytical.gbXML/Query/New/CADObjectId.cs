@@ -5,20 +5,20 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Query
     {
-        public static CADObjectId CADObjectId(this ArchitecturalModel architecturalModel, IPartition partition, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.Distance)
+        public static CADObjectId CADObjectId(this BuildingModel buildingModel, IPartition partition, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.Distance)
         {
-            if (architecturalModel == null)
+            if (buildingModel == null)
             {
                 return null;
             }
 
-            int index = architecturalModel.UniqueIndex(partition);
+            int index = buildingModel.UniqueIndex(partition);
             if (index == -1)
             {
                 return null;
             }
 
-            PartitionAnalyticalType partitionAnalyticalType = architecturalModel.PartitionAnalyticalType(partition, tolerance_Angle, tolerance_Distance);
+            PartitionAnalyticalType partitionAnalyticalType = buildingModel.PartitionAnalyticalType(partition, tolerance_Angle, tolerance_Distance);
             if (partitionAnalyticalType == PartitionAnalyticalType.Undefined)
             {
                 return null;
@@ -98,14 +98,14 @@ namespace SAM.Analytical.gbXML
             return result;
         }
 
-        public static CADObjectId CADObjectId(this ArchitecturalModel architecturalModel, IOpening opening)
+        public static CADObjectId CADObjectId(this BuildingModel buildingModel, IOpening opening)
         {
-            if (architecturalModel == null)
+            if (buildingModel == null)
             {
                 return null;
             }
 
-            int index = architecturalModel.UniqueIndex(opening);
+            int index = buildingModel.UniqueIndex(opening);
             if (index == -1)
             {
                 return null;

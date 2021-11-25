@@ -4,7 +4,7 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Create
     {
-        public static ArchitecturalModel ArchitecturalModel(this string path, double tolerance = Core.Tolerance.Distance)
+        public static BuildingModel BuildingModel(this string path, double tolerance = Core.Tolerance.Distance)
         {
             System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(gbXMLSerializer.gbXML));
             TextReader textReader = new StreamReader(path);
@@ -19,7 +19,7 @@ namespace SAM.Analytical.gbXML
             if (gbXML == null)
                 return null;
 
-            return gbXML.ToSAM_ArchitecturalModel(tolerance);
+            return gbXML.ToSAM_BuildingModel(tolerance);
         }
     }
 }

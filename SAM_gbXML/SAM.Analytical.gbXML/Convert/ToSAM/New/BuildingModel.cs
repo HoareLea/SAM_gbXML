@@ -7,20 +7,20 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
-        public static ArchitecturalModel ToSAM_ArchitecturalModel(this gbXMLSerializer.gbXML gbXML, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
+        public static BuildingModel ToSAM_BuildingModel(this gbXMLSerializer.gbXML gbXML, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             if (gbXML == null)
                 return null;
 
-            return ToSAM_ArchitecturalModel(gbXML.Campus, silverSpacing, tolerance);
+            return ToSAM_BuildingModel(gbXML.Campus, silverSpacing, tolerance);
         }
 
-        public static ArchitecturalModel ToSAM_ArchitecturalModel(this Campus campus, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
+        public static BuildingModel ToSAM_BuildingModel(this Campus campus, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             Address address = campus.Location.ToSAM_Address();
             Core.Location location = campus.Location.ToSAM(tolerance);
 
-            ArchitecturalModel result = new ArchitecturalModel(null, location, address, Architectural.Create.PlanarTerrain(0), new MaterialLibrary(string.Empty), new ProfileLibrary(string.Empty));
+            BuildingModel result = new BuildingModel(null, location, address, Architectural.Create.PlanarTerrain(0), new MaterialLibrary(string.Empty), new ProfileLibrary(string.Empty));
 
             Dictionary<string, Space> dictionary_Space = new Dictionary<string, Space>();
             Building[] buildings = campus.Buildings;

@@ -4,9 +4,9 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Query
     {
-        public static surfaceTypeEnum? SurfaceTypeEnum(this ArchitecturalModel architecturalModel, IPartition partition, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.Distance)
+        public static surfaceTypeEnum? SurfaceTypeEnum(this BuildingModel buildingModel, IPartition partition, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.Distance)
         {
-            PartitionAnalyticalType partitionAnalyticalType = architecturalModel.PartitionAnalyticalType(partition, tolerance_Angle, tolerance_Distance);
+            PartitionAnalyticalType partitionAnalyticalType = buildingModel.PartitionAnalyticalType(partition, tolerance_Angle, tolerance_Distance);
             
             if(partitionAnalyticalType == PartitionAnalyticalType.Undefined)
             {
