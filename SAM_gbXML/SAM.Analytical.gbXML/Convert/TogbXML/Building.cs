@@ -61,48 +61,114 @@ namespace SAM.Analytical.gbXML
                 if (buildingStorey == null)
                     continue;
 
-                List<Face3D> face3Ds = null;
-
-                Shell shell = adjacencyCluster.Shell(space);
-                if(shell != null)
+                if(!space.TryGetValue(SpaceParameter.Volume, out double volume))
                 {
-                    face3Ds = shell.Section(Tolerance.MacroDistance, false, Tolerance.Angle, tolerance, Tolerance.MacroDistance);
-                    face3Ds?.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
-                    face3Ds = face3Ds.ConvertAll(x => x.GetMoved(new Vector3D(0, 0, - Tolerance.MacroDistance)) as Face3D);
+                    volume = double.NaN;
                 }
 
-                if(face3Ds == null || face3Ds.Count == 0)
+                if (!space.TryGetValue(SpaceParameter.Area, out double area))
                 {
-                    List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
-                    panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
-                    if (panels_PlanarGeometry != null || panels_PlanarGeometry.Count != 0)
+                    area = double.NaN;
+                }
+
+                Face3D face3D = null;
+
+                Shell shell = adjacencyCluster.Shell(space);
+                BoundingBox3D boundingBox3D = shell?.GetBoundingBox();
+                if (shell != null && boundingBox3D != null)
+                {
+                    if(double.IsNaN(volume))
                     {
-                        face3Ds = panels_PlanarGeometry.ConvertAll(x => x.GetFace3D());
-                        face3Ds?.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                        volume = shell.Volume(tolerance: tolerance);
+                    }
+
+                    double offset = (boundingBox3D.Max.Z - boundingBox3D.Min.Z) / 2;
+
+                    List<Face3D> face3Ds = shell.Section(offset, false, Tolerance.Angle, tolerance, Tolerance.MacroDistance);
+                    if (face3Ds != null)
+                    {
+                        face3Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                        if (face3Ds.Count != 0)
+                        {
+                            if(double.IsNaN(area))
+                            {
+                                area = face3Ds.ConvertAll(x => x.GetArea()).Sum();
+                            }
+
+                            face3Ds = face3Ds.Union(tolerance);
+
+                            if(face3Ds.Count > 1)
+                            {
+                                face3Ds.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
+                            }
+
+                            face3D = face3Ds[0];
+                            face3D = face3D.GetMoved(new Vector3D(0, 0, -offset)) as Face3D;
+                        }
                     }
                 }
 
-                if (face3Ds == null || face3Ds.Count == 0)
+                if (double.IsNaN(area) || face3D == null)
+                {
+                    List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
+                    //panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
+                    if (panels_PlanarGeometry != null || panels_PlanarGeometry.Count != 0)
+                    {
+                        List<Face3D> face3Ds = panels_PlanarGeometry.ConvertAll(x => x.GetFace3D());
+                        if (face3Ds != null)
+                        {
+                            face3Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                            if (face3Ds.Count != 0)
+                            {
+                                Plane plane = Geometry.Spatial.Create.Plane(elevation_Min);
+                                List<Geometry.Planar.Face2D> face2Ds = face3Ds.ConvertAll(x => plane.Convert(plane.Project(x)));
+                                face2Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
+                                if (face2Ds.Count != 0)
+                                {
+                                    face2Ds = Geometry.Planar.Query.Union(face2Ds);
+                                }
+
+                                if (double.IsNaN(area))
+                                {
+                                    area = face3Ds.ConvertAll(x => x.GetArea()).Sum();
+                                }
+
+                                if (face2Ds.Count > 1)
+                                {
+                                    face2Ds.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
+                                }
+
+                                face3D = plane.Convert(face2Ds[0]);
+                            }
+                        }
+                    }
+
+                }
+
+                if (double.IsNaN(area))
                 {
                     continue;
                 }
 
-                if(face3Ds.Count > 1)
+                if (double.IsNaN(volume))
                 {
-                    face3Ds.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
+                    volume = boundingBox3D == null ? Math.Abs(elevation_Max - elevation_Min) * area : (boundingBox3D.Max.Z - boundingBox3D.Min.Z) * area;
                 }
 
-                Face3D face3D = face3Ds[0];
-                if (face3D == null)
+                if (double.IsNaN(area) || area < Tolerance.MacroDistance)
+                {
                     continue;
+                }
 
-                double area = face3D.GetArea();
-                if (area < Tolerance.MacroDistance)
+                if (double.IsNaN(volume) || volume < Tolerance.MacroDistance)
+                {
                     continue;
+                }
 
-                double volume = Math.Abs(elevation_Max - elevation_Min) * area;
-                if (volume < Tolerance.MacroDistance)
+                if(face3D == null)
+                {
                     continue;
+                }
 
                 List<SpaceBoundary> spaceBoundaries = new List<SpaceBoundary>();
                 foreach (Panel panel in panels_Space)
