@@ -43,7 +43,7 @@ namespace SAM.Analytical.gbXML
                             if (construction_gbXML != null)
                             {
                                 //constructions_gbXML.Add(construction_gbXML);
-                                guids.Add(construction.Guid);
+                                guids.Add(apertureConstruction.Guid);
                             }
                         }
                     }
