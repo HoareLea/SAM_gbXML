@@ -35,7 +35,7 @@ namespace SAM.Analytical.gbXML
                 uniqueName = string.Empty;
                 if(!string.IsNullOrWhiteSpace(prefix))
                 {
-                    uniqueName += prefix;
+                    uniqueName += prefix + ":";
                 }
 
                 if(!string.IsNullOrWhiteSpace(name))
