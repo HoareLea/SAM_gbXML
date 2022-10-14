@@ -18,7 +18,7 @@ namespace SAM.Analytical.gbXML
             campus.Location = Core.gbXML.Convert.TogbXML(buildingModel_Temp.Location, buildingModel_Temp.Address, tolerance_Distance);
 
             buildingModel_Temp.SplitByInternalEdges(tolerance_Distance);
-            buildingModel_Temp.OrientPartitions(true, silverSpacing, tolerance_Distance);
+            buildingModel_Temp.OrientPartitions(true, true, silverSpacing, tolerance_Distance);
             buildingModel_Temp.FixEdges(tolerance_Distance);
 
             campus.Buildings = new Building[] { buildingModel_Temp.TogbXML(buildingModel_Temp.Name, buildingModel_Temp.Description, tolerance_Distance) };

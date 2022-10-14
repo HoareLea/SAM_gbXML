@@ -19,7 +19,7 @@ namespace SAM.Analytical.gbXML
             if(adjacencyCluster != null)
             {
                 adjacencyCluster = adjacencyCluster.SplitByInternalEdges(tolerance);
-                adjacencyCluster = adjacencyCluster.UpdateNormals(true, silverSpacing, tolerance);
+                adjacencyCluster = adjacencyCluster.UpdateNormals(true, true, silverSpacing, tolerance);
                 adjacencyCluster = adjacencyCluster.FixEdges(false, tolerance);
                 
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(analyticalModel.Name, analyticalModel.Description, tolerance) };
