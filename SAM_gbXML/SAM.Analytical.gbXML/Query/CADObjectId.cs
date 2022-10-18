@@ -26,7 +26,36 @@ namespace SAM.Analytical.gbXML
 
             string uniqueName = Analytical.Query.UniqueName(aperture, cADObjectIdSufix);
             if (string.IsNullOrEmpty(uniqueName))
+            {
                 return null;
+            }
+
+            if(Analytical.Query.UniqueNameDecomposition(uniqueName, out string prefix, out string name, out System.Guid? guid, out int id))
+            {
+                uniqueName = string.Empty;
+                if(!string.IsNullOrWhiteSpace(prefix))
+                {
+                    uniqueName += prefix + ":";
+                }
+
+                if(!string.IsNullOrWhiteSpace(name))
+                {
+                    uniqueName += " " + name;
+                }
+
+                if(guid != null && guid.HasValue)
+                {
+                    uniqueName += " " + guid.ToString();
+                }
+
+                if(id != -1)
+                {
+                    uniqueName += string.Format(" [{0}]", id);
+                }
+
+                uniqueName = uniqueName.Trim();
+
+            }
 
             CADObjectId cADObjectId = new CADObjectId();
             cADObjectId.id = uniqueName;

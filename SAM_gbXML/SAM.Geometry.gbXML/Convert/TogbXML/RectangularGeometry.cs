@@ -8,11 +8,19 @@ namespace SAM.Geometry.gbXML
         public static RectangularGeometry TogbXML_RectangularGeometry(this IClosedPlanar3D closedPlanar3D, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (closedPlanar3D == null)
+            {
                 return null;
+            }
 
-            Plane plane = closedPlanar3D.GetPlane();
-            Planar.BoundingBox2D boundingBox2D = plane.Convert(closedPlanar3D).GetBoundingBox();
-            double area_closedPlanar3D = closedPlanar3D.GetArea();
+            IClosedPlanar3D closedPlanar3D_Temp = closedPlanar3D;
+            if(closedPlanar3D_Temp is Face3D)
+            {
+                closedPlanar3D_Temp = ((Face3D)closedPlanar3D_Temp).GetExternalEdge3D();
+            }
+
+            Plane plane = closedPlanar3D_Temp.GetPlane();
+            Planar.BoundingBox2D boundingBox2D = plane.Convert(closedPlanar3D_Temp).GetBoundingBox();
+            double area_closedPlanar3D = closedPlanar3D_Temp.GetArea();
             double area_boundingBox2D = boundingBox2D.GetArea();
 
             double width = boundingBox2D.Width;
@@ -25,11 +33,11 @@ namespace SAM.Geometry.gbXML
             }
 
             RectangularGeometry rectangularGeometry = new RectangularGeometry();
-            rectangularGeometry.Azimuth = Spatial.Query.Azimuth(closedPlanar3D, Vector3D.WorldY).ToString();
+            rectangularGeometry.Azimuth = Spatial.Query.Azimuth(closedPlanar3D_Temp, Vector3D.WorldY).ToString();
             rectangularGeometry.Width = width.ToString();
             rectangularGeometry.Height = height.ToString();
             rectangularGeometry.CartesianPoint = plane.Convert(boundingBox2D.Min).TogbXML(tolerance);
-            rectangularGeometry.Tilt = Spatial.Query.Tilt(closedPlanar3D).ToString();
+            rectangularGeometry.Tilt = Spatial.Query.Tilt(closedPlanar3D_Temp).ToString();
             return rectangularGeometry;
         }
 
