@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using SAM.Core;
+using System.IO;
 
 namespace SAM.Analytical.gbXML
 {
     public static partial class Create
     {
-        public static AnalyticalModel AnalyticalModel(this string path, double tolerance = Core.Tolerance.Distance)
+        public static AnalyticalModel AnalyticalModel(this string path, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(gbXMLSerializer.gbXML));
             TextReader textReader = new StreamReader(path);
@@ -19,7 +20,7 @@ namespace SAM.Analytical.gbXML
             if (gbXML == null)
                 return null;
 
-            return gbXML.ToSAM(tolerance);
+            return gbXML.ToSAM(silverSpacing, tolerance);
         }
     }
 }

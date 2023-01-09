@@ -85,7 +85,7 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            Analytical.AnalyticalModel analyticalModel = Analytical.gbXML.Create.AnalyticalModel(path, tolerance);
+            Analytical.AnalyticalModel analyticalModel = Analytical.gbXML.Create.AnalyticalModel(path, Core.Tolerance.MacroDistance, tolerance);
 
             dataAccess.SetData(0, new GooAnalyticalModel(analyticalModel));
             dataAccess.SetData(1, true);
