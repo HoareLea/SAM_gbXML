@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert\ToFile\ToFile.cs" />
     <Compile Include="Convert\TogbXML\Building.cs" />
     <Compile Include="Convert\TogbXML\Construction.cs" />
     <Compile Include="Convert\TogbXML\ClosedShell.cs" />
