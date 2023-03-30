@@ -85,7 +85,7 @@ namespace SAM.Analytical.gbXML
 
                         if (!dictionary_Space.TryGetValue(id, out space))
                         {
-                            panel.SetValue(PanelParameter.Adiabatic, true);
+                            panel.SetValue(Analytical.PanelParameter.Adiabatic, true);
                             continue;
                         }
                             
