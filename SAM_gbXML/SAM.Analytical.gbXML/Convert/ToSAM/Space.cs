@@ -13,6 +13,7 @@ namespace SAM.Analytical.gbXML
             Point3D location = Query.Location(space.ShellGeo, silverSpacing, tolerance);
 
             Space result = new Space(space.Name, location);
+            result.SetValue(SpaceParameter.Id, space.id);
 
             return result;
         }

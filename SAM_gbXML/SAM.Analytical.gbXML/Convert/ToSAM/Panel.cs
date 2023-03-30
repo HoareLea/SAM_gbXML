@@ -2,6 +2,7 @@
 using SAM.Core;
 using SAM.Geometry.gbXML;
 using SAM.Geometry.Spatial;
+using System.Collections.Generic;
 
 namespace SAM.Analytical.gbXML
 {
@@ -19,7 +20,7 @@ namespace SAM.Analytical.gbXML
             return Analytical.Create.Panel(null, PanelType.Undefined, new Face3D(polygon3D));
         }
 
-        public static Panel ToSAM(this gbXMLSerializer.Surface surface, double tolerance = Tolerance.Distance)
+        public static Panel ToSAM(this gbXMLSerializer.Surface surface, IEnumerable<Construction> constructions = null,  double tolerance = Tolerance.Distance)
         {
             if (surface == null)
                 return null;
@@ -30,9 +31,14 @@ namespace SAM.Analytical.gbXML
 
             PanelType panelType = Query.PanelType(surface.surfaceType);
 
-            Construction construction = new Construction(surface.Name);
+            Construction construction = constructions?.Construction(surface.constructionIdRef);
+            if(construction == null)
+            {
+                construction = string.IsNullOrWhiteSpace(surface.constructionIdRef) ? new Construction(surface.Name) : new Construction(surface.constructionIdRef);
+            }
 
             Panel result = Analytical.Create.Panel(construction, panelType, new Face3D(polygon3D));
+            result.SetValue(PanelParameter.Id, surface.id);
 
             Opening[] openings = surface.Opening;
             if(openings != null)

@@ -10,12 +10,21 @@ namespace SAM.Analytical.gbXML
         public static AnalyticalModel ToSAM(this gbXMLSerializer.gbXML gbXML, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             if (gbXML == null)
+            {
                 return null;
+            }
 
-            return ToSAM(gbXML.Campus, silverSpacing, tolerance);
+            MaterialLibrary materialLibrary = ToSAM_MaterialLibrary(gbXML);
+
+            List<Construction> constructions = ToSAM_Constructions(gbXML);
+
+            AnalyticalModel result = ToSAM(gbXML.Campus, constructions, silverSpacing, tolerance);
+            result = new AnalyticalModel(result, result.AdjacencyCluster, materialLibrary, result.ProfileLibrary);
+
+            return result;
         }
 
-        public static AnalyticalModel ToSAM(this Campus campus, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
+        public static AnalyticalModel ToSAM(this Campus campus, IEnumerable<Construction> constructions = null, double silverSpacing = Tolerance.MacroDistance, double tolerance = Tolerance.Distance)
         {
             Address address = campus.Location.ToSAM_Address();
             Core.Location location = campus.Location.ToSAM(tolerance);
@@ -56,7 +65,7 @@ namespace SAM.Analytical.gbXML
                     if (surface == null)
                         continue;
                     
-                    Panel panel = surface.ToSAM(tolerance);
+                    Panel panel = surface.ToSAM(constructions, tolerance);
                     if (panel == null)
                         continue;
 

@@ -61,12 +61,12 @@ namespace SAM.Analytical.gbXML
                 if (buildingStorey == null)
                     continue;
 
-                if(!space.TryGetValue(SpaceParameter.Volume, out double volume))
+                if(!space.TryGetValue(Analytical.SpaceParameter.Volume, out double volume))
                 {
                     volume = double.NaN;
                 }
 
-                if (!space.TryGetValue(SpaceParameter.Area, out double area))
+                if (!space.TryGetValue(Analytical.SpaceParameter.Area, out double area))
                 {
                     area = double.NaN;
                 }
