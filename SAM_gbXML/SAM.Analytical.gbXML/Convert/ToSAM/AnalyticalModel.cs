@@ -84,7 +84,11 @@ namespace SAM.Analytical.gbXML
                         Space space = null;
 
                         if (!dictionary_Space.TryGetValue(id, out space))
+                        {
+                            panel.SetValue(PanelParameter.Adiabatic, true);
                             continue;
+                        }
+                            
 
                         adjacencyCluster.AddRelation(panel, space);
                     }
