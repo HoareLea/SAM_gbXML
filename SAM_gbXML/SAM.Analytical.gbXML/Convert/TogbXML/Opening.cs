@@ -22,7 +22,7 @@ namespace SAM.Analytical.gbXML
                 name = aperture.ApertureConstruction.Name;
 
             Opening opening = new Opening();
-            //opening.constructionIdRef = Core.gbXML.Query.Id(aperture.ApertureConstruction, typeof(gbXMLSerializer.Construction));
+            opening.constructionIdRef = Core.gbXML.Query.Id(aperture.ApertureConstruction, typeof(gbXMLSerializer.WindowType));
             opening.Description = name;
             opening.id = Core.gbXML.Query.Id(aperture, typeof(Opening));
 

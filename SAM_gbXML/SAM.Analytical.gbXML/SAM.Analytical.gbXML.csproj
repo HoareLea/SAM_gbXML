@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Convert\ToFile\ToFile.cs" />
     <Compile Include="Convert\TogbXML\Building.cs" />
+    <Compile Include="Convert\TogbXML\WindowType.cs" />
     <Compile Include="Convert\TogbXML\Construction.cs" />
     <Compile Include="Convert\TogbXML\ClosedShell.cs" />
     <Compile Include="Convert\TogbXML\New\Building.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Convert\TogbXML\New\Opening.cs" />
     <Compile Include="Convert\TogbXML\New\ShellGeometry.cs" />
     <Compile Include="Convert\TogbXML\New\Surface.cs" />
+    <Compile Include="Convert\TogbXML\Material.cs" />
+    <Compile Include="Convert\TogbXML\Layer.cs" />
     <Compile Include="Convert\TogbXML\ShellGeometry.cs" />
     <Compile Include="Convert\TogbXML\Campus.cs" />
     <Compile Include="Convert\TogbXML\gbXML.cs" />

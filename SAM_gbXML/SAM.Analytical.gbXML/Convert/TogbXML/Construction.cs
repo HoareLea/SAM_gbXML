@@ -10,6 +10,7 @@
             gbXMLSerializer.Construction construction_gbXML = new gbXMLSerializer.Construction();
             construction_gbXML.id = Core.gbXML.Query.Id(construction, typeof(gbXMLSerializer.Construction));
             construction_gbXML.Name = construction.Name;
+            construction_gbXML.LayerId = new gbXMLSerializer.LayerId[] { new gbXMLSerializer.LayerId() { layerIdRef = Core.gbXML.Query.Id(construction, typeof(gbXMLSerializer.Layer)) } };
 
             return construction_gbXML;
         }

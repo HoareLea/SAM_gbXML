@@ -22,7 +22,7 @@ namespace SAM.Analytical.gbXML
                 surface.Name = string.Format("{0} [{1}]", panel.Name, cADObjectIdSufix_Surface);
 
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
-            //surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
+            surface.constructionIdRef = Core.gbXML.Query.Id(panel.Construction, typeof(gbXMLSerializer.Construction));
             surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix_Surface);
             surface.surfaceType = panel.PanelType.SurfaceTypeEnum();
             surface.RectangularGeometry = planarBoundary3D.TogbXML_RectangularGeometry(tolerance);

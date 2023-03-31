@@ -2,7 +2,7 @@
 {
     public static partial class Convert
     {
-        public static gbXMLSerializer.Location TogbXML(this Location location, Address address = null, double tolerance = Core.Tolerance.MicroDistance)
+        public static gbXMLSerializer.Location TogbXML(this Location location, Address address = null, double tolerance = Tolerance.MicroDistance)
         {
             if (location == null)
                 return null;
