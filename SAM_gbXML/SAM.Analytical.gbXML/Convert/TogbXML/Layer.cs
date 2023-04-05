@@ -24,7 +24,7 @@ namespace SAM.Analytical.gbXML
                     continue;
                 }
 
-                materialIds.Add(new MaterialId() { materialIdRef = constructionLayer.Name, percentOfLayer = 100 });
+                materialIds.Add(new MaterialId() { materialIdRef = Core.gbXML.Query.Id(constructionLayer.Name), percentOfLayer = 100 });
             }
 
             result.MaterialId = materialIds.ToArray();

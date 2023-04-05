@@ -12,7 +12,7 @@ namespace SAM.Analytical.gbXML
             }
 
             Material result = new Material();
-            result.id = material.Name;
+            result.id = Core.gbXML.Query.Id(material.Name);
             result.Name = material is Core.Material ? ((Core.Material)material).DisplayName : material.Name;
             if (string.IsNullOrWhiteSpace(result.Name))
             {
@@ -23,17 +23,26 @@ namespace SAM.Analytical.gbXML
             {
                 Core.Material material_Temp = (Core.Material)material;
 
-                result.Conductivity = new Conductivity();
-                result.Conductivity.value = material_Temp.ThermalConductivity;
-                result.Conductivity.unit = conductivityUnitEnum.WPerMeterK;
+                if(!double.IsNaN(material_Temp.ThermalConductivity))
+                {
+                    result.Conductivity = new Conductivity();
+                    result.Conductivity.value = material_Temp.ThermalConductivity;
+                    result.Conductivity.unit = conductivityUnitEnum.WPerMeterK;
+                }
 
-                result.SpecificHeat = new SpecificHeat();
-                result.SpecificHeat.value = material_Temp.SpecificHeatCapacity;
-                result.SpecificHeat.unit = specificHeatEnum.JPerKgK;
+                if (!double.IsNaN(material_Temp.SpecificHeatCapacity))
+                {
+                    result.SpecificHeat = new SpecificHeat();
+                    result.SpecificHeat.value = material_Temp.SpecificHeatCapacity;
+                    result.SpecificHeat.unit = specificHeatEnum.JPerKgK;
+                }
 
-                result.Density = new Density();
-                result.Density.value = material_Temp.Density;
-                result.Density.unit = densityUnitEnum.KgPerCubicM;
+                if (!double.IsNaN(material_Temp.Density))
+                {
+                    result.Density = new Density();
+                    result.Density.value = material_Temp.Density;
+                    result.Density.unit = densityUnitEnum.KgPerCubicM;
+                }
 
                 result.Description = material_Temp.Description;
             }

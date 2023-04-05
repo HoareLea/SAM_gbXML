@@ -38,14 +38,20 @@ namespace SAM.Analytical.gbXML
 
                         gap.Name = gasMaterial.Name;
                         gap.Description = gasMaterial.Description;
+                        
+                        if(!double.IsNaN(constructionLayer.Thickness))
+                        {
+                            gap.Thickness = new gbXMLSerializer.Thickness();
+                            gap.Thickness.value = constructionLayer.Thickness;
+                            gap.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        }
 
-                        gap.Thickness = new gbXMLSerializer.Thickness();
-                        gap.Thickness.value = constructionLayer.Thickness;
-                        gap.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
-
-                        gap.Conductivity = new gbXMLSerializer.Conductivity();
-                        gap.Conductivity.value = gasMaterial.ThermalConductivity;
-                        gap.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
+                        if (!double.IsNaN(gasMaterial.ThermalConductivity))
+                        {
+                            gap.Conductivity = new gbXMLSerializer.Conductivity();
+                            gap.Conductivity.value = gasMaterial.ThermalConductivity;
+                            gap.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
+                        }
 
                         gaps.Add(gap);
                     }
@@ -59,13 +65,19 @@ namespace SAM.Analytical.gbXML
                         glaze.Name = transparentMaterial.Name;
                         glaze.Description = transparentMaterial.Description;
 
-                        glaze.Thickness = new gbXMLSerializer.Thickness();
-                        glaze.Thickness.value = constructionLayer.Thickness;
-                        glaze.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        if (!double.IsNaN(constructionLayer.Thickness))
+                        {
+                            glaze.Thickness = new gbXMLSerializer.Thickness();
+                            glaze.Thickness.value = constructionLayer.Thickness;
+                            glaze.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        }
 
-                        glaze.Conductivity = new gbXMLSerializer.Conductivity();
-                        glaze.Conductivity.value = transparentMaterial.ThermalConductivity;
-                        glaze.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
+                        if (!double.IsNaN(transparentMaterial.ThermalConductivity))
+                        {
+                            glaze.Conductivity = new gbXMLSerializer.Conductivity();
+                            glaze.Conductivity.value = transparentMaterial.ThermalConductivity;
+                            glaze.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
+                        }
 
                         glazes.Add(glaze);
                     }
@@ -81,9 +93,12 @@ namespace SAM.Analytical.gbXML
 
                         frame.type = gbXMLSerializer.frameTypeEnum.Insulated;
 
-                        frame.Width = new gbXMLSerializer.Width();
-                        frame.Width.value = constructionLayer.Thickness;
-                        frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        if(!double.IsNaN(constructionLayer.Thickness))
+                        {
+                            frame.Width = new gbXMLSerializer.Width();
+                            frame.Width.value = constructionLayer.Thickness;
+                            frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        }
 
                         frames.Add(frame);
                     }
@@ -112,9 +127,12 @@ namespace SAM.Analytical.gbXML
 
                         frame.type = gbXMLSerializer.frameTypeEnum.Insulated;
 
-                        frame.Width = new gbXMLSerializer.Width();
-                        frame.Width.value = constructionLayer.Thickness;
-                        frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        if(!double.IsNaN(constructionLayer.Thickness))
+                        {
+                            frame.Width = new gbXMLSerializer.Width();
+                            frame.Width.value = constructionLayer.Thickness;
+                            frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                        }
 
                         frames_Temp.Add(frame);
                     }

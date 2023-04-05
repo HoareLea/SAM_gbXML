@@ -13,5 +13,19 @@ namespace SAM.Core.gbXML
 
             return string.Format("{0}_{1}", type.Name, guid.ToString("N"));
         }
+
+        public static string Id(this string text)
+        {
+            if(string.IsNullOrWhiteSpace(text))
+            {
+                return null;
+            }
+
+            string result = text;
+            result = result.Replace(" ", "");
+            result = result.Replace("/", "");
+            result = result.Replace("\'", "");
+            return result;
+        }
     }
 }
