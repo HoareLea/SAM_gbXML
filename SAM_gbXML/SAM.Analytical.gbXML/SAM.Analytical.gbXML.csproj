@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{57FDD311-8237-4B83-9824-927D0140C2A9}</ProjectGuid>
+    <LangVersion>latest</LangVersion>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SAM.Analytical.gbXML</RootNamespace>
@@ -96,6 +97,8 @@
     <Compile Include="Create\Reflectances.cs" />
     <Compile Include="Create\AnalyticalModel.cs" />
     <Compile Include="Create\New\BuildingModel.cs" />
+    <Compile Include="Create\Emittances.cs" />
+    <Compile Include="Create\Transmittances.cs" />
     <Compile Include="Enum\Parameter\ConstructionParameter.cs" />
     <Compile Include="Enum\Parameter\PanelParameter.cs" />
     <Compile Include="Enum\Parameter\SpaceParameter.cs" />

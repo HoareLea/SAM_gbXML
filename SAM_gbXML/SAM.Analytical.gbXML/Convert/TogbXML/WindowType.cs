@@ -29,7 +29,7 @@ namespace SAM.Analytical.gbXML
                 foreach(ConstructionLayer constructionLayer in constructionLayers_Pane)
                 {
                     IMaterial material = constructionLayer?.Material(materialLibrary);
-                    if(material is GasMaterial)
+                    if (material is GasMaterial)
                     {
                         GasMaterial gasMaterial = (GasMaterial)material;
 
@@ -38,8 +38,8 @@ namespace SAM.Analytical.gbXML
 
                         gap.Name = gasMaterial.Name;
                         gap.Description = gasMaterial.Description;
-                        
-                        if(!double.IsNaN(constructionLayer.Thickness))
+
+                        if (!double.IsNaN(constructionLayer.Thickness))
                         {
                             gap.Thickness = new gbXMLSerializer.Thickness();
                             gap.Thickness.value = constructionLayer.Thickness;
@@ -53,9 +53,16 @@ namespace SAM.Analytical.gbXML
                             gap.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
                         }
 
+                        if (!double.IsNaN(gasMaterial.Density))
+                        {
+                            gap.Density = new gbXMLSerializer.Density();
+                            gap.Density.value = gasMaterial.Density;
+                            gap.Density.unit = gbXMLSerializer.densityUnitEnum.KgPerCubicM;
+                        }
+
                         gaps.Add(gap);
                     }
-                    else if(material is TransparentMaterial)
+                    else if (material is TransparentMaterial)
                     {
                         TransparentMaterial transparentMaterial = (TransparentMaterial)material;
 
@@ -78,6 +85,11 @@ namespace SAM.Analytical.gbXML
                             glaze.Conductivity.value = transparentMaterial.ThermalConductivity;
                             glaze.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
                         }
+                        glaze.Reflectance = Create.Reflectances(transparentMaterial);
+
+                        glaze.Transmittance = Create.Transmittances(transparentMaterial);
+
+                        glaze.Emittance = Create.Emittances(transparentMaterial);
 
                         glazes.Add(glaze);
                     }
@@ -93,7 +105,7 @@ namespace SAM.Analytical.gbXML
 
                         frame.type = gbXMLSerializer.frameTypeEnum.Insulated;
 
-                        if(!double.IsNaN(constructionLayer.Thickness))
+                        if (!double.IsNaN(constructionLayer.Thickness))
                         {
                             frame.Width = new gbXMLSerializer.Width();
                             frame.Width.value = constructionLayer.Thickness;

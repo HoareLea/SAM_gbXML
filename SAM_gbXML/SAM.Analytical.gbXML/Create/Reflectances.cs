@@ -16,7 +16,10 @@ namespace SAM.Analytical.gbXML
 
             gbXMLSerializer.surfaceDescriptionEnum surfaceDescriptionEnum = gbXMLSerializer.surfaceDescriptionEnum.Both;
 
-            if (material.TryGetValue(OpaqueMaterialParameter.ExternalEmissivity, out double externalEmissivity))
+            System.Enum @enum;
+
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalEmissivity : TransparentMaterialParameter.ExternalEmissivity;
+            if (material.TryGetValue(@enum, out double externalEmissivity))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
@@ -27,7 +30,8 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
-            if (material.TryGetValue(OpaqueMaterialParameter.ExternalLightReflectance, out double externalLightReflectance))
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalLightReflectance : TransparentMaterialParameter.ExternalLightReflectance;
+            if (material.TryGetValue(@enum, out double externalLightReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
@@ -38,7 +42,8 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
-            if (material.TryGetValue(OpaqueMaterialParameter.ExternalSolarReflectance, out double externalSolarReflectance))
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalSolarReflectance : TransparentMaterialParameter.ExternalSolarReflectance;
+            if (material.TryGetValue(@enum, out double externalSolarReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
@@ -49,7 +54,8 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
-            if (material.TryGetValue(OpaqueMaterialParameter.InternalEmissivity, out double internalEmissivity))
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalEmissivity : TransparentMaterialParameter.InternalEmissivity;
+            if (material.TryGetValue(@enum, out double internalEmissivity))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
@@ -60,7 +66,8 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
-            if (material.TryGetValue(OpaqueMaterialParameter.InternalLightReflectance, out double internalLightReflectance))
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalLightReflectance : TransparentMaterialParameter.InternalLightReflectance;
+            if (material.TryGetValue(@enum, out double internalLightReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
@@ -71,7 +78,8 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
-            if (material.TryGetValue(OpaqueMaterialParameter.InternalSolarReflectance, out double internalSolarReflectance))
+            @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalSolarReflectance : TransparentMaterialParameter.InternalSolarReflectance;
+            if (material.TryGetValue(@enum, out double internalSolarReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
                 reflectance.surfaceType = surfaceDescriptionEnum;
