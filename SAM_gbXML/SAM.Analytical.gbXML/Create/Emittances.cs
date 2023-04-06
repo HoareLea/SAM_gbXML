@@ -14,9 +14,12 @@ namespace SAM.Analytical.gbXML
 
             List<gbXMLSerializer.Emittance> emittances = new List<gbXMLSerializer.Emittance>();
 
+            gbXMLSerializer.surfaceDescriptionEnum surfaceDescriptionEnum = gbXMLSerializer.surfaceDescriptionEnum.Both;
+
             if (material.TryGetValue(TransparentMaterialParameter.ExternalEmissivity, out double externalEmissivity))
             {
                 gbXMLSerializer.Emittance emittance = new gbXMLSerializer.Emittance();
+                emittance.surfaceType = surfaceDescriptionEnum;
                 emittance.type = gbXMLSerializer.emittanceTypeEnum.ExtIR;
                 emittance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 emittance.value = externalEmissivity;
@@ -27,6 +30,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(TransparentMaterialParameter.InternalEmissivity, out double internalEmissivity))
             {
                 gbXMLSerializer.Emittance emittance = new gbXMLSerializer.Emittance();
+                emittance.surfaceType = surfaceDescriptionEnum;
                 emittance.type = gbXMLSerializer.emittanceTypeEnum.IntIR;
                 emittance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 emittance.value = internalEmissivity;

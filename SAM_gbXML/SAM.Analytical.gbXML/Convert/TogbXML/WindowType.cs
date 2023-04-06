@@ -18,9 +18,6 @@ namespace SAM.Analytical.gbXML
 
             result.Transmittance = apertureConstruction.Transmittances();
 
-            
-
-
             List<gbXMLSerializer.Glaze> glazes = new List<gbXMLSerializer.Glaze>();
             List<gbXMLSerializer.Gap> gaps = new List<gbXMLSerializer.Gap>();
             List<gbXMLSerializer.Frame> frames = new List<gbXMLSerializer.Frame>();
