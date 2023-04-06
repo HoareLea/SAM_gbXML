@@ -14,12 +14,12 @@ namespace SAM.Analytical.gbXML
 
             List<gbXMLSerializer.Reflectance> reflectances = new List<gbXMLSerializer.Reflectance>();
 
-            gbXMLSerializer.surfaceDescriptionEnum surfaceDescriptionEnum = gbXMLSerializer.surfaceDescriptionEnum.One;
+            gbXMLSerializer.surfaceDescriptionEnum surfaceDescriptionEnum = gbXMLSerializer.surfaceDescriptionEnum.Both;
 
             if (material.TryGetValue(OpaqueMaterialParameter.ExternalEmissivity, out double externalEmissivity))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.ExtIR;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = externalEmissivity;
@@ -30,7 +30,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.ExternalLightReflectance, out double externalLightReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.ExtVisible;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = externalLightReflectance;
@@ -41,7 +41,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.ExternalSolarReflectance, out double externalSolarReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.ExtSolar;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = externalSolarReflectance;
@@ -52,7 +52,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.InternalEmissivity, out double internalEmissivity))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.IntIR;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = internalEmissivity;
@@ -63,7 +63,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.InternalLightReflectance, out double internalLightReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.IntVisible;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = internalLightReflectance;
@@ -74,7 +74,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.InternalSolarReflectance, out double internalSolarReflectance))
             {
                 gbXMLSerializer.Reflectance reflectance = new gbXMLSerializer.Reflectance();
-                reflectance.surfaceDescriptionEnum = surfaceDescriptionEnum;
+                reflectance.surfaceType = surfaceDescriptionEnum;
                 reflectance.type = gbXMLSerializer.reflectanceTypeEnum.IntSolar;
                 reflectance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 reflectance.value = internalSolarReflectance;
