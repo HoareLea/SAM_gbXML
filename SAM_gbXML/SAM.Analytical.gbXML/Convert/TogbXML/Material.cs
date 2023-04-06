@@ -44,6 +44,15 @@ namespace SAM.Analytical.gbXML
                     result.Density.unit = densityUnitEnum.KgPerCubicM;
                 }
 
+                if (material_Temp.TryGetValue(Core.MaterialParameter.DefaultThickness, out double defaultThickness) && !double.IsNaN(defaultThickness))
+                {
+                    result.Thickness = new Thickness();
+                    result.Thickness.value = defaultThickness;
+                    result.Thickness.unit = lengthUnitEnum.Meters;
+                }
+
+                result.Reflectance = Create.Reflectances(material_Temp);
+
                 result.Description = material_Temp.Description;
             }
 
