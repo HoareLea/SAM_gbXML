@@ -53,6 +53,8 @@ namespace SAM.Analytical.gbXML
 
                 result.Reflectance = Create.Reflectances(material_Temp);
 
+                result.Absorptance = Create.Absorptances(material_Temp);
+
                 result.Description = material_Temp.Description;
             }
 

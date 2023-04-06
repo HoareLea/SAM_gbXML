@@ -92,6 +92,7 @@
     <Compile Include="Convert\ToSAM\Construction.cs" />
     <Compile Include="Convert\ToSAM\Space.cs" />
     <Compile Include="Convert\ToSAM\AnalyticalModel.cs" />
+    <Compile Include="Create\Absorptances.cs" />
     <Compile Include="Create\Reflectances.cs" />
     <Compile Include="Create\AnalyticalModel.cs" />
     <Compile Include="Create\New\BuildingModel.cs" />
