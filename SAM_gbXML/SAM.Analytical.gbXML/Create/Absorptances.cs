@@ -47,7 +47,7 @@ namespace SAM.Analytical.gbXML
             if (material.TryGetValue(OpaqueMaterialParameter.InternalEmissivity, out double internalEmissivity))
             {
                 gbXMLSerializer.Absorptance absorptance = new gbXMLSerializer.Absorptance();
-                absorptance.type = gbXMLSerializer.absorptanceUnitEnum.IntIr;
+                absorptance.type = gbXMLSerializer.absorptanceUnitEnum.IntIR;
                 absorptance.unit = gbXMLSerializer.unitlessUnitEnum.Fraction;
                 absorptance.value = 1 - internalEmissivity;
 
