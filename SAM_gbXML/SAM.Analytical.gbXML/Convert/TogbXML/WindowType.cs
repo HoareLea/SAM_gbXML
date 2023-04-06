@@ -16,6 +16,10 @@ namespace SAM.Analytical.gbXML
             result.Name = apertureConstruction.Name;
             result.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.WindowType));
 
+            result.Transmittance = apertureConstruction.Transmittances();
+
+            
+
 
             List<gbXMLSerializer.Glaze> glazes = new List<gbXMLSerializer.Glaze>();
             List<gbXMLSerializer.Gap> gaps = new List<gbXMLSerializer.Gap>();
