@@ -90,7 +90,7 @@ namespace SAM.Geometry.Grasshopper
             Analytical.AdjacencyCluster adjacencyCluster = analyticalModel?.AdjacencyCluster;
             if(adjacencyCluster != null)
             {
-                Analytical.Modify.UpdateAreaAndVolume(adjacencyCluster);
+                Analytical.Modify.UpdateAreaAndVolume(adjacencyCluster, false);
                 analyticalModel = new Analytical.AnalyticalModel(analyticalModel, adjacencyCluster);
             }
 
