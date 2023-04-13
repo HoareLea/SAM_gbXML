@@ -87,6 +87,13 @@ namespace SAM.Geometry.Grasshopper
 
             Analytical.AnalyticalModel analyticalModel = Analytical.gbXML.Create.AnalyticalModel(path, Core.Tolerance.MacroDistance, tolerance);
 
+            Analytical.AdjacencyCluster adjacencyCluster = analyticalModel?.AdjacencyCluster;
+            if(adjacencyCluster != null)
+            {
+                Analytical.Modify.UpdateAreaAndVolume(adjacencyCluster);
+                analyticalModel = new Analytical.AnalyticalModel(analyticalModel, adjacencyCluster);
+            }
+
             dataAccess.SetData(0, new GooAnalyticalModel(analyticalModel));
             dataAccess.SetData(1, true);
 
