@@ -83,6 +83,16 @@ namespace SAM.Analytical.Grasshopper.gbXML.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SAM_gbXML_in3 {
+            get {
+                object obj = ResourceManager.GetObject("SAM_gbXML_in3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SAM_gbXML_out {
             get {
                 object obj = ResourceManager.GetObject("SAM_gbXML_out", resourceCulture);
@@ -93,9 +103,39 @@ namespace SAM.Analytical.Grasshopper.gbXML.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SAM_gbXML_out3 {
+            get {
+                object obj = ResourceManager.GetObject("SAM_gbXML_out3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SAM_gbXML3 {
+            get {
+                object obj = ResourceManager.GetObject("SAM_gbXML3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SAM_Small {
             get {
                 object obj = ResourceManager.GetObject("SAM_Small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SAM_Small3 {
+            get {
+                object obj = ResourceManager.GetObject("SAM_Small3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

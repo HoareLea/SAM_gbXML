@@ -123,6 +123,18 @@
       <Version>13.0.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_gbXML3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_gbXML_in3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_gbXML_out3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAM_Small3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
