@@ -5,7 +5,7 @@
 <a href="https://github.com/HoareLea/SAM_gbXML"><img src="https://github.com/HoareLea/SAM_gbXML/blob/master/Grasshopper/SAM.Analytical.Grasshopper.gbXML/Resources/SAM_gbXML.png" align="left" hspace="10" vspace="6"></a>
 
 **SAM_gbXML** is part of SAM Toolkit that is designed to help export/import gbXML from SAM Analytical Model. Welcome and let's make the opensource journey continue. :handshake:
-SAM_gbXML is a C# library that provides functionality for working with gbXML files, a standard format used to exchange building information data.
+SAM_gbXML is a C# library that provides functionality for working with gbXML files, a standard format used to exchange building information data. It is a module of the Sustainable Analytical Model (SAM) software developed by [Michal Dengusiak](https://github.com/michaldengusiak) and [Jakub Ziolkowski](https://github.com/ZiolkowskiJakub).
 
 ## Features
 
