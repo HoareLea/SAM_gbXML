@@ -71,7 +71,7 @@ var errors = gbxmlFile.Validate();
 
 
 ## Contributing
-If you would like to contribute to SAM_SolarCalculator, please fork the repository and submit a pull request. Before submitting a pull request, please make sure that your code adheres to the coding standards and conventions used in the project.
+If you would like to contribute to SAM_gbXML, please fork the repository and submit a pull request. Before submitting a pull request, please make sure that your code adheres to the coding standards and conventions used in the project.
 
 
 ## Licence ##
