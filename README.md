@@ -23,7 +23,7 @@ To install **SAM** from .exe just download and run [latest installer](https://gi
 
 ## Usage
 
-Converting gbXML to SAM
+**Converting gbXML to SAM**<br />
 The library provides extension methods that allow you to easily convert gbXML geometry objects to SAM geometry objects. For example, to convert a gbXML opening object to a SAM aperture object, you can use the following code:
 
 ```csharp
@@ -34,7 +34,7 @@ using SAM.Analytical.gbXML;
 var gbxmlOpening = ...; // get the gbXML opening object
 var samAperture = gbxmlOpening.ToSAM();
 ```
-Analyzing gbXML geometry objects
+**Analyzing gbXML geometry objects**<br />
 The library also provides methods for analyzing gbXML geometry objects and calculating their properties. For example, to calculate the area of a gbXML polygon object, you can use the following code:
 
 ```csharp
@@ -46,7 +46,7 @@ var gbxmlPolygon = ...; // get the gbXML polygon object
 var area = gbxmlPolygon.GetArea();
 ```
 
-Creating gbXML geometry objects
+**Creating gbXML geometry objects**<br />
 You can also create gbXML geometry objects from scratch using the classes provided in the library. For example, to create a gbXML polygon object, you can use the following code:
 
 ```csharp
@@ -58,7 +58,7 @@ var vertices = new List<Point3D> { new Point3D(0, 0, 0), new Point3D(1, 0, 0), n
 var gbxmlPolygon = new Polygon(vertices);
 ```
 
-Validating gbXML files
+**Validating gbXML files**<br />
 The library provides methods for validating gbXML files. For example, to validate a gbXML file, you can use the following code:
 ```csharp
 using SAM.Geometry.gbXML;
