@@ -5,6 +5,12 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts an ApertureConstruction object to a gbXMLSerializer.WindowType object
+        /// </summary>
+        /// <param name="apertureConstruction">The ApertureConstruction object to be converted</param>
+        /// <param name="materialLibrary">The MaterialLibrary to be used for the conversion</param>
+        /// <returns>A gbXMLSerializer.WindowType object</returns>
         public static gbXMLSerializer.WindowType TogbXML(this ApertureConstruction apertureConstruction, MaterialLibrary materialLibrary)
         {
             if (apertureConstruction == null)
@@ -12,15 +18,17 @@ namespace SAM.Analytical.gbXML
                 return null;
             }
 
-            gbXMLSerializer.WindowType result = new gbXMLSerializer.WindowType();
-            result.Name = apertureConstruction.Name;
-            result.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.WindowType));
+            gbXMLSerializer.WindowType result = new();
+            {
 
-            result.Transmittance = apertureConstruction.Transmittances();
+                result.Name = apertureConstruction.Name;
+                result.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.WindowType));
+                result.Transmittance = apertureConstruction.Transmittances();
+            }
 
-            List<gbXMLSerializer.Glaze> glazes = new List<gbXMLSerializer.Glaze>();
-            List<gbXMLSerializer.Gap> gaps = new List<gbXMLSerializer.Gap>();
-            List<gbXMLSerializer.Frame> frames = new List<gbXMLSerializer.Frame>();
+            List<gbXMLSerializer.Glaze> glazes = new ();
+            List<gbXMLSerializer.Gap> gaps = new ();
+            List<gbXMLSerializer.Frame> frames = new ();
 
             int index = 1;
 
@@ -30,44 +38,53 @@ namespace SAM.Analytical.gbXML
                 foreach(ConstructionLayer constructionLayer in constructionLayers_Pane)
                 {
                     IMaterial material = constructionLayer?.Material(materialLibrary);
-                    if (material is GasMaterial)
+                    if (material is GasMaterial gasMaterial)
                     {
-                        GasMaterial gasMaterial = (GasMaterial)material;
+                        //GasMaterial gasMaterial = (GasMaterial)material;
 
-                        gbXMLSerializer.Gap gap = new gbXMLSerializer.Gap();
-                        gap.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Gap)) + "_" + index.ToString();
+                        //gbXMLSerializer.Gap gap = new gbXMLSerializer.Gap();
+                        //gap.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Gap)) + "_" + index.ToString();
 
-                        gap.Name = gasMaterial.Name;
-                        gap.Description = gasMaterial.Description;
+                        //gap.Name = gasMaterial.Name;
+                        //gap.Description = gasMaterial.Description;
+
+                        gbXMLSerializer.Gap gap = new()
+                        {
+                            id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Gap)) + "_" + index.ToString(),
+                            Name = gasMaterial.Name,
+                            Description = gasMaterial.Description
+                        };
 
                         if (!double.IsNaN(constructionLayer.Thickness))
                         {
-                            gap.Thickness = new gbXMLSerializer.Thickness();
-                            gap.Thickness.value = constructionLayer.Thickness;
-                            gap.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
+                            gap.Thickness = new gbXMLSerializer.Thickness
+                            {
+                                value = constructionLayer.Thickness,
+                                unit = gbXMLSerializer.lengthUnitEnum.Meters
+                            };
                         }
 
                         if (!double.IsNaN(gasMaterial.ThermalConductivity))
                         {
-                            gap.Conductivity = new gbXMLSerializer.Conductivity();
+                            gap.Conductivity = new ();
                             gap.Conductivity.value = gasMaterial.ThermalConductivity;
                             gap.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
                         }
 
                         if (!double.IsNaN(gasMaterial.Density))
                         {
-                            gap.Density = new gbXMLSerializer.Density();
+                            gap.Density = new ();
                             gap.Density.value = gasMaterial.Density;
                             gap.Density.unit = gbXMLSerializer.densityUnitEnum.KgPerCubicM;
                         }
 
                         gaps.Add(gap);
                     }
-                    else if (material is TransparentMaterial)
+                    if (material is TransparentMaterial transparentMaterial)
                     {
-                        TransparentMaterial transparentMaterial = (TransparentMaterial)material;
+                        //TransparentMaterial transparentMaterial = (TransparentMaterial)material;
 
-                        gbXMLSerializer.Glaze glaze = new gbXMLSerializer.Glaze();
+                        gbXMLSerializer.Glaze glaze = new ();
                         glaze.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Glaze)) + "_" + index.ToString();
 
                         glaze.Name = transparentMaterial.Name;
@@ -75,14 +92,14 @@ namespace SAM.Analytical.gbXML
 
                         if (!double.IsNaN(constructionLayer.Thickness))
                         {
-                            glaze.Thickness = new gbXMLSerializer.Thickness();
+                            glaze.Thickness = new ();
                             glaze.Thickness.value = constructionLayer.Thickness;
                             glaze.Thickness.unit = gbXMLSerializer.lengthUnitEnum.Meters;
                         }
 
                         if (!double.IsNaN(transparentMaterial.ThermalConductivity))
                         {
-                            glaze.Conductivity = new gbXMLSerializer.Conductivity();
+                            glaze.Conductivity = new ();
                             glaze.Conductivity.value = transparentMaterial.ThermalConductivity;
                             glaze.Conductivity.unit = gbXMLSerializer.conductivityUnitEnum.WPerMeterK;
                         }
@@ -94,11 +111,11 @@ namespace SAM.Analytical.gbXML
 
                         glazes.Add(glaze);
                     }
-                    else if (material is OpaqueMaterial)
+                    else if (material is OpaqueMaterial opaqueMaterial)
                     {
-                        OpaqueMaterial opaqueMaterial = (OpaqueMaterial)material;
+                        //OpaqueMaterial opaqueMaterial = (OpaqueMaterial)material;
 
-                        gbXMLSerializer.Frame frame = new gbXMLSerializer.Frame();
+                        gbXMLSerializer.Frame frame = new ();
                         frame.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Frame)) + "_" + index.ToString();
 
                         frame.Name = opaqueMaterial.Name;
@@ -108,7 +125,7 @@ namespace SAM.Analytical.gbXML
 
                         if (!double.IsNaN(constructionLayer.Thickness))
                         {
-                            frame.Width = new gbXMLSerializer.Width();
+                            frame.Width = new ();
                             frame.Width.value = constructionLayer.Thickness;
                             frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
                         }
@@ -123,16 +140,16 @@ namespace SAM.Analytical.gbXML
             List<ConstructionLayer> constructionLayer_Frame = apertureConstruction.FrameConstructionLayers;
             if(constructionLayer_Frame != null)
             {
-                List<gbXMLSerializer.Frame> frames_Temp = new List<gbXMLSerializer.Frame>();
+                List<gbXMLSerializer.Frame> frames_Temp = new ();
                 foreach (ConstructionLayer constructionLayer in constructionLayer_Frame)
                 {
                     IMaterial material = constructionLayer?.Material(materialLibrary);
 
-                    if (material is OpaqueMaterial)
+                    if (material is OpaqueMaterial opaqueMaterial)
                     {
-                        OpaqueMaterial opaqueMaterial = (OpaqueMaterial)material;
+                        //OpaqueMaterial opaqueMaterial = (OpaqueMaterial)material;
 
-                        gbXMLSerializer.Frame frame = new gbXMLSerializer.Frame();
+                        gbXMLSerializer.Frame frame = new ();
                         frame.id = Core.gbXML.Query.Id(apertureConstruction, typeof(gbXMLSerializer.Frame)) + "_" + index.ToString();
 
                         frame.Name = opaqueMaterial.Name;
@@ -142,7 +159,7 @@ namespace SAM.Analytical.gbXML
 
                         if(!double.IsNaN(constructionLayer.Thickness))
                         {
-                            frame.Width = new gbXMLSerializer.Width();
+                            frame.Width = new ();
                             frame.Width.value = constructionLayer.Thickness;
                             frame.Width.unit = gbXMLSerializer.lengthUnitEnum.Meters;
                         }

@@ -2,11 +2,19 @@
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// Provides methods for querying gbXML objects.
+    /// </summary>
     public static partial class Query
     {
+        /// <summary>
+        /// Returns the corresponding <see cref="Analytical.PanelType"/> for the specified <see cref="surfaceTypeEnum"/>.
+        /// </summary>
+        /// <param name="surfaceTypeEnum">The surface type.</param>
+        /// <returns>The corresponding <see cref="Analytical.PanelType"/>.</returns>
         public static PanelType PanelType(this surfaceTypeEnum surfaceTypeEnum)
         {
-            switch(surfaceTypeEnum)
+            switch (surfaceTypeEnum)
             {
                 case surfaceTypeEnum.Air:
                     return Analytical.PanelType.Air;

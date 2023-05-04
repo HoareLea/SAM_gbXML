@@ -8,8 +8,19 @@ using System.Linq;
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// This class contains methods to convert SAM materials to gbXML materials.
+    /// </summary>
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts BuildingModel to gbXML Building.
+        /// </summary>
+        /// <param name="buildingModel">BuildingModel to convert.</param>
+        /// <param name="name">Name of the Building.</param>
+        /// <param name="description">Description of the Building.</param>
+        /// <param name="tolerance">Tolerance for conversion. Default value is Tolerance.MicroDistance.</param>
+        /// <returns>gbXML Building.</returns>
         public static Building TogbXML(this BuildingModel buildingModel, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
             List<IPartition> partitions = buildingModel?.GetPartitions();

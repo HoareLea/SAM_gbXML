@@ -3,11 +3,19 @@ using System.Collections.Generic;
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// Provides extension methods to create gbXML serializer reflectances from Material object.
+    /// </summary>
     public static partial class Create
     {
+        /// <summary>
+        /// Returns an array of gbXML reflectances for the Material object.
+        /// </summary>
+        /// <param name="material">The Material object for which the reflectances are to be created.</param>
+        /// <returns>An array of gbXML reflectances for the Material object.</returns>
         public static gbXMLSerializer.Reflectance[] Reflectances(this Material material)
         {
-            if(material == null)
+            if (material == null)
             {
                 return null;
             }
@@ -18,6 +26,7 @@ namespace SAM.Analytical.gbXML
 
             System.Enum @enum;
 
+            // Create reflectance for ExternalEmissivity if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalEmissivity : TransparentMaterialParameter.ExternalEmissivity;
             if (material.TryGetValue(@enum, out double externalEmissivity))
             {
@@ -30,6 +39,7 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
+            // Create reflectance for ExternalLightReflectance if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalLightReflectance : TransparentMaterialParameter.ExternalLightReflectance;
             if (material.TryGetValue(@enum, out double externalLightReflectance))
             {
@@ -42,6 +52,7 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
+            // Create reflectance for ExternalSolarReflectance if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.ExternalSolarReflectance : TransparentMaterialParameter.ExternalSolarReflectance;
             if (material.TryGetValue(@enum, out double externalSolarReflectance))
             {
@@ -54,6 +65,7 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
+            // Create reflectance for InternalEmissivity if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalEmissivity : TransparentMaterialParameter.InternalEmissivity;
             if (material.TryGetValue(@enum, out double internalEmissivity))
             {
@@ -66,6 +78,7 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
+            // Create reflectance for InternalLightReflectance if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalLightReflectance : TransparentMaterialParameter.InternalLightReflectance;
             if (material.TryGetValue(@enum, out double internalLightReflectance))
             {
@@ -78,6 +91,7 @@ namespace SAM.Analytical.gbXML
                 reflectances.Add(reflectance);
             }
 
+            // Create reflectance for InternalSolarReflectance if it exists
             @enum = material is OpaqueMaterial ? OpaqueMaterialParameter.InternalSolarReflectance : TransparentMaterialParameter.InternalSolarReflectance;
             if (material.TryGetValue(@enum, out double internalSolarReflectance))
             {

@@ -4,6 +4,11 @@ namespace SAM.Analytical.gbXML
 {
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts gbXML material library to SAM material library
+        /// </summary>
+        /// <param name="gbXML">gbXML object containing material library</param>
+        /// <returns>SAM material library</returns>
         public static MaterialLibrary ToSAM_MaterialLibrary(this gbXMLSerializer.gbXML gbXML)
         {
             if (gbXML == null)

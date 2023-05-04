@@ -2,6 +2,12 @@
 {
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts a gbXML location to a SAM location with the specified tolerance for rounding coordinates.
+        /// </summary>
+        /// <param name="location">The gbXML location to convert.</param>
+        /// <param name="tolerance">The tolerance for rounding coordinates.</param>
+        /// <returns>A new SAM location object with the same values as the gbXML location.</returns>
         public static Location ToSAM(this gbXMLSerializer.Location location, double tolerance = Tolerance.MicroDistance)
         {
             if (location == null)

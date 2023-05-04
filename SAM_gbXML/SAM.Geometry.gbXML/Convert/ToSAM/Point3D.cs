@@ -3,8 +3,16 @@ using SAM.Geometry.Spatial;
 
 namespace SAM.Geometry.gbXML
 {
+    /// <summary>
+    /// Provides conversion methods between gbXML geometry objects and SAM geometry objects
+    /// </summary>
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts a <see cref="CartesianPoint"/> to a <see cref="SAM.Geometry.Spatial.Point3D"/>.
+        /// </summary>
+        /// <param name="cartesianPoint">The Cartesian point to convert.</param>
+        /// <returns>A <see cref="Point3D"/> if the conversion was successful, otherwise null.</returns>
         public static Point3D ToSAM(this CartesianPoint cartesianPoint)
         {
             if (cartesianPoint == null)
@@ -24,6 +32,5 @@ namespace SAM.Geometry.gbXML
 
             return new Point3D(x, y, z);
         }
-
     }
 }

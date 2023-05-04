@@ -2,8 +2,16 @@
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// This class contains extension methods that provide conversion between Analytical objects and their corresponding gbXML objects.
+    /// </summary>
     public static partial class Query
     {
+        /// <summary>
+        /// Converts a <see cref="PanelType"/> to a <see cref="surfaceTypeEnum"/>.
+        /// </summary>
+        /// <param name="panelType">The <see cref="PanelType"/> to be converted.</param>
+        /// <returns>The corresponding <see cref="surfaceTypeEnum"/>.</returns>
         public static surfaceTypeEnum SurfaceTypeEnum(this PanelType panelType)
         {
             if (panelType == Analytical.PanelType.Undefined)

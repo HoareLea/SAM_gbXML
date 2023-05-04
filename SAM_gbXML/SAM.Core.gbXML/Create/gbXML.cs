@@ -3,8 +3,16 @@ using System.Xml.Serialization;
 
 namespace SAM.Core.gbXML
 {
+    /// <summary>
+    /// Provides static methods for creating and serializing gbXML objects.
+    /// </summary>
     public static partial class Create
     {
+        /// <summary>
+        /// Provides methods for creating and serializing gbXML objects.
+        /// </summary>
+        /// <param name="path">The path to the gbXML file.</param>
+        /// <returns>The deserialized gbXML object, or null if the file cannot be read or deserialized.</returns>
         public static gbXMLSerializer.gbXML gbXML(this string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -35,6 +43,12 @@ namespace SAM.Core.gbXML
             return result;
         }
 
+        /// <summary>
+        /// Serializes the given gbXML object to a file at the given path.
+        /// </summary>
+        /// <param name="gbXML">The gbXML object to serialize.</param>
+        /// <param name="path">The path to write the serialized gbXML to.</param>
+        /// <returns>True if the serialization was successful, false otherwise.</returns>
         public static bool gbXML(this gbXMLSerializer.gbXML gbXML, string path)
         {
             if (gbXML == null || string.IsNullOrWhiteSpace(path))

@@ -4,8 +4,17 @@ using System.Collections.Generic;
 
 namespace SAM.Geometry.gbXML
 {
+    /// <summary>
+    /// Contains methods to convert geometry objects to gbXML format.
+    /// </summary>
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts an IClosedPlanar3D object to a PolyLoop object in gbXML format.
+        /// </summary>
+        /// <param name="closedPlanar3D">The IClosedPlanar3D object to convert.</param>
+        /// <param name="tolerance">The tolerance to use in the conversion process. Defaults to Core.Tolerance.MicroDistance.</param>
+        /// <returns>A PolyLoop object in gbXML format representing the IClosedPlanar3D object.</returns>
         public static PolyLoop TogbXML_PolyLoop(this IClosedPlanar3D closedPlanar3D, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (closedPlanar3D == null)
@@ -24,10 +33,10 @@ namespace SAM.Geometry.gbXML
                 point3Ds = ((ISegmentable3D)closedPlanar3D_Temp).GetPoints();
 
             if (point3Ds == null)
-                throw new System.NotImplementedException();
+                throw new System.NotImplementedException("Conversion to gbXML format is not implemented for the given geometry object.");
 
             bool? clockwise = Spatial.Query.Clockwise(closedPlanar3D_Temp, null, tolerance);
-            if(clockwise != null && clockwise.HasValue)
+            if (clockwise != null && clockwise.HasValue)
             {
                 if (!clockwise.Value)
                     point3Ds.Reverse();

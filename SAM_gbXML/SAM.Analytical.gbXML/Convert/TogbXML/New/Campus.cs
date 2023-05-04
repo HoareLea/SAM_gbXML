@@ -4,8 +4,19 @@ using System.Linq;
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// Class for converting BuildingModel to gbXML Campus object.
+    /// </summary>
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts a BuildingModel object to a gbXML Campus object.
+        /// </summary>
+        /// <param name="buildingModel">The BuildingModel to be converted.</param>
+        /// <param name="silverSpacing">The spacing for silver geometry (default value is Core.Tolerance.MacroDistance).</param>
+        /// <param name="tolerance_Angle">The tolerance for angle (default value is Core.Tolerance.Angle).</param>
+        /// <param name="tolerance_Distance">The tolerance for distance (default value is Core.Tolerance.Distance).</param>
+        /// <returns>A gbXML Campus object.</returns>
         public static Campus TogbXML_Campus(this BuildingModel buildingModel, double silverSpacing = Core.Tolerance.MacroDistance, double tolerance_Angle = Core.Tolerance.Angle, double tolerance_Distance = Core.Tolerance.Distance)
         {
             if (buildingModel == null)

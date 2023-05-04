@@ -4,6 +4,11 @@ namespace SAM.Core.gbXML
 {
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts the gbXML object to its XML representation in string format.
+        /// </summary>
+        /// <param name="gbXML">The gbXML object to convert.</param>
+        /// <returns>A string containing the XML representation of the gbXML object.</returns>
         public static string ToString(this gbXMLSerializer.gbXML gbXML)
         {
             if (gbXML == null)

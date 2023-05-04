@@ -6,6 +6,12 @@ namespace SAM.Geometry.gbXML
 {
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts a <see cref="Shell"/> object to a <see cref="ClosedShell"/> object in gbXML format.
+        /// </summary>
+        /// <param name="shell">The input <see cref="Shell"/> object to be converted.</param>
+        /// <param name="tolerance">The tolerance for comparison. The default value is <see cref="Core.Tolerance.MicroDistance"/>.</param>
+        /// <returns>A <see cref="ClosedShell"/> object in gbXML format.</returns>
         public static ClosedShell TogbXML(this Shell shell, double tolerance = Core.Tolerance.MicroDistance)
         {
             List<Face3D> face3Ds = shell?.Face3Ds;
@@ -27,6 +33,5 @@ namespace SAM.Geometry.gbXML
 
             return closedShell;
         }
-
     }
 }

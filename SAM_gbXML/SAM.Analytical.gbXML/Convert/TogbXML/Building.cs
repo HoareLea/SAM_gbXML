@@ -8,37 +8,67 @@ using System.Linq;
 
 namespace SAM.Analytical.gbXML
 {
+    /// <summary>
+    /// Define static class containing extension methods for AdjacencyCluster
+    /// </summary>
     public static partial class Convert
     {
+        /// <summary>
+        /// Converts AdjacencyCluster to gbXML Building
+        /// </summary>
+        /// <param name="adjacencyCluster">AdjacencyCluster</param>
+        /// <param name="name">Name of gbXML Building</param>
+        /// <param name="description">Description of gbXML Building</param>
+        /// <param name="tolerance">Tolerance</param>
+        /// <returns>gbXML Building</returns>
         public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
+            // Get all panels from the adjacency cluster
             List<Panel> panels = adjacencyCluster?.GetPanels();
+
+            // Return null if there are no panels
             if (panels == null || panels.Count == 0)
                 return null;
 
+            // Get all spaces from the adjacency cluster
             List<Space> spaces = adjacencyCluster.GetSpaces();
+
+            // Return null if there are no spaces
             if (spaces == null)
                 return null;
 
             //Dictionary of Minimal Elevations and List of Panels
+            // Create a dictionary of minimal elevations and the panels that lie at that elevation
             Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
 
             //Dictionary of gbXML BuildingStoreys and its elevations
-            Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new Dictionary<BuildingStorey, double>();
+            // Create a dictionary to store the building storeys and their elevations
+            Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new ();
 
             //Dictionary of SAM Panels related buildingSorey, minimal elevation and maximal elevation
-            Dictionary<Panel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new Dictionary<Panel, Tuple<BuildingStorey, double, double, double>>();
+            // Create a dictionary to store the relationship between panels, building storeys, and their elevations
+            Dictionary<Panel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new ();
 
-            foreach(KeyValuePair<double, List<Panel>> keyValuePair in dictionary_MinElevations)
+            // Iterate through each elevation in the dictionary
+            foreach (KeyValuePair<double, List<Panel>> keyValuePair in dictionary_MinElevations)
             {
+                // Create a new building storey for the elevation and add it to the dictionary
                 BuildingStorey buildingStorey = Architectural.Create.Level(keyValuePair.Key).TogbXML(tolerance);
                 dictionary_buildingStoreys[buildingStorey] = keyValuePair.Key;
-                foreach(Panel panel in keyValuePair.Value)
-                    dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double, double> (buildingStorey, keyValuePair.Key, panel.MinElevation(), panel.MaxElevation());
+
+                // Iterate through each panel at the current elevation
+                foreach (Panel panel in keyValuePair.Value)
+                    // Add the panel to the dictionary with the associated building storey, minimal elevation, and maximal elevation
+                    dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double, double>(buildingStorey, keyValuePair.Key, panel.MinElevation(), panel.MaxElevation());
             }
 
-            List<gbXMLSerializer.Space> spaces_gbXML = new List<gbXMLSerializer.Space>();
-            Dictionary<Guid, SpaceBoundary> dictionary = new Dictionary<Guid, SpaceBoundary>();
+            // Create a list to store the gbXML spaces
+            List<gbXMLSerializer.Space> spaces_gbXML = new ();
+
+            // Create a dictionary to store the relationship between space boundaries and their IDs
+            Dictionary<Guid, SpaceBoundary> dictionary = new ();
+
+            // Iterate through each space in the adjacency cluster
             foreach (Space space in spaces)
             {
                 List<Panel> panels_Space = adjacencyCluster.GetRelatedObjects<Panel>(space);
@@ -49,6 +79,8 @@ namespace SAM.Analytical.gbXML
                 double elevation_Min = panels_Space.ConvertAll(x => dictionary_Panels[x].Item3).Min();
                 double elevation_Max = panels_Space.ConvertAll(x => dictionary_Panels[x].Item4).Max();
                 BuildingStorey buildingStorey = null;
+
+                // Finding BuildingStorey based on Elevation level of the panels in the Space
                 foreach (KeyValuePair<BuildingStorey, double> keyValuePair in dictionary_buildingStoreys)
                 {
                     if (keyValuePair.Value.Equals(elevation_Level))
@@ -170,14 +202,14 @@ namespace SAM.Analytical.gbXML
                     continue;
                 }
 
-                List<SpaceBoundary> spaceBoundaries = new List<SpaceBoundary>();
+                List<SpaceBoundary> spaceBoundaries = new ();
                 foreach (Panel panel in panels_Space)
                 {
                     if (panel == null)
                         continue;
 
-                    SpaceBoundary spaceBoundary = null;
-                    if(!dictionary.TryGetValue(panel.Guid, out spaceBoundary))
+                    SpaceBoundary spaceBoundary = new ();
+                    if (!dictionary.TryGetValue(panel.Guid, out spaceBoundary))
                     {
                         spaceBoundary = panel.TogbXML_SpaceBoundary(tolerance);
                         dictionary[panel.Guid] = spaceBoundary;
@@ -186,7 +218,7 @@ namespace SAM.Analytical.gbXML
                     spaceBoundaries.Add(spaceBoundary);
                 }
 
-                gbXMLSerializer.Space space_gbXML = new gbXMLSerializer.Space();
+                gbXMLSerializer.Space space_gbXML = new ();
                 space_gbXML.Name = space.Name;
                 space_gbXML.spacearea = new Area() { val = area.ToString() };
                 space_gbXML.spacevol = new Volume() { val = volume.ToString() };
@@ -200,7 +232,7 @@ namespace SAM.Analytical.gbXML
                 spaces_gbXML.Add(space_gbXML);
             }
 
-            Building building = new Building();
+            Building building = new ();
             building.id = Core.gbXML.Query.Id(adjacencyCluster, typeof(Building));
             building.Name = name;
             building.Description = description;

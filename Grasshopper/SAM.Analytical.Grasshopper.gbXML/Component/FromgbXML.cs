@@ -6,6 +6,9 @@ using System;
 
 namespace SAM.Geometry.Grasshopper
 {
+    /// <summary>
+    /// A Grasshopper component that converts a gbXML file into a SAM Analytical Model.
+    /// </summary>
     public class FromgbXML : GH_SAMComponent
     {
         /// <summary>
@@ -60,18 +63,23 @@ namespace SAM.Geometry.Grasshopper
         /// </param>
         protected override void SolveInstance(IGH_DataAccess dataAccess)
         {
+            // Set the default value of the second output parameter to false.
             dataAccess.SetData(1, false);
 
             bool run = false;
+            // Get the value of the second input parameter, and display an error message if it's invalid.
             if (!dataAccess.GetData(2, ref run))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
                 return;
             }
+
+            // If the value of the second input parameter is false, return without executing the rest of the code.
             if (!run)
                 return;
 
             string path = null;
+            // Get the value of the first input parameter, and display an error message if it's invalid.
             if (!dataAccess.GetData(0, ref path) || string.IsNullOrWhiteSpace(path))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
@@ -79,24 +87,33 @@ namespace SAM.Geometry.Grasshopper
             }
 
             double tolerance = 0.00001;
+            // Get the value of the third input parameter, and display an error message if it's invalid.
             if (!dataAccess.GetData(1, ref tolerance) || double.IsNaN(tolerance))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid data");
                 return;
             }
 
+            // Create an AnalyticalModel object using the gbXML.Create.AnalyticalModel method.
+            // The method takes a file path, a MacroDistance object, and a tolerance value as input parameters.
             Analytical.AnalyticalModel analyticalModel = Analytical.gbXML.Create.AnalyticalModel(path, Core.Tolerance.MacroDistance, tolerance);
 
+            // Get the adjacency cluster from the AnalyticalModel object, if it exists.
             Analytical.AdjacencyCluster adjacencyCluster = analyticalModel?.AdjacencyCluster;
-            if(adjacencyCluster != null)
+            if (adjacencyCluster != null)
             {
+                // Update the area and volume properties of the adjacency cluster.
                 Analytical.Modify.UpdateAreaAndVolume(adjacencyCluster, false);
+                // Create a new AnalyticalModel object using the modified adjacency cluster.
                 analyticalModel = new Analytical.AnalyticalModel(analyticalModel, adjacencyCluster);
             }
 
+            // Set the first output parameter to a GooAnalyticalModel object that wraps the AnalyticalModel object.
             dataAccess.SetData(0, new GooAnalyticalModel(analyticalModel));
+            // Set the second output parameter to true.
             dataAccess.SetData(1, true);
 
+            // This line is commented out, but it's a good practice to add comments for debugging purposes.
             //AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Cannot split segments");
         }
     }
