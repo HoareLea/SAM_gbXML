@@ -28,10 +28,17 @@ namespace SAM.Geometry.gbXML
             foreach (CartesianPoint cartesianPoint in cartesianPoints)
             {
                 Point3D point3D = cartesianPoint.ToSAM();
-                if (point3D == null)
+                if (point3D == null || !point3D.IsValid())
+                {
                     return null;
+                }
 
                 point3Ds.Add(point3D);
+            }
+
+            if(point3Ds.Count < 3)
+            {
+                return null;
             }
 
             // Calculate the origin and normal of the polygon
@@ -42,11 +49,28 @@ namespace SAM.Geometry.gbXML
                 normal += (point3Ds.ElementAt(i) - origin).CrossProduct(point3Ds.ElementAt(i + 1) - origin);
             }
 
+            if(!normal.IsValid())
+            {
+                return null;
+            }
+
             // Normalize the normal vector
             normal = normal.Unit;
 
             // Create a SAM Geometry Spatial Polygon3D using the origin, normal, and points
-            return Spatial.Create.Polygon3D(normal, point3Ds);
+            Polygon3D result = Spatial.Create.Polygon3D(normal, point3Ds);
+            if(result == null || !result.IsValid())
+            {
+                return null;
+            }
+
+            double area = result.GetArea();
+            if(area < tolerance)
+            {
+                return null;
+            }
+
+            return result; ;
         }
 
         /// <summary>

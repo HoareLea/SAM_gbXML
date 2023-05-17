@@ -20,13 +20,13 @@ namespace SAM.Analytical.gbXML
             }
 
             // Extract necessary properties from gbXML Material
-            double thermalConductivity = material.Conductivity.Value();
-            double specificHeatCapacity = material.SpecificHeat.Value();
-            double density = material.Density.Value();
+            double thermalConductivity = material.Conductivity == null ? double.NaN : material.Conductivity.Value();
+            double specificHeatCapacity = material.SpecificHeat == null ? double.NaN : material.SpecificHeat.Value();
+            double density = material.Density == null ? double.NaN :material.Density.Value();
 
             Material result = null;
 
-            double rValue = material.RValue.Value();
+            double rValue = material.RValue == null ? double.NaN : material.RValue.Value();
             if (double.IsNaN(rValue) || rValue == 0)
             {
                 // If the material is opaque, create an OpaqueMaterial object
@@ -39,7 +39,7 @@ namespace SAM.Analytical.gbXML
                 result.SetValue(GasMaterialParameter.HeatTransferCoefficient, 1 / rValue);
             }
 
-            double thickness = material.Thickness.Value();
+            double thickness = material.Thickness == null ? double.NaN : material.Thickness.Value();
             if (!double.IsNaN(thickness))
             {
                 // Set the material's default thickness, if available
