@@ -28,7 +28,7 @@ namespace SAM.Analytical.gbXML
             foreach (SAM.Analytical.Panel panel in panels)
             {
                 // Get the face3D of the panel, convert it to a PolyLoop, and add it to polyLoops if not null
-                PolyLoop polyLoop = panel?.GetFace3D(false)?.TogbXML_PolyLoop(tolerance);
+                PolyLoop polyLoop = panel?.GetFace3D()?.TogbXML_PolyLoop(tolerance);
                 if (polyLoop != null)
                     polyLoops.Add(polyLoop);
             }
