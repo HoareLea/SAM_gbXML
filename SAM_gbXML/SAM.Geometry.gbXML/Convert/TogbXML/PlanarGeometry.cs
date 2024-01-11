@@ -30,7 +30,7 @@ namespace SAM.Geometry.gbXML
         /// <param name="face3DObject">The <see cref="Spatial.IFace3DObject"/> object to convert.</param>
         /// <param name="tolerance">The tolerance to use for the conversion (optional, default is <see cref="Core.Tolerance.MicroDistance"/>).</param>
         /// <returns>A <see cref="PlanarGeometry"/> object in gbXML format.</returns>
-        public static PlanarGeometry TogbXML_PlanarGeometry(this Spatial.IFace3DObject face3DObject, double tolerance = Core.Tolerance.MicroDistance)
+        public static PlanarGeometry TogbXML_PlanarGeometry(this Object.Spatial.IFace3DObject face3DObject, double tolerance = Core.Tolerance.MicroDistance)
         {
             return TogbXML(face3DObject?.Face3D, tolerance);
         }

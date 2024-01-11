@@ -1,4 +1,5 @@
 ﻿using gbXMLSerializer;
+using SAM.Geometry.Object.Spatial;
 using SAM.Geometry.Spatial;
 
 namespace SAM.Geometry.gbXML

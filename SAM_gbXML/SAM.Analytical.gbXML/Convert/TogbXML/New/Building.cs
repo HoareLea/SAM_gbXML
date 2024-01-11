@@ -5,6 +5,7 @@ using SAM.Geometry.Spatial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SAM.Geometry.Object.Spatial;
 
 namespace SAM.Analytical.gbXML
 {
@@ -32,7 +33,7 @@ namespace SAM.Analytical.gbXML
                 return null;
 
             //Dictionary of Minimal Elevations and List of Panels
-            Dictionary<double, List<IPartition>> dictionary_MinElevations = Geometry.Spatial.Query.ElevationDictionary(partitions, Tolerance.MacroDistance);
+            Dictionary<double, List<IPartition>> dictionary_MinElevations = Geometry.Object.Spatial.Query.ElevationDictionary(partitions, Tolerance.MacroDistance);
 
             //Dictionary of gbXML BuildingStoreys and its elevations
             Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new Dictionary<BuildingStorey, double>();
