@@ -25,14 +25,14 @@ namespace SAM.Analytical.gbXML
         public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
             // Get all panels from the adjacency cluster
-            List<Panel> panels = adjacencyCluster?.GetPanels();
+            List<IPanel> panels = adjacencyCluster?.GetObjects<IPanel>();
 
             // Return null if there are no panels
             if (panels == null || panels.Count == 0)
                 return null;
 
             // Get all spaces from the adjacency cluster
-            List<Space> spaces = adjacencyCluster.GetSpaces();
+            List<ISpace> spaces = adjacencyCluster.GetObjects<ISpace>();
 
             // Return null if there are no spaces
             if (spaces == null)
@@ -40,7 +40,7 @@ namespace SAM.Analytical.gbXML
 
             //Dictionary of Minimal Elevations and List of Panels
             // Create a dictionary of minimal elevations and the panels that lie at that elevation
-            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
+            Dictionary<double, List<IPanel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
 
             //Dictionary of gbXML BuildingStoreys and its elevations
             // Create a dictionary to store the building storeys and their elevations
@@ -51,7 +51,7 @@ namespace SAM.Analytical.gbXML
             Dictionary<IPanel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new();
 
             // Iterate through each elevation in the dictionary
-            foreach (KeyValuePair<double, List<Panel>> keyValuePair in dictionary_MinElevations)
+            foreach (KeyValuePair<double, List<IPanel>> keyValuePair in dictionary_MinElevations)
             {
                 // Create a new building storey for the elevation and add it to the dictionary
                 BuildingStorey buildingStorey = Architectural.Create.Level(keyValuePair.Key).TogbXML(tolerance);
@@ -250,7 +250,7 @@ namespace SAM.Analytical.gbXML
             building.Name = name;
             building.Description = description;
             building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
-            building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
+            building.Area = Analytical.Query.Area(panels.FindAll(x => x is Panel).ConvertAll(x => (Panel)x), PanelGroup.Floor);
             building.buildingType = buildingTypeEnum.Office;
             building.Spaces = spaces_gbXML.ToArray();
 

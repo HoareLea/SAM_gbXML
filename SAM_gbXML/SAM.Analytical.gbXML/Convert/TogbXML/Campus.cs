@@ -63,7 +63,7 @@ namespace SAM.Analytical.gbXML
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(analyticalModel.Name, analyticalModel.Description, tolerance) };
 
                 // Get the list of Panel objects in the adjacency cluster.
-                List<Panel> panels = adjacencyCluster.GetPanels();
+                List<IPanel> panels = adjacencyCluster.GetObjects<IPanel>();
 
                 if (panels != null)
                 {
@@ -73,12 +73,12 @@ namespace SAM.Analytical.gbXML
                     // Loop through each panel and create a Surface object representing it.
                     for (int i = 0; i < panels.Count; i++)
                     {
-                        Panel panel = panels[i];
+                        IPanel panel = panels[i];
                         if (panel == null)
                             continue;
 
                         // Get the list of Space objects that are adjacent to the panel.
-                        List<Space> spaces = adjacencyCluster.GetRelatedObjects<Space>(panel);
+                        List<ISpace> spaces = adjacencyCluster.GetRelatedObjects<ISpace>(panel);
 
                         if (spaces != null && spaces.Count > 1)
                         {
@@ -86,7 +86,7 @@ namespace SAM.Analytical.gbXML
                             //https://www.gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link7
 
                             // Sort the list of Space objects in the correct order.
-                            SortedDictionary<int, Space> sortedDictionary = new();
+                            SortedDictionary<int, ISpace> sortedDictionary = new();
                             foreach (var space in spaces)
                             {
                                 sortedDictionary[adjacencyCluster.GetIndex(space)] = space;

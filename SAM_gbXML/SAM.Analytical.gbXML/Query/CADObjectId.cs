@@ -12,7 +12,7 @@ namespace SAM.Analytical.gbXML
         /// <param name="panel">The Panel object to generate a CADObjectId for.</param>
         /// <param name="cADObjectIdSufix">An optional suffix to append to the generated CADObjectId.</param>
         /// <returns>A CADObjectId object representing the specified Panel object.</returns>
-        public static CADObjectId CADObjectId(this Panel panel, int cADObjectIdSufix = -1)
+        public static CADObjectId CADObjectId(this IPanel panel, int cADObjectIdSufix = -1)
         {
             // Check for null input
             if (panel == null)
