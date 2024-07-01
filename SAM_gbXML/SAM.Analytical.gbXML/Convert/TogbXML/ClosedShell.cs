@@ -15,7 +15,7 @@ namespace SAM.Analytical.gbXML
         /// <param name="panels">The collection of SAM Analytical Panels to convert.</param>
         /// <param name="tolerance">The tolerance to use for the conversion.</param>
         /// <returns>The resulting ClosedShell in gbXML format.</returns>
-        public static ClosedShell TogbXML(this IEnumerable<SAM.Analytical.Panel> panels, double tolerance = Core.Tolerance.MicroDistance)
+        public static ClosedShell TogbXML(this IEnumerable<IPanel> panels, double tolerance = Core.Tolerance.MicroDistance)
         {
             // Check if panels is null, and return null if so
             if (panels == null)
@@ -25,10 +25,10 @@ namespace SAM.Analytical.gbXML
             List<PolyLoop> polyLoops = new List<PolyLoop>();
 
             // Loop through each panel in panels
-            foreach (SAM.Analytical.Panel panel in panels)
+            foreach (IPanel panel in panels)
             {
                 // Get the face3D of the panel, convert it to a PolyLoop, and add it to polyLoops if not null
-                PolyLoop polyLoop = panel?.GetFace3D()?.TogbXML_PolyLoop(tolerance);
+                PolyLoop polyLoop = panel?.Face3D?.TogbXML_PolyLoop(tolerance);
                 if (polyLoop != null)
                     polyLoops.Add(polyLoop);
             }
