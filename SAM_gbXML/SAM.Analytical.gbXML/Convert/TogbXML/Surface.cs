@@ -54,7 +54,7 @@ namespace SAM.Analytical.gbXML
             if (adjacentSpaces != null && adjacentSpaces.Count > 0)
             {
                 List<AdjacentSpaceId> adjacentSpaceIds = new List<AdjacentSpaceId>();
-                foreach (Space space in adjacentSpaces)
+                foreach (ISpace space in adjacentSpaces)
                 {
                     // Get the AdjacentSpaceId object for the space and add it to the list
                     AdjacentSpaceId adjacentSpaceId = Query.AdjacentSpaceId(space);
