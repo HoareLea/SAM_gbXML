@@ -58,7 +58,7 @@ namespace SAM.Analytical.gbXML
                 dictionary_buildingStoreys[buildingStorey] = keyValuePair.Key;
 
                 // Iterate through each panel at the current elevation
-                foreach (Panel panel in keyValuePair.Value)
+                foreach (IPanel panel in keyValuePair.Value)
                     // Add the panel to the dictionary with the associated building storey, minimal elevation, and maximal elevation
                     dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double, double>(buildingStorey, keyValuePair.Key, panel.MinElevation(), panel.MaxElevation());
             }
