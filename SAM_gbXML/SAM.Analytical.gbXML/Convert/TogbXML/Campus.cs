@@ -75,7 +75,9 @@ namespace SAM.Analytical.gbXML
                     {
                         IPanel panel = panels[i];
                         if (panel == null)
+                        {
                             continue;
+                        }
 
                         // Get the list of Space objects that are adjacent to the panel.
                         List<ISpace> spaces = adjacencyCluster.GetRelatedObjects<ISpace>(panel);
@@ -87,7 +89,7 @@ namespace SAM.Analytical.gbXML
 
                             // Sort the list of Space objects in the correct order.
                             SortedDictionary<int, ISpace> sortedDictionary = new();
-                            foreach (var space in spaces)
+                            foreach (ISpace space in spaces)
                             {
                                 sortedDictionary[adjacencyCluster.GetIndex(space)] = space;
                             }
@@ -97,11 +99,15 @@ namespace SAM.Analytical.gbXML
                         // Convert the Panel to a gbXML Surface object and add it to the list of surfaces
                         Surface surface = panel.TogbXML(spaces, i + 1, count_opening, tolerance);
                         if (surface != null)
+                        {
                             surfaces.Add(surface);
+                        }
 
                         // If the Surface has openings, add the number of openings to the count
                         if (surface.Opening != null)
+                        {
                             count_opening += surface.Opening.Length;
+                        }
 
                     }
                     // Convert the list of surfaces to an array and assign it to the Campus
