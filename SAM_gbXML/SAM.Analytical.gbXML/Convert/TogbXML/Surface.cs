@@ -15,7 +15,7 @@ namespace SAM.Analytical.gbXML
         /// <param name="cADObjectIdSufix_Opening">Suffix to add to CAD Object ID of openings</param>
         /// <param name="tolerance">Tolerance value for geometric calculations</param>
         /// <returns>A Surface object for gbXML serialization</returns>
-        public static Surface TogbXML(this IPanel panel, List<ISpace> adjacentSpaces = null, int cADObjectIdSufix_Surface = -1, int cADObjectIdSufix_Opening = -1, double tolerance = Core.Tolerance.MicroDistance)
+        public static Surface TogbXML(this IPanel panel, List<ISpace> adjacentSpaces = null, int cADObjectIdSufix_Surface = -1, int cADObjectIdSufix_Opening = -1, bool flipSurface = false, double tolerance = Core.Tolerance.MicroDistance)
         {
             // Return null if the panel is null
             if (panel == null)
@@ -25,6 +25,11 @@ namespace SAM.Analytical.gbXML
             SAM.Geometry.Spatial.Face3D face3D = panel.Face3D;
             if (face3D == null)
                 return null;
+
+            if(flipSurface)
+            {
+                face3D.FlipNormal();
+            }
 
             // Create a new Surface object
             Surface surface = new Surface();

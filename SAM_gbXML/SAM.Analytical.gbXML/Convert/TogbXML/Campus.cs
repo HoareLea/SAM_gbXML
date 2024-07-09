@@ -91,13 +91,19 @@ namespace SAM.Analytical.gbXML
                             SortedDictionary<int, ISpace> sortedDictionary = new();
                             foreach (ISpace space in spaces)
                             {
-                                sortedDictionary[adjacencyCluster.GetIndex(space)] = space;
+                                sortedDictionary[adjacencyCluster.GetIndex(space, typeof(ISpace))] = space;
                             }
                             spaces = sortedDictionary.Values.ToList();
                         }
 
+                        bool flipSurface = false;
+                        if(spaces != null && spaces.Count > 1 && spaces[1] is ExternalSpace)
+                        {
+                            flipSurface = true;
+                        }
+
                         // Convert the Panel to a gbXML Surface object and add it to the list of surfaces
-                        Surface surface = panel.TogbXML(spaces, i + 1, count_opening, tolerance);
+                        Surface surface = panel.TogbXML(spaces, i + 1, count_opening, flipSurface, tolerance);
                         if (surface != null)
                         {
                             surfaces.Add(surface);
