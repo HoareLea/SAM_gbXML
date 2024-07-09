@@ -12,7 +12,7 @@ namespace SAM.Analytical.gbXML
         /// <param name="space">The space object that the shell geometry belongs to.</param>
         /// <param name="tolerance">The tolerance to use for the conversion.</param>
         /// <returns>The converted shell geometry object.</returns>
-        public static ShellGeometry TogbXML(this IEnumerable<Panel> panels, Space space, double tolerance = Core.Tolerance.MicroDistance)
+        public static ShellGeometry TogbXML(this IEnumerable<IPanel> panels, ISpace space, double tolerance = Core.Tolerance.MicroDistance)
         {
             if (panels == null || space == null)
                 return null;

@@ -11,7 +11,7 @@ namespace SAM.Analytical.gbXML
         /// </summary>
         /// <param name="space">The space to retrieve the adjacent space identifier from.</param>
         /// <returns>An AdjacentSpaceId object containing the adjacent space identifier.</returns>
-        public static AdjacentSpaceId AdjacentSpaceId(this Space space)
+        public static AdjacentSpaceId AdjacentSpaceId(this ISpace space)
         {
             // If the input space is null, return null
             if (space == null)

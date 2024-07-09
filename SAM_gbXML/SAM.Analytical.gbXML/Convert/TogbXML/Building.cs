@@ -25,14 +25,14 @@ namespace SAM.Analytical.gbXML
         public static Building TogbXML(this AdjacencyCluster adjacencyCluster, string name, string description, double tolerance = Tolerance.MicroDistance)
         {
             // Get all panels from the adjacency cluster
-            List<Panel> panels = adjacencyCluster?.GetPanels();
+            List<IPanel> panels = adjacencyCluster?.GetObjects<IPanel>();
 
             // Return null if there are no panels
             if (panels == null || panels.Count == 0)
                 return null;
 
             // Get all spaces from the adjacency cluster
-            List<Space> spaces = adjacencyCluster.GetSpaces();
+            List<ISpace> spaces = adjacencyCluster.GetObjects<ISpace>();
 
             // Return null if there are no spaces
             if (spaces == null)
@@ -40,41 +40,43 @@ namespace SAM.Analytical.gbXML
 
             //Dictionary of Minimal Elevations and List of Panels
             // Create a dictionary of minimal elevations and the panels that lie at that elevation
-            Dictionary<double, List<Panel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
+            Dictionary<double, List<IPanel>> dictionary_MinElevations = Analytical.Query.MinElevationDictionary(panels, true, Tolerance.MacroDistance);
 
             //Dictionary of gbXML BuildingStoreys and its elevations
             // Create a dictionary to store the building storeys and their elevations
-            Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new ();
+            Dictionary<BuildingStorey, double> dictionary_buildingStoreys = new();
 
             //Dictionary of SAM Panels related buildingSorey, minimal elevation and maximal elevation
             // Create a dictionary to store the relationship between panels, building storeys, and their elevations
-            Dictionary<Panel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new ();
+            Dictionary<IPanel, Tuple<BuildingStorey, double, double, double>> dictionary_Panels = new();
 
             // Iterate through each elevation in the dictionary
-            foreach (KeyValuePair<double, List<Panel>> keyValuePair in dictionary_MinElevations)
+            foreach (KeyValuePair<double, List<IPanel>> keyValuePair in dictionary_MinElevations)
             {
                 // Create a new building storey for the elevation and add it to the dictionary
                 BuildingStorey buildingStorey = Architectural.Create.Level(keyValuePair.Key).TogbXML(tolerance);
                 dictionary_buildingStoreys[buildingStorey] = keyValuePair.Key;
 
                 // Iterate through each panel at the current elevation
-                foreach (Panel panel in keyValuePair.Value)
+                foreach (IPanel panel in keyValuePair.Value)
                     // Add the panel to the dictionary with the associated building storey, minimal elevation, and maximal elevation
                     dictionary_Panels[panel] = new Tuple<BuildingStorey, double, double, double>(buildingStorey, keyValuePair.Key, panel.MinElevation(), panel.MaxElevation());
             }
 
             // Create a list to store the gbXML spaces
-            List<gbXMLSerializer.Space> spaces_gbXML = new ();
+            List<gbXMLSerializer.Space> spaces_gbXML = new();
 
             // Create a dictionary to store the relationship between space boundaries and their IDs
-            Dictionary<Guid, SpaceBoundary> dictionary = new ();
+            Dictionary<Guid, SpaceBoundary> dictionary = new();
 
             // Iterate through each space in the adjacency cluster
-            foreach (Space space in spaces)
+            foreach (ISpace space in spaces)
             {
-                List<Panel> panels_Space = adjacencyCluster.GetRelatedObjects<Panel>(space);
+                List<IPanel> panels_Space = adjacencyCluster.GetRelatedObjects<IPanel>(space);
                 if (panels_Space == null || panels_Space.Count == 0)
+                {
                     continue;
+                }
 
                 double elevation_Level = panels_Space.ConvertAll(x => dictionary_Panels[x].Item2).Min();
                 double elevation_Min = panels_Space.ConvertAll(x => dictionary_Panels[x].Item3).Min();
@@ -92,16 +94,24 @@ namespace SAM.Analytical.gbXML
                 }
 
                 if (buildingStorey == null)
-                    continue;
-
-                if(!space.TryGetValue(Analytical.SpaceParameter.Volume, out double volume))
                 {
-                    volume = double.NaN;
+                    continue;
                 }
 
-                if (!space.TryGetValue(Analytical.SpaceParameter.Area, out double area))
+                double volume = double.NaN;
+                double area = double.NaN;
+
+                if (space is IParameterizedSAMObject)
                 {
-                    area = double.NaN;
+                    if (!((IParameterizedSAMObject)space).TryGetValue(Analytical.SpaceParameter.Volume, out volume))
+                    {
+                        volume = double.NaN;
+                    }
+
+                    if (!((IParameterizedSAMObject)space).TryGetValue(Analytical.SpaceParameter.Area, out area))
+                    {
+                        area = double.NaN;
+                    }
                 }
 
                 Face3D face3D = null;
@@ -110,7 +120,7 @@ namespace SAM.Analytical.gbXML
                 BoundingBox3D boundingBox3D = shell?.GetBoundingBox();
                 if (shell != null && boundingBox3D != null)
                 {
-                    if(double.IsNaN(volume))
+                    if (double.IsNaN(volume))
                     {
                         volume = shell.Volume(tolerance: tolerance);
                     }
@@ -123,14 +133,14 @@ namespace SAM.Analytical.gbXML
                         face3Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
                         if (face3Ds.Count != 0)
                         {
-                            if(double.IsNaN(area))
+                            if (double.IsNaN(area))
                             {
                                 area = face3Ds.ConvertAll(x => x.GetArea()).Sum();
                             }
 
                             face3Ds = face3Ds.Union(tolerance);
 
-                            if(face3Ds.Count > 1)
+                            if (face3Ds.Count > 1)
                             {
                                 face3Ds.Sort((x, y) => y.GetArea().CompareTo(x.GetArea()));
                             }
@@ -143,11 +153,11 @@ namespace SAM.Analytical.gbXML
 
                 if (double.IsNaN(area) || face3D == null)
                 {
-                    List<Panel> panels_PlanarGeometry = panels_Space.FindAll(x => x.PanelType.PanelGroup() == PanelGroup.Floor || (x.Normal.AlmostSimilar(Vector3D.WorldZ.GetNegated()) && dictionary_Panels[x].Item3 == elevation_Min));
+                    List<IPanel> panels_PlanarGeometry = panels_Space.FindAll(x => (x is Panel && ((Panel)x).PanelType.PanelGroup() == PanelGroup.Floor) || (Vector3D.WorldZ.GetNegated().AlmostSimilar(x?.Face3D?.GetPlane()?.Normal) && dictionary_Panels[x].Item3 == elevation_Min));
                     //panels_PlanarGeometry = panels_PlanarGeometry?.MergeCoplanarPanels(Tolerance.MacroDistance, false, false, Tolerance.MacroDistance);
                     if (panels_PlanarGeometry != null || panels_PlanarGeometry.Count != 0)
                     {
-                        List<Face3D> face3Ds = panels_PlanarGeometry.ConvertAll(x => x.GetFace3D());
+                        List<Face3D> face3Ds = panels_PlanarGeometry.ConvertAll(x => x.Face3D);
                         if (face3Ds != null)
                         {
                             face3Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
@@ -198,18 +208,20 @@ namespace SAM.Analytical.gbXML
                     continue;
                 }
 
-                if(face3D == null)
+                if (face3D == null)
                 {
                     continue;
                 }
 
-                List<SpaceBoundary> spaceBoundaries = new ();
-                foreach (Panel panel in panels_Space)
+                List<SpaceBoundary> spaceBoundaries = new();
+                foreach (IPanel panel in panels_Space)
                 {
                     if (panel == null)
+                    {
                         continue;
+                    }
 
-                    SpaceBoundary spaceBoundary = new ();
+                    SpaceBoundary spaceBoundary = new();
                     if (!dictionary.TryGetValue(panel.Guid, out spaceBoundary))
                     {
                         spaceBoundary = panel.TogbXML_SpaceBoundary(tolerance);
@@ -219,7 +231,7 @@ namespace SAM.Analytical.gbXML
                     spaceBoundaries.Add(spaceBoundary);
                 }
 
-                gbXMLSerializer.Space space_gbXML = new ();
+                gbXMLSerializer.Space space_gbXML = new();
                 space_gbXML.Name = space.Name;
                 space_gbXML.spacearea = new Area() { val = area.ToString() };
                 space_gbXML.spacevol = new Volume() { val = volume.ToString() };
@@ -233,12 +245,12 @@ namespace SAM.Analytical.gbXML
                 spaces_gbXML.Add(space_gbXML);
             }
 
-            Building building = new ();
+            Building building = new();
             building.id = Core.gbXML.Query.Id(adjacencyCluster, typeof(Building));
             building.Name = name;
             building.Description = description;
             building.bldgStories = dictionary_buildingStoreys.Keys.ToArray();
-            building.Area = Analytical.Query.Area(panels, PanelGroup.Floor);
+            building.Area = Analytical.Query.Area(panels.FindAll(x => x is Panel).ConvertAll(x => (Panel)x), PanelGroup.Floor);
             building.buildingType = buildingTypeEnum.Office;
             building.Spaces = spaces_gbXML.ToArray();
 

@@ -63,7 +63,7 @@ namespace SAM.Analytical.gbXML
                 campus.Buildings = new Building[] { adjacencyCluster.TogbXML(analyticalModel.Name, analyticalModel.Description, tolerance) };
 
                 // Get the list of Panel objects in the adjacency cluster.
-                List<Panel> panels = adjacencyCluster.GetPanels();
+                List<IPanel> panels = adjacencyCluster.GetObjects<IPanel>();
 
                 if (panels != null)
                 {
@@ -73,12 +73,14 @@ namespace SAM.Analytical.gbXML
                     // Loop through each panel and create a Surface object representing it.
                     for (int i = 0; i < panels.Count; i++)
                     {
-                        Panel panel = panels[i];
+                        IPanel panel = panels[i];
                         if (panel == null)
+                        {
                             continue;
+                        }
 
                         // Get the list of Space objects that are adjacent to the panel.
-                        List<Space> spaces = adjacencyCluster.GetRelatedObjects<Space>(panel);
+                        List<ISpace> spaces = adjacencyCluster.GetRelatedObjects<ISpace>(panel);
 
                         if (spaces != null && spaces.Count > 1)
                         {
@@ -86,8 +88,8 @@ namespace SAM.Analytical.gbXML
                             //https://www.gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link7
 
                             // Sort the list of Space objects in the correct order.
-                            SortedDictionary<int, Space> sortedDictionary = new();
-                            foreach (var space in spaces)
+                            SortedDictionary<int, ISpace> sortedDictionary = new();
+                            foreach (ISpace space in spaces)
                             {
                                 sortedDictionary[adjacencyCluster.GetIndex(space)] = space;
                             }
@@ -97,11 +99,15 @@ namespace SAM.Analytical.gbXML
                         // Convert the Panel to a gbXML Surface object and add it to the list of surfaces
                         Surface surface = panel.TogbXML(spaces, i + 1, count_opening, tolerance);
                         if (surface != null)
+                        {
                             surfaces.Add(surface);
+                        }
 
                         // If the Surface has openings, add the number of openings to the count
                         if (surface.Opening != null)
+                        {
                             count_opening += surface.Opening.Length;
+                        }
 
                     }
                     // Convert the list of surfaces to an array and assign it to the Campus
