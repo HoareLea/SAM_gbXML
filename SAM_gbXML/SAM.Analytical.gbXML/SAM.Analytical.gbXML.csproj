@@ -1,41 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57FDD311-8237-4B83-9824-927D0140C2A9}</ProjectGuid>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SAM.Analytical.gbXML</RootNamespace>
-    <AssemblyName>SAM.Analytical.gbXML</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>SAM_gbXML</AssemblyTitle>
+    <Product>SAM_gbXML</Product>
+    <Copyright>Copyright ©  2023</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>..\..\build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\build\SAM.Analytical.gbXML.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>..\..\build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gbXMLSerializer">
       <HintPath>..\..\references\gbXMLSerializer.dll</HintPath>
+	  <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SAM.Analytical">
       <HintPath>..\..\..\SAM\build\SAM.Analytical.dll</HintPath>
@@ -51,101 +38,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\SAM\build\SAM.Geometry.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\ToFile\ToFile.cs" />
-    <Compile Include="Convert\TogbXML\Building.cs" />
-    <Compile Include="Convert\TogbXML\WindowType.cs" />
-    <Compile Include="Convert\TogbXML\Construction.cs" />
-    <Compile Include="Convert\TogbXML\ClosedShell.cs" />
-    <Compile Include="Convert\TogbXML\New\Building.cs" />
-    <Compile Include="Convert\TogbXML\New\Campus.cs" />
-    <Compile Include="Convert\TogbXML\New\Construction.cs" />
-    <Compile Include="Convert\TogbXML\New\gbXML.cs" />
-    <Compile Include="Convert\TogbXML\New\Opening.cs" />
-    <Compile Include="Convert\TogbXML\New\ShellGeometry.cs" />
-    <Compile Include="Convert\TogbXML\New\Surface.cs" />
-    <Compile Include="Convert\TogbXML\Material.cs" />
-    <Compile Include="Convert\TogbXML\Layer.cs" />
-    <Compile Include="Convert\TogbXML\ShellGeometry.cs" />
-    <Compile Include="Convert\TogbXML\Campus.cs" />
-    <Compile Include="Convert\TogbXML\gbXML.cs" />
-    <Compile Include="Convert\TogbXML\PlanarGeometry.cs" />
-    <Compile Include="Convert\TogbXML\RectangularGeometry.cs" />
-    <Compile Include="Convert\TogbXML\Opening.cs" />
-    <Compile Include="Convert\TogbXML\Surface.cs" />
-    <Compile Include="Convert\ToSAM\Constructions.cs" />
-    <Compile Include="Convert\ToSAM\New\BuildingModel.cs" />
-    <Compile Include="Convert\ToSAM\New\Opening.cs" />
-    <Compile Include="Convert\ToSAM\New\Partition.cs" />
-    <Compile Include="Convert\ToSAM\Panel.cs" />
-    <Compile Include="Convert\ToSAM\Aperture.cs" />
-    <Compile Include="Convert\ToSAM\MaterialLibrary.cs" />
-    <Compile Include="Convert\ToSAM\Material.cs" />
-    <Compile Include="Convert\ToSAM\Construction.cs" />
-    <Compile Include="Convert\ToSAM\Space.cs" />
-    <Compile Include="Convert\ToSAM\AnalyticalModel.cs" />
-    <Compile Include="Create\Absorptances.cs" />
-    <Compile Include="Create\Reflectances.cs" />
-    <Compile Include="Create\AnalyticalModel.cs" />
-    <Compile Include="Create\New\BuildingModel.cs" />
-    <Compile Include="Create\Emittances.cs" />
-    <Compile Include="Create\Transmittances.cs" />
-    <Compile Include="Enum\Parameter\ConstructionParameter.cs" />
-    <Compile Include="Enum\Parameter\PanelParameter.cs" />
-    <Compile Include="Enum\Parameter\SpaceParameter.cs" />
-    <Compile Include="Modify\RenameSpaces.cs" />
-    <Compile Include="Modify\Rename.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\Material.cs" />
-    <Compile Include="Query\Match.cs" />
-    <Compile Include="Query\New\OpeningTypeEnum.cs" />
-    <Compile Include="Query\New\SurfaceTypeEnum.cs" />
-    <Compile Include="Query\New\CADObjectId.cs" />
-    <Compile Include="Query\PanelType.cs" />
-    <Compile Include="Query\ApertureType.cs" />
-    <Compile Include="Query\Location.cs" />
-    <Compile Include="Query\Construction.cs" />
-    <Compile Include="Query\Layer.cs" />
-    <Compile Include="Query\Value.cs" />
-    <Compile Include="Query\Spaces.cs" />
-    <Compile Include="Query\CADObjectId.cs" />
-    <Compile Include="Query\AdjacentSpaceId.cs" />
-    <Compile Include="Query\OpeningTypeEnum.cs" />
-    <Compile Include="Query\SurfaceTypeEnum.cs" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Manager\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj">
-      <Project>{1daf1cec-4d6f-4519-a014-b85a3b9168be}</Project>
-      <Name>SAM.Architectural.gbXML</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SAM.Core.gbXML\SAM.Core.gbXML.csproj">
-      <Project>{bba608a4-615b-4824-8e53-f8232be703ec}</Project>
-      <Name>SAM.Core.gbXML</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj">
-      <Project>{2faa4b69-24a8-4b43-bdf2-65a462e5ae6a}</Project>
-      <Name>SAM.Geometry.gbXML</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj" />
+    <ProjectReference Include="..\SAM.Core.gbXML\SAM.Core.gbXML.csproj" />
+    <ProjectReference Include="..\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NetTopologySuite">
       <Version>2.5.0</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.2</Version>
-    </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Remove="SAM.Analytical.gbXML\Class1.cs" />
+    <Compile Remove="SAM.Analytical.gbXML\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
 </Project>

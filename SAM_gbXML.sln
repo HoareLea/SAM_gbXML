@@ -1,11 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30104.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Analytical.gbXML", "SAM_gbXML\SAM.Analytical.gbXML\SAM.Analytical.gbXML.csproj", "{57FDD311-8237-4B83-9824-927D0140C2A9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dynamo", "Dynamo", "{F652363D-FD6C-4CA1-A992-E074C8EC2F82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAM.Analytical.gbXML", "SAM_gbXML\SAM.Analytical.gbXML\SAM.Analytical.gbXML.csproj", "{57FDD311-8237-4B83-9824-927D0140C2A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grasshopper", "Grasshopper", "{C249747D-3819-446F-9697-1306778A065C}"
 EndProject
@@ -13,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SAM_gbXML", "SAM_gbXML", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Analytical.Grasshopper.gbXML", "Grasshopper\SAM.Analytical.Grasshopper.gbXML\SAM.Analytical.Grasshopper.gbXML.csproj", "{FE92A197-5958-4A33-B41A-BAF94D83FC99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Geometry.gbXML", "SAM_gbXML\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj", "{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAM.Geometry.gbXML", "SAM_gbXML\SAM.Geometry.gbXML\SAM.Geometry.gbXML.csproj", "{2FAA4B69-24A8-4B43-BDF2-65A462E5AE6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Architectural.gbXML", "SAM_gbXML\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj", "{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAM.Architectural.gbXML", "SAM_gbXML\SAM.Architectural.gbXML\SAM.Architectural.gbXML.csproj", "{1DAF1CEC-4D6F-4519-A014-B85A3B9168BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAM.Core.gbXML", "SAM_gbXML\SAM.Core.gbXML\SAM.Core.gbXML.csproj", "{BBA608A4-615B-4824-8E53-F8232BE703EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAM.Core.gbXML", "SAM_gbXML\SAM.Core.gbXML\SAM.Core.gbXML.csproj", "{BBA608A4-615B-4824-8E53-F8232BE703EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

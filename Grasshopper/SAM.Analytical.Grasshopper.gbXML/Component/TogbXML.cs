@@ -99,7 +99,7 @@ namespace SAM.Geometry.Grasshopper
                 return;
             }
 
-            gbXML gbXML = null; // Declare a null gbXML object
+            gbXMLSerializer.gbXML gbXML = null; // Declare a null gbXML object
             if (sAMObject is AnalyticalModel) // If the retrieved data is an AnalyticalModel object
             {
                 gbXML = ((AnalyticalModel)sAMObject).TogbXML(Core.Tolerance.MacroDistance, tolerance); // Convert the AnalyticalModel object to gbXML format
