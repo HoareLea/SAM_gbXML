@@ -1,8 +1,6 @@
-﻿using gbXMLSerializer;
-using Grasshopper.Kernel;
+﻿using Grasshopper.Kernel;
 using SAM.Analytical;
 using SAM.Analytical.gbXML;
-using SAM.Analytical.Grasshopper;
 using SAM.Analytical.Grasshopper.gbXML.Properties;
 using SAM.Core.Grasshopper;
 using System;
