@@ -37,7 +37,7 @@ namespace SAM.Analytical.gbXML
             List<gbXMLSerializer.WindowType> windowTypes_gbXML = new List<gbXMLSerializer.WindowType>();
 
             // Get constructions and corresponding layers from the analytical model
-            List<Construction> constructions = analyticalModel_Temp.AdjacencyCluster?.GetConstructions();
+            List<Construction> constructions = analyticalModel_Temp.AdjacencyCluster?.GetConstructions<IPanel>();
             if (constructions != null)
             {
                 foreach (Construction construction in constructions)
