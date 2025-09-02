@@ -46,7 +46,29 @@ namespace SAM.Analytical.gbXML
             surface.id = Core.gbXML.Query.Id(panel, typeof(Surface));
             surface.constructionIdRef = panel is Panel ? Core.gbXML.Query.Id(((Panel)panel).Construction, typeof(gbXMLSerializer.Construction)) : panel is ExternalPanel ? Core.gbXML.Query.Id(((ExternalPanel)panel).Construction, typeof(gbXMLSerializer.Construction)) : null;
             surface.CADObjectId = Query.CADObjectId(panel, cADObjectIdSufix_Surface);
-            surface.surfaceType = panel is Panel ? ((Panel)panel).PanelType.SurfaceTypeEnum() : surfaceTypeEnum.Air;
+
+            if(panel is ExternalPanel externalPanel)
+            {
+                if(externalPanel.Construction is Construction construction)
+                {
+                    PanelType panelType = externalPanel.Construction.PanelType();
+                    if (panelType is PanelType.Undefined)
+                    {
+                        panelType = face3D.GetPlane().Normal.PanelType();
+                    }
+
+                    surface.surfaceType = panelType.SurfaceTypeEnum();
+                }
+                else
+                {
+                    surface.surfaceType = surfaceTypeEnum.Air;
+                }
+            }
+            else
+            {
+                surface.surfaceType = ((Panel)panel).PanelType.SurfaceTypeEnum();
+            }
+
 
             // Add the rectangular and planar geometry to the surface
             surface.RectangularGeometry = face3D.TogbXML_RectangularGeometry(tolerance);
