@@ -133,7 +133,7 @@ namespace SAM.Analytical.gbXML
                         face3Ds.RemoveAll(x => x == null || x.GetArea() < Tolerance.MacroDistance);
                         if (face3Ds.Count != 0)
                         {
-                            if (double.IsNaN(area))
+                            if (double.IsNaN(area) || Core.Query.AlmostEqual(area, 0, Tolerance.MacroDistance))
                             {
                                 area = face3Ds.ConvertAll(x => x.GetArea()).Sum();
                             }
