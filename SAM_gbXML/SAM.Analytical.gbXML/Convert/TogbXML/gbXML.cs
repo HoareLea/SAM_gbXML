@@ -25,7 +25,7 @@ namespace SAM.Analytical.gbXML
             }
 
             // Create a temporary copy of the analytical model
-            AnalyticalModel analyticalModel_Temp = new AnalyticalModel(analyticalModel);
+            AnalyticalModel analyticalModel_Temp = new (analyticalModel);
 
             // Split materials by thickness
             analyticalModel_Temp.SplitMaterialsByThickness(true, false);
