@@ -1,0 +1,118 @@
+name: Build (Windows)
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.repository_owner == 'SAM-BIM'
+    runs-on: windows-2022
+
+    env:
+      # Optional extra repos (space-separated) that must be built before THIS repo.
+      # Example: "SAM_Windows SAM_SolarCalculator SAM_Systems"
+      EXTRA_DEPS: ""
+
+      # Which branch to use for dependency clones (usually master in SAM-BIM)
+      DEPS_BRANCH: "master"
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x"
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Clone deps + build
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $org        = 'SAM-BIM'
+          $repo       = '${{ github.event.repository.name }}'
+          $depsBranch = $env:DEPS_BRANCH
+
+          $root  = (Get-Location).Path
+          $cache = Join-Path $root 'gitcache'
+
+          if (Test-Path $cache) { Remove-Item $cache -Recurse -Force }
+          New-Item -ItemType Directory -Force -Path $cache | Out-Null
+
+          function CloneRepo([string]$name, [string]$ref) {
+            $dst = Join-Path $cache $name
+            if (Test-Path $dst) { return }
+            $url = "https://github.com/$org/$name.git"
+            Write-Host "Cloning $url (branch=$ref) -> $dst"
+            git clone --single-branch -b $ref $url $dst
+          }
+
+          # Always clone base SAM
+          CloneRepo 'SAM' $depsBranch
+
+          # Optional extras
+          $extras = @()
+          if ($env:EXTRA_DEPS) {
+            $extras = $env:EXTRA_DEPS -split '\s+' | Where-Object { $_ -and $_.Trim() -ne '' }
+          }
+          foreach ($e in $extras) { CloneRepo $e $depsBranch }
+
+          # Copy THIS repo into cache so relative paths like ..\SAM\build resolve
+          $dstSelf = Join-Path $cache $repo
+          New-Item -ItemType Directory -Force -Path $dstSelf | Out-Null
+          Write-Host "Copying current repo -> $dstSelf"
+          robocopy $root $dstSelf /MIR /XD .git | Out-Null
+          if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
+
+          function PickSolution([string]$repoPath, [string]$name) {
+            $preferred = Join-Path $repoPath "$name.sln"
+            if (Test-Path $preferred) { return $preferred }
+            $sln = Get-ChildItem -Path $repoPath -Filter *.sln -File | Select-Object -First 1
+            if (-not $sln) { throw "No .sln found in $repoPath" }
+            return $sln.FullName
+          }
+
+          # ReferencePath = all existing build folders we have (helps assembly resolution)
+          $refPaths = @()
+          foreach ($r in @('SAM') + $extras + @($repo)) {
+            $p = Join-Path (Join-Path $cache $r) 'build'
+            if (Test-Path $p) { $refPaths += $p }
+          }
+
+          $common = @(
+            '/m:1'
+            '/nr:false'
+            '/v:m'
+            '/p:Configuration=Release'
+            '/p:UseSharedCompilation=false'
+            '/p:RunPostBuildEvent=OnOutputUpdated'
+          )
+          if ($refPaths.Count -gt 0) {
+            $common += "/p:ReferencePath=$($refPaths -join ';')"
+          }
+
+          function RestoreAndBuild([string]$sln) {
+            Write-Host "==> Restore: $sln"
+            & msbuild $sln /t:Restore @common
+            Write-Host "==> Rebuild: $sln"
+            & msbuild $sln /t:Rebuild @common
+          }
+
+          # Build deps in order, then this repo
+          $buildOrder = @('SAM') + $extras + @($repo)
+          foreach ($r in $buildOrder) {
+            $rp  = Join-Path $cache $r
+            $sln = PickSolution $rp $r
+            RestoreAndBuild $sln
+          }
