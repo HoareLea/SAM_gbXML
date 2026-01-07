@@ -1,5 +1,9 @@
 [![Build Status](https://hldigitalinnovation.visualstudio.com/HLApps/_apis/build/status/SAM-deploy-SAM_gbXML?branchName=master)](https://hldigitalinnovation.visualstudio.com/HLApps/_build/latest?definitionId=20&branchName=master)
 
+[![Build (Windows)](https://github.com/SAM-BIM/SAM_gbXML/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/SAM-BIM/SAM_gbXML/actions/workflows/build.yml)
+[![Installer (latest)](https://img.shields.io/github/v/release/SAM-BIM/SAM_Deploy?label=installer)](https://github.com/SAM-BIM/SAM_Deploy/releases/latest)
+
+
 # SAM_gbXML
 
 <a href="https://github.com/HoareLea/SAM_gbXML"><img src="https://github.com/HoareLea/SAM_gbXML/blob/master/Grasshopper/SAM.Analytical.Grasshopper.gbXML/Resources/SAM_gbXML.png" align="left" hspace="10" vspace="6"></a>
