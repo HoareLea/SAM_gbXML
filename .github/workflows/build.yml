@@ -9,17 +9,24 @@ on:
 
 jobs:
   build:
-    # Guard: if this workflow is ever merged upstream (e.g. HoareLea),
-    # it will show as "skipped" and won't break their CI/branch protections.
+    # Guard: if this workflow ever gets merged upstream (e.g. HoareLea),
+    # it will show as "skipped" there and won't break their CI.
     if: github.repository_owner == 'SAM-BIM'
     runs-on: windows-2022
 
+    env:
+      MSBUILDDISABLENODEREUSE: "1"
+      ORG_NAME: "SAM-BIM"
+      # >>> CHANGE THIS PER REPO <<<
+      # Examples: SAM, SAM_gbXML, SAM_GEM, SAM_Tas, ...
+      REPO_NAME: "SAM_gbXML"
+
     steps:
-      - name: Checkout
+      - name: Checkout this repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+          path: ${{ env.REPO_NAME }}
 
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
@@ -29,72 +36,81 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Clone deps + build
+      - name: Clone dependency repos (siblings)
         shell: pwsh
-        env:
-          MSBUILDDISABLENODEREUSE: "1"
         run: |
           $ErrorActionPreference = 'Stop'
 
-          # -----------------------------
-          # CONFIG: deps for this repo
-          # -----------------------------
-          $branch = 'master'
-          $deps = @(
-            @{ name = 'SAM'; url = 'https://github.com/SAM-BIM/SAM.git' }
+          $org  = '${{ env.ORG_NAME }}'
+          $repo = '${{ env.REPO_NAME }}'
+
+          # >>> ADJUST BUILD ORDER HERE IF NEEDED <<<
+          # Keep the current repo LAST.
+          $buildOrder = @(
+            'SAM'
+            $repo
           )
 
-          # Repo name from GITHUB_REPOSITORY (e.g. SAM-BIM/SAM_gbXML -> SAM_gbXML)
-          $repo = ($env:GITHUB_REPOSITORY -split '/')[1]
-
-          # -----------------------------
-          # IMPORTANT: cache OUTSIDE repo
-          # avoids robocopy recursion/hangs
-          # -----------------------------
-          $cache = Join-Path $env:RUNNER_TEMP 'gitcache'
-
-          if (Test-Path $cache) { Remove-Item $cache -Recurse -Force }
-          New-Item -ItemType Directory -Force -Path $cache | Out-Null
-
-          function Clone-Repo([string]$name, [string]$url) {
-            $dst = Join-Path $cache $name
-            Write-Host "Cloning $url (branch=$branch) -> $dst"
-            git clone --single-branch -b $branch $url $dst
+          # Clone everything except the last one (already checked out by Actions)
+          $deps = $buildOrder[0..($buildOrder.Count-2)]
+          foreach ($r in $deps) {
+            if (Test-Path $r) { continue }
+            Write-Host "Cloning https://github.com/$org/$r.git"
+            git clone --depth 1 "https://github.com/$org/$r.git" $r
           }
 
-          foreach ($d in $deps) { Clone-Repo $d.name $d.url }
+          # Ensure ReferencePath exists even before SAM_Windows builds
+          New-Item -ItemType Directory -Force -Path "SAM_Windows\build" | Out-Null
 
-          # Copy current repo into cache as well (so we build the PR/commit contents)
-          $dstSelf = Join-Path $cache $repo
-          New-Item -ItemType Directory -Force -Path $dstSelf | Out-Null
+      - name: Restore + Rebuild in order (CI props like SAM_Deploy)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
 
-          Write-Host "Copying current repo -> $dstSelf"
-          robocopy (Get-Location).Path $dstSelf /MIR /XD .git bin obj .vs packages | Out-Null
-          if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
+          $repo = '${{ env.REPO_NAME }}'
+          $windowsRef = (Resolve-Path 'SAM_Windows\build').Path
 
-          # --------------------------------
-          # Build in order (deps first)
-          # --------------------------------
-          $toBuild = @('SAM', $repo)
+          # IMPORTANT: keep these as an ARRAY of args (do NOT join into one string)
+          $common = @(
+            '/m:1'
+            '/nr:false'
+            '/v:m'
+            '/p:Configuration=Release'
+            '/p:UseSharedCompilation=false'
+            '/p:RunPostBuildEvent=OnOutputUpdated'
+            "/p:ReferencePath=$windowsRef"
+          )
 
-          foreach ($name in $toBuild) {
-            $projDir = Join-Path $cache $name
-            if (-not (Test-Path $projDir)) { throw "Missing repo folder: $projDir" }
+          # If you really want Platform, use QUOTED Any CPU:
+          # $common += '/p:Platform="Any CPU"'
 
-            $sln = Get-ChildItem -Path $projDir -Filter *.sln -File | Select-Object -First 1
-            if (-not $sln) { throw "No .sln found in $projDir" }
+          # Same build order as above (keep repo LAST)
+          $buildOrder = @(
+            'SAM'
+            $repo
+          )
 
-            Write-Host "==> Restore: $name\$($sln.Name)"
-            msbuild $sln.FullName `
-              /t:Restore `
-              /m:1 /nr:false /v:m `
-              /p:Configuration=Release `
-              /p:UseSharedCompilation=false
-
-            Write-Host "==> Rebuild: $name\$($sln.Name)"
-            msbuild $sln.FullName `
-              /t:Rebuild `
-              /m:1 /nr:false /v:m `
-              /p:Configuration=Release `
-              /p:UseSharedCompilation=false
+          # Convert build order -> solution paths (robust: first .sln in each folder)
+          $solutions = foreach ($r in $buildOrder) {
+            $sln = Get-ChildItem -Path $r -Filter *.sln -File | Select-Object -First 1
+            if (-not $sln) { throw "No .sln found under: $r" }
+            $sln.FullName
           }
+
+          foreach ($sln in $solutions) {
+            Write-Host "==> Restore: $sln"
+            & msbuild $sln /t:Restore @common
+          }
+
+          foreach ($sln in $solutions) {
+            Write-Host "==> Rebuild: $sln"
+            & msbuild $sln /t:Rebuild @common
+          }
+
+      - name: Upload build folders (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.REPO_NAME }}-build-folders
+          path: |
+            **\build\*
+          if-no-files-found: warn
