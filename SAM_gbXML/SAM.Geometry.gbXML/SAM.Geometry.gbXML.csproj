@@ -47,7 +47,4 @@
   <ItemGroup>
     <ProjectReference Include="..\SAM.Core.gbXML\SAM.Core.gbXML.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="SAM.Geometry.gbXML\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
 </Project>
