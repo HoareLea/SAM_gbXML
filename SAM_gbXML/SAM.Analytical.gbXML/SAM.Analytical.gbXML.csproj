@@ -51,8 +51,4 @@
       <Version>2.6.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="SAM.Analytical.gbXML\Class1.cs" />
-    <Compile Remove="SAM.Analytical.gbXML\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
 </Project>
